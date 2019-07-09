@@ -38,6 +38,7 @@ public class Init {
 		// TODO Bot aufrufen
 
 		while (input.hasNext()) {
+			
 			unserBot.machAktion(); // man könnte hier auch mehrer Bots benutzen, z.B. einen zum Erkunden, einen zum
 									// Einsammeln und einen um zum Ziel zu fahren
 		}
