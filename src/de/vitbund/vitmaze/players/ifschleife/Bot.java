@@ -53,22 +53,22 @@ public class Bot {
 	}
 
 	// Bewegungsfunktionen
-	private void nachWesten() {
+	protected void nachWesten() {
 		this.x--;
 		System.out.println("go west");
 	}
 
-	private void nachSueden() {
+	protected void nachSueden() {
 		this.y++;
 		System.out.println("go south");
 	}
 
-	private void nachOsten() {
+	protected void nachOsten() {
 		this.x++;
 		System.out.println("go east");
 	}
 
-	private void nachNorden() {
+	protected void nachNorden() {
 		this.y--;
 
 		System.out.println("go north");
@@ -86,4 +86,5 @@ public class Bot {
 		return y;
 	}
 
+	//TODO Methode finish
 }

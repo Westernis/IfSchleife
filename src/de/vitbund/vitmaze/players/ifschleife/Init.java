@@ -34,8 +34,9 @@ public class Init {
 
 		Karte karte = new Karte(sizeX, sizeY);
 
+		//Hier wird der Bot initialisiert, der Karte, der playerID und dem Level zugeordnet
 		BotLevel1 unserBot = new BotLevel1(karte, playerId, startX, startY);
-		// TODO Bot aufrufen
+		
 
 		while (input.hasNext()) {
 
