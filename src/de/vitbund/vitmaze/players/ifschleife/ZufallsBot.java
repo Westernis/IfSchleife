@@ -9,7 +9,7 @@ public class ZufallsBot extends Bot {
 		// TODO Automatisch generierter Konstruktorstub
 	}
 
-	public boolean machAktion() {
-		return true;
+	public void machAktion() {
+
 	}
 }

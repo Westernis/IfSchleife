@@ -7,7 +7,7 @@ public class Bot {
 	// die Karte, die er gerade erkundet
 	private Karte aktuelleKarte;
 
-	private final int id;
+	protected final int id;
 
 	// Die aktuellen Koordinaten des Bots
 	private int x;
@@ -27,7 +27,8 @@ public class Bot {
 		this.y = y;
 	}
 
-	public boolean machAktion() {
+	public void machAktion() {
+
 		// TODO hier das Hirn aufrufen oder einbauen, die Schleife befindet sich in der
 		// Klasse Init
 
@@ -48,23 +49,28 @@ public class Bot {
 		// implementiert werden kann
 		//
 
-		return true; // Methode als boolean lassen??
+		// Methode als boolean lassen??
 	}
 
 	// Bewegungsfunktionen
 	private void nachWesten() {
+		this.x--;
 		System.out.println("go west");
 	}
 
 	private void nachSueden() {
+		this.y++;
 		System.out.println("go south");
 	}
 
 	private void nachOsten() {
+		this.x++;
 		System.out.println("go east");
 	}
 
 	private void nachNorden() {
+		this.y--;
+
 		System.out.println("go north");
 	}
 
@@ -79,4 +85,5 @@ public class Bot {
 	public int getY() {
 		return y;
 	}
+
 }

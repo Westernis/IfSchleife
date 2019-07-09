@@ -34,11 +34,26 @@ public class Init {
 
 		Karte karte = new Karte(sizeX, sizeY);
 
-		Bot unserBot = new Bot(karte, playerId, startX, startY);
+		Bot unserBot = new BotLevel1(karte, playerId, startX, startY);
 		// TODO Bot aufrufen
 
 		while (input.hasNext()) {
-			
+
+			// Rundeninformationen auslesen
+
+			String lastActionsResult = input.nextLine();
+			String currentCellStatus = input.nextLine();
+			String northCellStatus = input.nextLine();
+			String eastCellStatus = input.nextLine();
+			String southCellStatus = input.nextLine();
+			String westCellStatus = input.nextLine();
+
+			// Debug Information ausgeben (optional möglich)
+			System.err.println("Ergebnis Vorrunde Aktion: " + lastActionsResult);
+			System.err.println("Ergebnis Vorrunde Norden: " + "               " + northCellStatus);
+			System.err.println("Ergebnis Vorrunde Westen / Osten: " + "   " + westCellStatus + " / " + eastCellStatus);
+			System.err.println("Ergebnis Vorrunde Sueden: " + "                " + southCellStatus);
+
 			unserBot.machAktion(); // man könnte hier auch mehrer Bots benutzen, z.B. einen zum Erkunden, einen zum
 									// Einsammeln und einen um zum Ziel zu fahren
 		}
