@@ -48,7 +48,7 @@ public class Bot {
 		// implementiert werden kann
 		//
 
-		return true; // Methode als boolean lassen?
+		return true; // Methode als boolean lassen??
 	}
 
 	// Bewegungsfunktionen
