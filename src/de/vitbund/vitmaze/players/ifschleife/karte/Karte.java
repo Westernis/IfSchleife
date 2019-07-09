@@ -1,7 +1,8 @@
 package de.vitbund.vitmaze.players.ifschleife.karte;
 
 /**
- * TODO 
+ * TODO
+ * 
  * @author helmut.rietz
  *
  */
@@ -61,25 +62,58 @@ public class Karte {
 	public Feld[][] getFelder() {
 		return felder;
 	}
-	// Festestellen, ob bei den Koordinaten schon ein Feldobjekt existiert. Wenn nein->Anlegen. Welche Wege müssen hinzugefügt werden?
-	public void pruefeFeld(int x, int y, String feldbeschreibung) {
-		if(felder[x][y] == null );
-		felder[x][y] = new Flur(x, y, this); //TODO
-		
+
+	// Festestellen, ob bei den Koordinaten schon ein Feldobjekt existiert. Wenn
+	// nein->Anlegen. Welche Wege müssen hinzugefügt werden?
+	public void aktualisiereFeld(int x, int y, String feldbeschreibung) {
+		if (felder[x][y] == null) {
+			// TODO switch mit feldbeschreibung, greift entsprechend auf Klassen Flur und
+
+			// Wand zu
+			felder[x][y] = new Flur(x, y, this);
+			// Wege erstellen
+
+			// prüfen, ob das Feld auch wirklich schon bekannt (!=null) ist UND das Feld
+			// begehbar ist.
+			// wenn ja dann Weg setzen (setHimmelsrichtung), und auch umgekehrt
+			// wenn nein dann bleibt die
+			// Variable auf null
+
+			// TODO Himmelsrichtungen überprüfen, Arraygrenzen
+
+			if (this.isFeldBekannt(x + 1, y) && felder[x + 1][y].istBegehbar()) { // Ost
+				felder[x][y].setOst(felder[x + 1][y]);
+				felder[x + 1][y].setWest(felder[x][y]);
+				// else nicht nötig, da die Variable Ost auf null bleibt (siehe Feld ost)
+			}
+			if (this.isFeldBekannt(x - 1, y) && felder[x - 1][y].istBegehbar()) { // West
+				felder[x][y].setWest(felder[x - 1][y]);
+				felder[x - 1][y].setOst(felder[x][y]);
+			}
+			if (this.isFeldBekannt(x, y + 1) && felder[x][y + 1].istBegehbar()) { // Süd
+				felder[x][y].setSued(felder[x][y + 1]);
+				felder[x][y + 1].setNord(felder[x][y]);
+			}
+			if (this.isFeldBekannt(x, y - 1) && felder[x][y - 1].istBegehbar()) { // Nord
+				felder[x][y].setNord(felder[x][y - 1]);
+				felder[x][y - 1].setSued(felder[x][y]);
+			}
+
+			felder[x][y] = new Wand(x, y, this); // Bei Wand keine Wege nötig
+		}
 	}
-	
+
 	public boolean isFeldBekannt(int x, int y) {
 		if (felder[x][y] == null) {
 			return false;
 		}
 		return true;
 	}
-	
-	
-	//Vielleicht brauchen wir das noch
+
+	// Vielleicht brauchen wir das noch
 	public Feld getFeld(int x, int y) {
-		//TODO Arraygrenzen abfangen
+		// TODO Arraygrenzen abfangen
 		return felder[x][y];
 	}
-	
+
 }

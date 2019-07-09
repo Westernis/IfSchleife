@@ -7,4 +7,7 @@ public class Flur extends Feld {
 		// TODO Automatisch generierter Konstruktorstub
 	}
 
+	public boolean istBegehbar() {
+		return true;
+	}
 }

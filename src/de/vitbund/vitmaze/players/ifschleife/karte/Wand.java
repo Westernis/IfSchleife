@@ -7,4 +7,7 @@ public class Wand extends Feld {
 		// TODO Automatisch generierter Konstruktorstub
 	}
 
+	public boolean istBegehbar() {
+		return false;
+	}
 }
