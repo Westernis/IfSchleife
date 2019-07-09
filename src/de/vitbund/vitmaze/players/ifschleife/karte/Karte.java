@@ -61,12 +61,25 @@ public class Karte {
 	public Feld[][] getFelder() {
 		return felder;
 	}
-	
+	// Festestellen, ob bei den Koordinaten schon ein Feldobjekt existiert. Wenn nein->Anlegen. Welche Wege müssen hinzugefügt werden?
 	public void pruefeFeld(int x, int y, String feldbeschreibung) {
 		if(felder[x][y] == null );
+		felder[x][y] = new Flur(x, y, this); //TODO
+		
 	}
 	
 	public boolean isFeldBekannt(int x, int y) {
+		if (felder[x][y] == null) {
+			return false;
+		}
 		return true;
 	}
+	
+	
+	//Vielleicht brauchen wir das noch
+	public Feld getFeld(int x, int y) {
+		//TODO Arraygrenzen abfangen
+		return felder[x][y];
+	}
+	
 }
