@@ -61,4 +61,12 @@ public class Karte {
 	public Feld[][] getFelder() {
 		return felder;
 	}
+	
+	public void pruefeFeld(int x, int y, String feldbeschreibung) {
+		if(felder[x][y] == null );
+	}
+	
+	public boolean isFeldBekannt(int x, int y) {
+		return true;
+	}
 }
