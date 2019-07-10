@@ -109,4 +109,7 @@ public class ZufallsBot extends Bot {
 		return "hallooooo";
 	}
 
+	public void nochSchlauereZufallsrichtung() {
+		
+	}
 }
