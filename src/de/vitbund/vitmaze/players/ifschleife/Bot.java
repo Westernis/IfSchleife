@@ -6,7 +6,7 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
  * 
  * @author IFSchleife
  *
- *Die Grundklasse für alle anderen Bots.
+ *         Die Grundklasse für alle anderen Bots.
  */
 public class Bot {
 

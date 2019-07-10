@@ -55,6 +55,7 @@ public class Init {
 		 */
 
 		// TODO Auswahl welcher Bot benutzt wird
+		//TODO: hier noch eine Verzweigung für Level -> passender Bot bauen
 
 		Bot unserBot = erstelleBotLevel1(karte, playerId, startX, startY);
 
@@ -83,8 +84,13 @@ public class Init {
 			/*
 			 * Aufruf der machAktion (in BotLevel1 überschriebene Methode).
 			 */
-			unserBot.machAktion(); // man könnte hier auch mehrer Bots benutzen, z.B. einen zum Erkunden, einen zum
+
+// aus Testgründen deaktiviert für den ZufallsBOT			
+//			unserBot.machAktion(); // man könnte hier auch mehrer Bots benutzen, z.B. einen zum Erkunden, einen zum
 			// Einsammeln und einen um zum Ziel zu fahren
+			
+			ZufallsBot zufallsBot = new ZufallsBot(karte, playerId, startX, startY) ;
+			zufallsBot.nochSchlauereZufallsrichtung();
 		}
 
 		// Alles fertig -> aufräumen
@@ -98,5 +104,9 @@ public class Init {
 	public static Bot erstelleBotLevel2(Karte karte, int playerId, int startX, int startY) {
 		return new BotLevel2(karte, playerId, startX, startY);
 	}
+	
+	
 
 }
+// TODO 
+// Rückgängig machen: unserBot wieder aktivieren (Zeile 87 und Zeile 60: Erstellung des unserBot)
