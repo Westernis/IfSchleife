@@ -105,7 +105,7 @@ public class Karte {
 					felder[x][y] = new Wand(x, y, this, true); // Bei Wand keine Wege nötig
 					break;
 			//TODO	case "FINISH"
-			//TODO case "FORM"
+			//TODO  case "FORM"
 			}
 			
 
