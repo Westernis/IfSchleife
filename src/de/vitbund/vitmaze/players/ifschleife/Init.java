@@ -13,7 +13,15 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
  * @author IFSchleife
  *
  */
+
 public class Init {
+
+	public static String lastActionsResult1 = "";
+	public static String currentCellStatus1 = "";
+	public static String northCellStatus1 = "";
+	public static String southCellStatus1 = "";
+	public static String westCellStatus1 = "";
+	public static String eastCellStatus1 = "";
 
 	public static void main(String[] args) {
 		// TODO Initialisierung (ersten Text einlesen, Karten initialisieren für lvl 2?)
@@ -36,20 +44,19 @@ public class Init {
 
 		// Hier wird der Bot initialisiert, der Karte, der playerID und dem Level
 		// zugeordnet
-		/**
+		/*
 		 * Erstellen einer Bot-Instanz (namentlich unserBot). Klasse ist BotLevel1 (erbt
-		 * von Bot).
-		 * TODO: Hier könnte man eine einfache Überprüfung des Levels für die Erstellung eines passenden Bots erstellen
-		 * à Level2 > BotLevel2 unserBot = new BotLevel2
-		 * Vorschläge:
-		 * (BotLevel(level)) unserBot2 = new (BotLevel(level))???
+		 * von Bot). TODO: Hier könnte man eine einfache Überprüfung des Levels für die
+		 * Erstellung eines passenden Bots erstellen à Level2 > BotLevel2 unserBot = new
+		 * BotLevel2 Vorschläge: (BotLevel(level)) unserBot2 = new (BotLevel(level))???
 		 * 
-		 * String botTyp = "BotLevel" + level;
-		 * botTyp unserBot2 = botTyp(blabla,soso,aha);
+		 * String botTyp = "BotLevel" + level; botTyp unserBot2 =
+		 * botTyp(blabla,soso,aha);
 		 */
-		
-		
-		BotLevel1 unserBot = new BotLevel1(karte, playerId, startX, startY);
+
+		// TODO Auswahl welcher Bot benutzt wird
+
+		Bot unserBot = erstelleBotLevel1(karte, playerId, startX, startY);
 
 		while (input.hasNext()) {
 
@@ -61,6 +68,16 @@ public class Init {
 			String eastCellStatus = input.nextLine();
 			String southCellStatus = input.nextLine();
 			String westCellStatus = input.nextLine();
+			
+			lastActionsResult1 = lastActionsResult;
+			currentCellStatus1 = currentCellStatus;
+			northCellStatus1 = northCellStatus;
+			eastCellStatus1 = eastCellStatus;
+			southCellStatus1 = southCellStatus;
+			westCellStatus1 = westCellStatus;
+			
+
+			// Karte befüllen
 
 			// Debug Information ausgeben (optional möglich)
 			/**
@@ -74,13 +91,16 @@ public class Init {
 			/**
 			 * Aufruf der machAktion (in BotLevel1 überschriebene Methode).
 			 */
-			unserBot.machAktion(lastActionsResult, northCellStatus, southCellStatus, westCellStatus, eastCellStatus,
-					currentCellStatus); // man könnte hier auch mehrer Bots benutzen, z.B. einen zum Erkunden, einen zum
+			unserBot.machAktion(); // man könnte hier auch mehrer Bots benutzen, z.B. einen zum Erkunden, einen zum
 			// Einsammeln und einen um zum Ziel zu fahren
 		}
 
 		// Alles fertig -> aufräumen
 		input.close();
+	}
+
+	public static Bot erstelleBotLevel1(Karte karte, int playerId, int startX, int startY) {
+		return new BotLevel1(karte, playerId, startX, startY);
 	}
 
 }

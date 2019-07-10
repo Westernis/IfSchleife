@@ -28,14 +28,13 @@ public class BotLevel1 extends Bot {
 	 * @param currentCellStatus
 	 * 
 	 */
-	public void machAktion(String lastActionsResult, String northCellStatus, String southCellStatus,
-			String westCellStatus, String eastCellStatus, String currentCellStatus) {
+	public void machAktion() {
 
 		/**
 		 * solange das lastActionResult "OK" beeinhaltet gehe in die Schleife....ähhh
 		 * Verzweigung.
 		 */
-		if ("OK".equals(lastActionsResult)) {
+		if ("OK".equals(Init.lastActionsResult1)) {
 
 			/**
 			 * Wenn der Status des nördlichen Felds nicht "WALL" beeinhaltet gebe "go north"
@@ -43,17 +42,15 @@ public class BotLevel1 extends Bot {
 			 * programmiert iS von "prüfe erst das dann das dann das.... wobei nur der
 			 * letzte Status genommen bzw. überschrieben wird?
 			 */
-			if (!"WALL".equals(northCellStatus)) {
-				richtungsausgabe = "go north";
-			}
-			if (!"WALL".equals(southCellStatus)) {
-				richtungsausgabe = "go south";
-			}
-			if (!"WALL".equals(westCellStatus)) {
-				richtungsausgabe = "go west";
-			}
-			if (!"WALL".equals(eastCellStatus)) {
-				richtungsausgabe = "go east";
+
+			if (!"WALL".equals(Init.northCellStatus1)) {
+				richtungsausgabe = "Norden";
+			} else if (!"WALL".equals(Init.southCellStatus1)) {
+				richtungsausgabe = "Sueden";
+			} else if (!"WALL".equals(Init.westCellStatus1)) {
+				richtungsausgabe = "Westen";
+			} else if (!"WALL".equals(Init.eastCellStatus1)) {
+				richtungsausgabe = "Osten";
 			}
 		}
 
@@ -62,12 +59,23 @@ public class BotLevel1 extends Bot {
 		 * lautet gebe "finish" aus. Wenn nicht gebe den Inhalt der String-Variablen
 		 * "richtungsausgabe" aus, die Prüfung siehe oben.
 		 */
-		if (("FINISH " + super.id + " 0").equals(currentCellStatus)) {
+		if (("FINISH " + super.id + " 0").equals(Init.currentCellStatus1)) {
 			System.out.println("finish");
 		} else {
-			System.out.println(richtungsausgabe);
+			switch (richtungsausgabe) {
+			case "Norden":
+				nachNorden();
+				break;
+			case "Sueden":
+				nachSueden();
+				break;
+			case "Westen":
+				nachWesten();
+				break;
+			case "Osten":
+				nachOsten();
+			}
+
 		}
-
 	}
-
 }
