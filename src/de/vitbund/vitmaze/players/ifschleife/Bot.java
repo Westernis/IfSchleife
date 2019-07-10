@@ -5,13 +5,13 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 public class Bot {
 
 	// die Karte, die er gerade erkundet
-	private Karte aktuelleKarte;
+	protected Karte aktuelleKarte;
 
 	protected final int id;
 
 	// Die aktuellen Koordinaten des Bots
-	private int x;
-	private int y;
+	protected int x;
+	protected int y;
 
 	/**
 	 * 

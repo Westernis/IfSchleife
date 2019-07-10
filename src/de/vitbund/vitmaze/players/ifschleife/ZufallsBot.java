@@ -1,5 +1,8 @@
 package de.vitbund.vitmaze.players.ifschleife;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 
 /**
@@ -21,7 +24,13 @@ public class ZufallsBot extends Bot {
 	 * zufallsRichtung() aus und gebe es aus.
 	 */
 	public void machAktion() {
-		System.out.println(zufallsRichtung());
+//		System.out.println(zufallsRichtung());
+
+		aktuelleKarte.aktualisiereFeld(x, y--, Init.northCellStatus);
+		aktuelleKarte.aktualisiereFeld(x, y++, Init.southCellStatus);
+		aktuelleKarte.aktualisiereFeld(x++, y, Init.eastCellStatus);
+		aktuelleKarte.aktualisiereFeld(x--, y, Init.westCellStatus);
+		aktuelleKarte.aktualisiereFeld(x, y, Init.currentCellStatus);
 
 	}
 
@@ -45,6 +54,59 @@ public class ZufallsBot extends Bot {
 		} else {
 			return "go south";
 		}
+	}
+
+	public String schlauereZufallsrichtung() {
+
+		int moeglicheRichtungen = 0;
+		double zufallsZahl = Math.random();
+		List<String> richtungsliste = new ArrayList<String>();
+
+		if (!"WALL".equals(Init.northCellStatus)) {
+			moeglicheRichtungen++;
+			richtungsliste.add("Norden");
+		}
+		if (!"WALL".equals(Init.southCellStatus)) {
+			moeglicheRichtungen++;
+			richtungsliste.add("Sueden");
+		}
+		if (!"WALL".equals(Init.westCellStatus)) {
+			moeglicheRichtungen++;
+			richtungsliste.add("Westen");
+		}
+		if (!"WALL".equals(Init.eastCellStatus)) {
+			moeglicheRichtungen++;
+			richtungsliste.add("Osten");
+		}
+
+		switch (richtungsliste.size()) {
+
+		case 1:
+
+			if (richtungsliste.contains("Norden")) {
+				nachNorden();
+			} else if (richtungsliste.contains("Sueden")) {
+				nachSueden();
+			} else if (richtungsliste.contains("Westen")) {
+				nachWesten();
+			} else if (richtungsliste.contains("Osten")) {
+				nachOsten();
+			}
+
+			break;
+
+		case 2:
+
+			break;
+		case 3:
+
+			break;
+		case 4:
+
+			break;
+		}
+
+		return "hallooooo";
 	}
 
 }
