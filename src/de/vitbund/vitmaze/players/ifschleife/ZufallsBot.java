@@ -108,7 +108,9 @@ public class ZufallsBot extends Bot {
 
 		return "hallooooo";
 	}
-
+/**
+ * eine noch bessere Version des ZufallsWegFindungs-Algorithmus, nun mit Prüfung ob Wände im Weg sind...
+ */
 	public void nochSchlauereZufallsrichtung() {
 		
 	}

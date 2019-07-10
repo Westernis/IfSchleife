@@ -1,5 +1,10 @@
 package de.vitbund.vitmaze.players.ifschleife.karte;
-
+/**
+ * 
+ * @author IFSchleife
+ *
+ *
+ */
 public class Wand extends Feld {
 
 	public Wand(int x, int y, Karte karte, boolean erkundet) {

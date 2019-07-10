@@ -19,13 +19,13 @@ public class BotLevel1 extends Bot {
 
 	public void machAktion() {
 
-		/**
+		/*
 		 * solange das lastActionResult "OK" beeinhaltet gehe in die Schleife....ähhh
 		 * Verzweigung.
 		 */
 		if ("OK".equals(Init.lastActionsResult)) {
 
-			/**
+			/*
 			 * Wenn der Status des nördlichen Felds nicht "WALL" beeinhaltet gebe "go north"
 			 * aus. TODO: FIXME Ist das schon eine IF-Else-Ladder oder ist es noch unsauber
 			 * programmiert iS von "prüfe erst das dann das dann das.... wobei nur der
@@ -43,7 +43,7 @@ public class BotLevel1 extends Bot {
 			}
 		}
 
-		/**
+		/*
 		 * Wenn der aktuelle Zellstatus "FINISH" + PlayerID + 0 (also z.B. "FINISH 1 0")
 		 * lautet gebe "finish" aus. Wenn nicht gebe den Inhalt der String-Variablen
 		 * "richtungsausgabe" aus, die Prüfung siehe oben.

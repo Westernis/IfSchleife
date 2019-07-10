@@ -2,6 +2,12 @@ package de.vitbund.vitmaze.players.ifschleife;
 
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 
+/**
+ * 
+ * @author IFSchleife
+ *
+ *Die Grundklasse für alle anderen Bots.
+ */
 public class Bot {
 
 	// die Karte, die er gerade erkundet
@@ -15,7 +21,7 @@ public class Bot {
 
 	/**
 	 * 
-	 * @param karte    Die zu erkundende Karte
+	 * @param karte
 	 * @param playerId
 	 * @param x
 	 * @param y
@@ -27,6 +33,9 @@ public class Bot {
 		this.y = y;
 	}
 
+	/**
+	 * Die Methode wird von jeder Unterklasse individuell implementiert.
+	 */
 	public void machAktion() {
 
 		// TODO hier das Hirn aufrufen oder einbauen, die Schleife befindet sich in der
@@ -86,5 +95,5 @@ public class Bot {
 		return y;
 	}
 
-	//TODO Methode finish
+	// TODO Methode finish
 }

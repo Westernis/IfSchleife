@@ -3,7 +3,7 @@ package de.vitbund.vitmaze.players.ifschleife.karte;
 /**
  * TODO
  * 
- * @author helmut.rietz
+ * @author IFSchleife
  *
  */
 public class Karte {
