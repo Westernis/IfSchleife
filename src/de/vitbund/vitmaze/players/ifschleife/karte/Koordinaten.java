@@ -111,17 +111,18 @@ public class Koordinaten {
 	 * public void xhoch() {}
 	 */
 
-	public static void main(String[] args) {
-		setzeMaximaleKoordinaten(11, 11);
-
-		// System.err.println(korrigiere(-10, 10));
-		Koordinaten p1 = new Koordinaten(1, 2);
-
-		for (int i = 0; i < 24; i++) {
-			System.err.println(p1);
-			p1.setX(p1.getXPlus(1));
-		}
-	}
+//	//nur zum testen der Koordinaten implementiert
+//	public static void main(String[] args) {
+//		setzeMaximaleKoordinaten(11, 11);
+//
+//		// System.err.println(korrigiere(-10, 10));
+//		Koordinaten p1 = new Koordinaten(1, 2);
+//
+//		for (int i = 0; i < 24; i++) {
+//			System.err.println(p1);
+//			p1.setX(p1.getXPlus(1));
+//		}
+//	}
 
 	@Override
 	public String toString() {
