@@ -70,36 +70,46 @@ public class Karte {
 			// TODO switch mit feldbeschreibung, greift entsprechend auf Klassen Flur und
 
 			// Wand zu
-			felder[x][y] = new Flur(x, y, this);
-			// Wege erstellen
+			switch (feldbeschreibung){
+				case "FLOOR":
+					felder[x][y] = new Flur(x, y, this);
+					// Wege erstellen
 
-			// prüfen, ob das Feld auch wirklich schon bekannt (!=null) ist UND das Feld
-			// begehbar ist.
-			// wenn ja dann Weg setzen (setHimmelsrichtung), und auch umgekehrt
-			// wenn nein dann bleibt die
-			// Variable auf null
+					// prüfen, ob das Feld auch wirklich schon bekannt (!=null) ist UND das Feld
+					// begehbar ist.
+					// wenn ja dann Weg setzen (setHimmelsrichtung), und auch umgekehrt
+					// wenn nein dann bleibt die
+					// Variable auf null
 
-			// TODO Himmelsrichtungen überprüfen, Arraygrenzen
+					// TODO Himmelsrichtungen überprüfen, Arraygrenzen
 
-			if (this.isFeldBekannt(x + 1, y) && felder[x + 1][y].istBegehbar()) { // Ost
-				felder[x][y].setOst(felder[x + 1][y]);
-				felder[x + 1][y].setWest(felder[x][y]);
-				// else nicht nötig, da die Variable Ost auf null bleibt (siehe Feld ost)
+					if (this.isFeldBekannt(x + 1, y) && felder[x + 1][y].istBegehbar()) { // Ost
+						felder[x][y].setOst(felder[x + 1][y]);
+						felder[x + 1][y].setWest(felder[x][y]);
+						// else nicht nötig, da die Variable Ost auf null bleibt (siehe Feld ost)
+					}
+					if (this.isFeldBekannt(x - 1, y) && felder[x - 1][y].istBegehbar()) { // West
+						felder[x][y].setWest(felder[x - 1][y]);
+						felder[x - 1][y].setOst(felder[x][y]);
+					}
+					if (this.isFeldBekannt(x, y + 1) && felder[x][y + 1].istBegehbar()) { // Süd
+						felder[x][y].setSued(felder[x][y + 1]);
+						felder[x][y + 1].setNord(felder[x][y]);
+					}
+					if (this.isFeldBekannt(x, y - 1) && felder[x][y - 1].istBegehbar()) { // Nord
+						felder[x][y].setNord(felder[x][y - 1]);
+						felder[x][y - 1].setSued(felder[x][y]);
+					}
+					break;
+				case "WALL":
+					felder[x][y] = new Wand(x, y, this, true); // Bei Wand keine Wege nötig
+					break;
+			//TODO	case "FINISH"
+			//TODO case "FORM"
 			}
-			if (this.isFeldBekannt(x - 1, y) && felder[x - 1][y].istBegehbar()) { // West
-				felder[x][y].setWest(felder[x - 1][y]);
-				felder[x - 1][y].setOst(felder[x][y]);
-			}
-			if (this.isFeldBekannt(x, y + 1) && felder[x][y + 1].istBegehbar()) { // Süd
-				felder[x][y].setSued(felder[x][y + 1]);
-				felder[x][y + 1].setNord(felder[x][y]);
-			}
-			if (this.isFeldBekannt(x, y - 1) && felder[x][y - 1].istBegehbar()) { // Nord
-				felder[x][y].setNord(felder[x][y - 1]);
-				felder[x][y - 1].setSued(felder[x][y]);
-			}
+			
 
-			felder[x][y] = new Wand(x, y, this); // Bei Wand keine Wege nötig
+			
 		}
 	}
 
@@ -117,3 +127,10 @@ public class Karte {
 	}
 
 }
+
+
+
+
+
+
+
