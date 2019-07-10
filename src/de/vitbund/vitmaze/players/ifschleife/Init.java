@@ -16,12 +16,12 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 
 public class Init {
 
-	public static String lastActionsResult1 = "";
-	public static String currentCellStatus1 = "";
-	public static String northCellStatus1 = "";
-	public static String southCellStatus1 = "";
-	public static String westCellStatus1 = "";
-	public static String eastCellStatus1 = "";
+	public static String lastActionsResult = "";
+	public static String currentCellStatus = "";
+	public static String northCellStatus = "";
+	public static String southCellStatus = "";
+	public static String westCellStatus = "";
+	public static String eastCellStatus = "";
 
 	public static void main(String[] args) {
 		// TODO Initialisierung (ersten Text einlesen, Karten initialisieren für lvl 2?)
@@ -62,20 +62,12 @@ public class Init {
 
 			// Rundeninformationen auslesen
 
-			String lastActionsResult = input.nextLine();
-			String currentCellStatus = input.nextLine();
-			String northCellStatus = input.nextLine();
-			String eastCellStatus = input.nextLine();
-			String southCellStatus = input.nextLine();
-			String westCellStatus = input.nextLine();
-			
-			lastActionsResult1 = lastActionsResult;
-			currentCellStatus1 = currentCellStatus;
-			northCellStatus1 = northCellStatus;
-			eastCellStatus1 = eastCellStatus;
-			southCellStatus1 = southCellStatus;
-			westCellStatus1 = westCellStatus;
-			
+			lastActionsResult = input.nextLine();
+			currentCellStatus = input.nextLine();
+			northCellStatus = input.nextLine();
+			eastCellStatus = input.nextLine();
+			southCellStatus = input.nextLine();
+			westCellStatus = input.nextLine();
 
 			// Karte befüllen
 
@@ -101,6 +93,10 @@ public class Init {
 
 	public static Bot erstelleBotLevel1(Karte karte, int playerId, int startX, int startY) {
 		return new BotLevel1(karte, playerId, startX, startY);
+	}
+	
+	public static Bot erstelleBotLevel2(Karte karte, int playerId, int startX, int startY) {
+		return new BotLevel2(karte, playerId, startX, startY);
 	}
 
 }
