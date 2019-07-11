@@ -56,7 +56,6 @@ public class Init {
 
 		// TODO Auswahl welcher Bot benutzt wird
 		//TODO: hier noch eine Verzweigung für Level -> passender Bot bauen
-
 		Bot unserBot = new ZufallsBot(karte, playerId, startX, startY) ;
 
 		while (input.hasNext()) {
@@ -76,22 +75,19 @@ public class Init {
 			/*
 			 * Darstellung eines kleinen Kompass mit den jeweils zugehörigen Zellstati.
 			 */
-			System.err.println("Ergebnis Vorrunde Aktion: " + lastActionsResult);
-			System.err.println("Ergebnis Vorrunde Norden: " + "               " + northCellStatus);
-			System.err.println("Ergebnis Vorrunde Westen / Osten: " + "   " + westCellStatus + " / " + eastCellStatus);
-			System.err.println("Ergebnis Vorrunde Sueden: " + "                " + southCellStatus);
+//			System.err.println("Ergebnis Vorrunde Aktion: " + lastActionsResult);
+//			System.err.println("Ergebnis Vorrunde Norden: " + "               " + northCellStatus);
+//			System.err.println("Ergebnis Vorrunde Westen / Osten: " + "   " + westCellStatus + " / " + eastCellStatus);
+//			System.err.println("Ergebnis Vorrunde Sueden: " + "                " + southCellStatus);
 
-			/*
-			 * Aufruf der machAktion (in BotLevel1 überschriebene Methode).
-			 */
 
 // aus Testgründen deaktiviert für den ZufallsBOT			
-//			unserBot.machAktion(); // man könnte hier auch mehrer Bots benutzen, z.B. einen zum Erkunden, einen zum
+ // man könnte hier auch mehrer Bots benutzen, z.B. einen zum Erkunden, einen zum
 			// Einsammeln und einen um zum Ziel zu fahren
 			
 
 			unserBot.machAktion();
-			unserBot.getAktuelleKarte().ausgabe();
+
 		}
 
 		// Alles fertig -> aufräumen

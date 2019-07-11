@@ -24,8 +24,6 @@ public class ZufallsBot extends Bot {
 	 * zufallsRichtung() aus und gebe es aus.
 	 */
 	public void machAktion() {
-//		System.out.println(zufallsRichtung());
-		System.err.println("Bot Standort: " + this.x + " " + this.y);
 
 		aktuelleKarte.aktualisiereFeld(x, y - 1, Init.northCellStatus);
 		aktuelleKarte.aktualisiereFeld(x, y + 1, Init.southCellStatus);
@@ -130,7 +128,7 @@ public class ZufallsBot extends Bot {
 			zufaelligeRichtung = zufallsRichtung();
 		} while (wegGleichWand(zufaelligeRichtung)); // prüfung ob wand
 
-		System.err.flush();
+		
 		this.fahren(zufaelligeRichtung);
 
 	}

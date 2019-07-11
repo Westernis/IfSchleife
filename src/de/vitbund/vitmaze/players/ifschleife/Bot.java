@@ -94,17 +94,33 @@ public class Bot {
 	//bequemlichkeit übersetzung der strings in unsere Methoden
 	public void fahren(String richtung) {
 
+
 		if ("go west".equals(richtung)) {
 			this.nachWesten();
+			System.err.println("AB HIER VORHERIGE KARTE");
+			System.err.println("Bot Standort: " + this.x + " " + this.y);
+			System.err.println("nach Western");
 		}
 		if ("go north".equals(richtung)) {
 			this.nachNorden();
+			System.err.println("AB HIER VORHERIGE KARTE");
+			System.err.println("Bot Standort: " + this.x + " " + this.y);
+			System.err.println("nach Norden");
 		}
 		if ("go east".equals(richtung)) {
 			this.nachOsten();
-		} else {
+			System.err.println("AB HIER VORHERIGE KARTE");
+			System.err.println("Bot Standort: " + this.x + " " + this.y);
+			System.err.println("nach osten");
+		} 
+		if("go south".equals(richtung)) {
 			this.nachSueden();
+			System.err.println("AB HIER VORHERIGE KARTE");
+			System.err.println("Bot Standort: " + this.x + " " + this.y);
+			System.err.println("nach süden");
 		}
+		this.aktuelleKarte.ausgabe();
+		System.err.flush();
 	}
 
 	public int getId() {
