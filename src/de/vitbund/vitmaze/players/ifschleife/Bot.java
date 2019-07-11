@@ -13,6 +13,14 @@ public class Bot {
 	// die Karte, die er gerade erkundet
 	protected Karte aktuelleKarte;
 
+	public Karte getAktuelleKarte() {
+		return aktuelleKarte;
+	}
+
+	public void setAktuelleKarte(Karte aktuelleKarte) {
+		this.aktuelleKarte = aktuelleKarte;
+	}
+
 	protected final int id;
 
 	// Die aktuellen Koordinaten des Bots
@@ -81,6 +89,22 @@ public class Bot {
 		this.y--;
 
 		System.out.println("go north");
+	}
+	
+	//bequemlichkeit übersetzung der strings in unsere Methoden
+	public void fahren(String richtung) {
+
+		if ("go west".equals(richtung)) {
+			this.nachWesten();
+		}
+		if ("go north".equals(richtung)) {
+			this.nachNorden();
+		}
+		if ("go east".equals(richtung)) {
+			this.nachOsten();
+		} else {
+			this.nachSueden();
+		}
 	}
 
 	public int getId() {

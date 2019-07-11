@@ -57,7 +57,7 @@ public class Init {
 		// TODO Auswahl welcher Bot benutzt wird
 		//TODO: hier noch eine Verzweigung für Level -> passender Bot bauen
 
-		Bot unserBot = erstelleBotLevel1(karte, playerId, startX, startY);
+		Bot unserBot = new ZufallsBot(karte, playerId, startX, startY) ;
 
 		while (input.hasNext()) {
 
@@ -89,8 +89,9 @@ public class Init {
 //			unserBot.machAktion(); // man könnte hier auch mehrer Bots benutzen, z.B. einen zum Erkunden, einen zum
 			// Einsammeln und einen um zum Ziel zu fahren
 			
-			ZufallsBot zufallsBot = new ZufallsBot(karte, playerId, startX, startY) ;
-			zufallsBot.nochSchlauereZufallsrichtung();
+
+			unserBot.machAktion();
+			unserBot.getAktuelleKarte().ausgabe();
 		}
 
 		// Alles fertig -> aufräumen

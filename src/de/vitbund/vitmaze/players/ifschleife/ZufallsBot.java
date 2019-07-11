@@ -25,13 +25,15 @@ public class ZufallsBot extends Bot {
 	 */
 	public void machAktion() {
 //		System.out.println(zufallsRichtung());
+		System.err.println("Bot Standort: " + this.x + " " + this.y);
 
-		aktuelleKarte.aktualisiereFeld(x, y--, Init.northCellStatus);
-		aktuelleKarte.aktualisiereFeld(x, y++, Init.southCellStatus);
-		aktuelleKarte.aktualisiereFeld(x++, y, Init.eastCellStatus);
-		aktuelleKarte.aktualisiereFeld(x--, y, Init.westCellStatus);
+		aktuelleKarte.aktualisiereFeld(x, y - 1, Init.northCellStatus);
+		aktuelleKarte.aktualisiereFeld(x, y + 1, Init.southCellStatus);
+		aktuelleKarte.aktualisiereFeld(x + 1, y, Init.eastCellStatus);
+		aktuelleKarte.aktualisiereFeld(x - 1, y, Init.westCellStatus);
 		aktuelleKarte.aktualisiereFeld(x, y, Init.currentCellStatus);
-
+		
+		nochSchlauereZufallsrichtung();
 	}
 
 	/**
@@ -59,58 +61,58 @@ public class ZufallsBot extends Bot {
 	/*
 	 * TODO: fertig implementieren
 	 */
-	public String schlauereZufallsrichtung() {
-
-		int moeglicheRichtungen = 0;
-		double zufallsZahl = Math.random();
-		List<String> richtungsliste = new ArrayList<String>();
-
-		if (!"WALL".equals(Init.northCellStatus)) {
-			moeglicheRichtungen++;
-			richtungsliste.add("Norden");
-		}
-		if (!"WALL".equals(Init.southCellStatus)) {
-			moeglicheRichtungen++;
-			richtungsliste.add("Sueden");
-		}
-		if (!"WALL".equals(Init.westCellStatus)) {
-			moeglicheRichtungen++;
-			richtungsliste.add("Westen");
-		}
-		if (!"WALL".equals(Init.eastCellStatus)) {
-			moeglicheRichtungen++;
-			richtungsliste.add("Osten");
-		}
-
-		switch (richtungsliste.size()) {
-
-		case 1:
-
-			if (richtungsliste.contains("Norden")) {
-				nachNorden();
-			} else if (richtungsliste.contains("Sueden")) {
-				nachSueden();
-			} else if (richtungsliste.contains("Westen")) {
-				nachWesten();
-			} else if (richtungsliste.contains("Osten")) {
-				nachOsten();
-			}
-
-			break;
-
-		case 2:
-
-			break;
-		case 3:
-
-			break;
-		case 4:
-
-			break;
-		}
-
-		return "hallooooo";
-	}
+//	public String schlauereZufallsrichtung() {
+//
+//		int moeglicheRichtungen = 0;
+//		double zufallsZahl = Math.random();
+//		List<String> richtungsliste = new ArrayList<String>();
+//
+//		if (!"WALL".equals(Init.northCellStatus)) {
+//			moeglicheRichtungen++;
+//			richtungsliste.add("Norden");
+//		}
+//		if (!"WALL".equals(Init.southCellStatus)) {
+//			moeglicheRichtungen++;
+//			richtungsliste.add("Sueden");
+//		}
+//		if (!"WALL".equals(Init.westCellStatus)) {
+//			moeglicheRichtungen++;
+//			richtungsliste.add("Westen");
+//		}
+//		if (!"WALL".equals(Init.eastCellStatus)) {
+//			moeglicheRichtungen++;
+//			richtungsliste.add("Osten");
+//		}
+//
+//		switch (richtungsliste.size()) {
+//
+//		case 1:
+//
+//			if (richtungsliste.contains("Norden")) {
+//				nachNorden();
+//			} else if (richtungsliste.contains("Sueden")) {
+//				nachSueden();
+//			} else if (richtungsliste.contains("Westen")) {
+//				nachWesten();
+//			} else if (richtungsliste.contains("Osten")) {
+//				nachOsten();
+//			}
+//
+//			break;
+//
+//		case 2:
+//
+//			break;
+//		case 3:
+//
+//			break;
+//		case 4:
+//
+//			break;
+//		}
+//
+//		return "hallooooo";
+//	}
 
 	/**
 	 * eine noch bessere Version des ZufallsWegFindungs-Algorithmus, nun mit Prüfung
@@ -126,9 +128,11 @@ public class ZufallsBot extends Bot {
 		String zufaelligeRichtung = "";
 		do {
 			zufaelligeRichtung = zufallsRichtung();
-		} while (wegGleichWand(zufaelligeRichtung)); //hier müsste man die gewürfelte Richtung gegen Wand prüfen but how?
-		System.out.println(zufaelligeRichtung);	
-		
+		} while (wegGleichWand(zufaelligeRichtung)); // prüfung ob wand
+
+		System.err.flush();
+		this.fahren(zufaelligeRichtung);
+
 	}
 
 	/**
@@ -165,8 +169,12 @@ public class ZufallsBot extends Bot {
 			} else
 				return false;
 //			break;
+		default:
+			return true;
 		}
-		return false; //TODO: warum muss hier ein Return stehen? Für den Fall dass SCase nicht durchlaufen wird???
+		// return false; // TODO: warum muss hier ein Return stehen? Für den Fall dass
+		// SCase nicht
+		// durchlaufen wird??? -> default hat gefehlt
 
 //		return true;
 	}
