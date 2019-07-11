@@ -1,5 +1,9 @@
 package de.vitbund.vitmaze.players.ifschleife.karte;
-
+/**
+ * 
+ * @author IFSchleife
+ *
+ */
 public class Ziel extends Flur {
 
 	private int playerID;

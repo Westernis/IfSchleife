@@ -1,5 +1,8 @@
 package de.vitbund.vitmaze.players.ifschleife;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 
 /**
@@ -21,7 +24,13 @@ public class ZufallsBot extends Bot {
 	 * zufallsRichtung() aus und gebe es aus.
 	 */
 	public void machAktion() {
-		System.out.println(zufallsRichtung());
+//		System.out.println(zufallsRichtung());
+
+		aktuelleKarte.aktualisiereFeld(x, y--, Init.northCellStatus);
+		aktuelleKarte.aktualisiereFeld(x, y++, Init.southCellStatus);
+		aktuelleKarte.aktualisiereFeld(x++, y, Init.eastCellStatus);
+		aktuelleKarte.aktualisiereFeld(x--, y, Init.westCellStatus);
+		aktuelleKarte.aktualisiereFeld(x, y, Init.currentCellStatus);
 
 	}
 
@@ -47,4 +56,118 @@ public class ZufallsBot extends Bot {
 		}
 	}
 
+	/*
+	 * TODO: fertig implementieren
+	 */
+	public String schlauereZufallsrichtung() {
+
+		int moeglicheRichtungen = 0;
+		double zufallsZahl = Math.random();
+		List<String> richtungsliste = new ArrayList<String>();
+
+		if (!"WALL".equals(Init.northCellStatus)) {
+			moeglicheRichtungen++;
+			richtungsliste.add("Norden");
+		}
+		if (!"WALL".equals(Init.southCellStatus)) {
+			moeglicheRichtungen++;
+			richtungsliste.add("Sueden");
+		}
+		if (!"WALL".equals(Init.westCellStatus)) {
+			moeglicheRichtungen++;
+			richtungsliste.add("Westen");
+		}
+		if (!"WALL".equals(Init.eastCellStatus)) {
+			moeglicheRichtungen++;
+			richtungsliste.add("Osten");
+		}
+
+		switch (richtungsliste.size()) {
+
+		case 1:
+
+			if (richtungsliste.contains("Norden")) {
+				nachNorden();
+			} else if (richtungsliste.contains("Sueden")) {
+				nachSueden();
+			} else if (richtungsliste.contains("Westen")) {
+				nachWesten();
+			} else if (richtungsliste.contains("Osten")) {
+				nachOsten();
+			}
+
+			break;
+
+		case 2:
+
+			break;
+		case 3:
+
+			break;
+		case 4:
+
+			break;
+		}
+
+		return "hallooooo";
+	}
+
+	/**
+	 * eine noch bessere Version des ZufallsWegFindungs-Algorithmus, nun mit Prüfung
+	 * ob Wände im Weg sind...
+	 */
+	public void nochSchlauereZufallsrichtung() {
+		/*
+		 * hier dachte ich an eine do-while, die erstmal Zufallsweg generiert und dann
+		 * prüft obs eine Wand war und dann neuen Zufallsweg sucht.
+		 * 
+		 * Schöner wärs mit Objekten als Rückgabe mit Methoden à linkeRichtung.gehe();
+		 */
+		String zufaelligeRichtung = "";
+		do {
+			zufaelligeRichtung = zufallsRichtung();
+		} while (wegGleichWand(zufaelligeRichtung)); //hier müsste man die gewürfelte Richtung gegen Wand prüfen but how?
+		System.out.println(zufaelligeRichtung);	
+		
+	}
+
+	/**
+	 * Die Methode überprüft ob ein Weg eine Wand ist.
+	 * 
+	 * @return
+	 */
+	public boolean wegGleichWand(String zufaelligeRichtung) {
+		switch (zufaelligeRichtung) {
+		case "go west":
+			if ("WALL".equals(Init.westCellStatus)) {
+				return true;
+			} else
+				return false;
+//			break; benötigt man nicht, weil alle Fälle mit Return beendet werden?
+
+		case "go east":
+			if ("WALL".equals(Init.eastCellStatus)) {
+				return true;
+			} else
+				return false;
+//			break;
+
+		case "go north":
+			if ("WALL".equals(Init.northCellStatus)) {
+				return true;
+			} else
+				return false;
+//			break;
+
+		case "go south":
+			if ("WALL".equals(Init.southCellStatus)) {
+				return true;
+			} else
+				return false;
+//			break;
+		}
+		return false; //TODO: warum muss hier ein Return stehen? Für den Fall dass SCase nicht durchlaufen wird???
+
+//		return true;
+	}
 }

@@ -3,7 +3,7 @@ package de.vitbund.vitmaze.players.ifschleife.karte;
 /**
  * TODO
  * 
- * @author helmut.rietz
+ * @author IFSchleife
  *
  */
 public class Karte {
@@ -125,6 +125,27 @@ public class Karte {
 		// TODO Arraygrenzen abfangen
 		return felder[x][y];
 	}
+	
+	public void ausgabe() {
+		int x = felder.length;
+		int y = felder[0].length;
+		for (int i = 0; i < x; i++) {
+			for (int j = 0; j < y; j++) {
+				if (felder[i][j] == null) {
+					System.err.println("0");
+				}
+				else if (felder[i][j].istBegehbar() == true) {
+					System.err.println("|");
+				}
+				else {
+					System.err.println("W");
+					
+				}
+				
+			}
+		}
+	}
+	
 
 }
 

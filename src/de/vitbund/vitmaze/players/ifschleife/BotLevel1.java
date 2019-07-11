@@ -17,49 +17,38 @@ public class BotLevel1 extends Bot {
 		super(karte, playerId, x, y);
 	}
 
-	/**
-	 * Überschriebene Methode der Elternklasse.
-	 * 
-	 * @param lastActionsResult
-	 * @param northCellStatus
-	 * @param southCellStatus
-	 * @param westCellStatus
-	 * @param eastCellStatus
-	 * @param currentCellStatus
-	 * 
-	 */
 	public void machAktion() {
 
-		/**
+		/*
 		 * solange das lastActionResult "OK" beeinhaltet gehe in die Schleife....ähhh
 		 * Verzweigung.
 		 */
-		if ("OK".equals(Init.lastActionsResult1)) {
+		if ("OK".equals(Init.lastActionsResult)) {
 
-			/**
+			/*
 			 * Wenn der Status des nördlichen Felds nicht "WALL" beeinhaltet gebe "go north"
 			 * aus. TODO: FIXME Ist das schon eine IF-Else-Ladder oder ist es noch unsauber
 			 * programmiert iS von "prüfe erst das dann das dann das.... wobei nur der
 			 * letzte Status genommen bzw. überschrieben wird?
 			 */
 
-			if (!"WALL".equals(Init.northCellStatus1)) {
+			if (!"WALL".equals(Init.northCellStatus)) {
 				richtungsausgabe = "Norden";
-			} else if (!"WALL".equals(Init.southCellStatus1)) {
+			} else if (!"WALL".equals(Init.southCellStatus)) {
 				richtungsausgabe = "Sueden";
-			} else if (!"WALL".equals(Init.westCellStatus1)) {
+			} else if (!"WALL".equals(Init.westCellStatus)) {
 				richtungsausgabe = "Westen";
-			} else if (!"WALL".equals(Init.eastCellStatus1)) {
+			} else if (!"WALL".equals(Init.eastCellStatus)) {
 				richtungsausgabe = "Osten";
 			}
 		}
 
-		/**
+		/*
 		 * Wenn der aktuelle Zellstatus "FINISH" + PlayerID + 0 (also z.B. "FINISH 1 0")
 		 * lautet gebe "finish" aus. Wenn nicht gebe den Inhalt der String-Variablen
 		 * "richtungsausgabe" aus, die Prüfung siehe oben.
 		 */
-		if (("FINISH " + super.id + " 0").equals(Init.currentCellStatus1)) {
+		if (("FINISH " + super.id + " 0").equals(Init.currentCellStatus)) {
 			System.out.println("finish");
 		} else {
 			switch (richtungsausgabe) {
