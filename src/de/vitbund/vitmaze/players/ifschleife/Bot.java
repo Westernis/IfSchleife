@@ -68,6 +68,26 @@ public class Bot {
 
 		// Methode als boolean lassen??
 	}
+	
+	/**
+	 * mögliche Inputs Norden Sueden Osten Westen
+	 * @return gegenteil, bei falscher eingabe -> null
+	 */
+	public String richtungUmkehren(String richtung){
+		switch (richtung) {
+		case "Norden":
+			return "Sueden";
+		case "Sueden":
+			return "Norden";
+		case "Osten":
+			return "Westen";
+
+		case "Westen":
+			return "Osten";
+		default:
+			return null;
+		}
+	}
 
 	// Bewegungsfunktionen
 	protected void nachWesten() {

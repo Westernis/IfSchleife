@@ -56,7 +56,7 @@ public class Init {
 
 		// TODO Auswahl welcher Bot benutzt wird
 		//TODO: hier noch eine Verzweigung für Level -> passender Bot bauen
-		Bot unserBot = new ZufallsBot(karte, playerId, startX, startY) ;
+		Bot unserBot = new ZufallsBot2(karte, playerId, startX, startY) ;
 
 		while (input.hasNext()) {
 
