@@ -23,13 +23,16 @@ public class ZufallsBot extends Bot {
 	 * TODO: testen füge in machAktion() die aktuelle Implementierung von
 	 * zufallsRichtung() aus und gebe es aus.
 	 */
+
+	private String letzteRichtung = "";
+
 	public void machAktion() {
 //		System.out.println(zufallsRichtung());
 
-		aktuelleKarte.aktualisiereFeld(x, y--, Init.northCellStatus);
-		aktuelleKarte.aktualisiereFeld(x, y++, Init.southCellStatus);
-		aktuelleKarte.aktualisiereFeld(x++, y, Init.eastCellStatus);
-		aktuelleKarte.aktualisiereFeld(x--, y, Init.westCellStatus);
+		aktuelleKarte.aktualisiereFeld(x, y - 1, Init.northCellStatus);
+		aktuelleKarte.aktualisiereFeld(x, y + 1, Init.southCellStatus);
+		aktuelleKarte.aktualisiereFeld(x + 1, y, Init.eastCellStatus);
+		aktuelleKarte.aktualisiereFeld(x - 1, y, Init.westCellStatus);
 		aktuelleKarte.aktualisiereFeld(x, y, Init.currentCellStatus);
 
 	}
@@ -62,6 +65,7 @@ public class ZufallsBot extends Bot {
 	public String schlauereZufallsrichtung() {
 
 		int moeglicheRichtungen = 0;
+		letzteRichtung = "";
 		double zufallsZahl = Math.random();
 		List<String> richtungsliste = new ArrayList<String>();
 
@@ -82,6 +86,16 @@ public class ZufallsBot extends Bot {
 			richtungsliste.add("Osten");
 		}
 
+		if ("OK NORTH".equals(Init.lastActionsResult)) {
+			letzteRichtung = "Norden";
+		} else if ("OK SOUTH".equals(Init.lastActionsResult)) {
+			letzteRichtung = "Sueden";
+		} else if ("OK EAST".equals(Init.lastActionsResult)) {
+			letzteRichtung = "Osten";
+		} else if ("OK WEST".equals(Init.lastActionsResult)) {
+			letzteRichtung = "Westen";
+		}
+
 		switch (richtungsliste.size()) {
 
 		case 1:
@@ -100,13 +114,23 @@ public class ZufallsBot extends Bot {
 
 		case 2:
 
-			break;
+			if (richtungsliste.contains(letzteRichtung)) {
+				weiterGehen();
+			} else
+
+				break;
 		case 3:
+			if (richtungsliste.contains(letzteRichtung)) {
+				weiterGehen();
+			} else
 
-			break;
+				break;
 		case 4:
+			if (richtungsliste.contains(letzteRichtung)) {
+				weiterGehen();
+			} else
 
-			break;
+				break;
 		}
 
 		return "hallooooo";
@@ -126,9 +150,10 @@ public class ZufallsBot extends Bot {
 		String zufaelligeRichtung = "";
 		do {
 			zufaelligeRichtung = zufallsRichtung();
-		} while (wegGleichWand(zufaelligeRichtung)); //hier müsste man die gewürfelte Richtung gegen Wand prüfen but how?
-		System.out.println(zufaelligeRichtung);	
-		
+		} while (wegGleichWand(zufaelligeRichtung)); // hier müsste man die gewürfelte Richtung gegen Wand prüfen but
+														// how?
+		System.out.println(zufaelligeRichtung);
+
 	}
 
 	/**
@@ -166,8 +191,25 @@ public class ZufallsBot extends Bot {
 				return false;
 //			break;
 		}
-		return false; //TODO: warum muss hier ein Return stehen? Für den Fall dass SCase nicht durchlaufen wird???
+		return false; // TODO: warum muss hier ein Return stehen? Für den Fall dass SCase nicht
+						// durchlaufen wird???
 
 //		return true;
+	}
+
+	public void weiterGehen() {
+		if (letzteRichtung == "Norden") {
+			nachNorden();
+		} else if (letzteRichtung == "Sueden") {
+			nachSueden();
+		} else if (letzteRichtung == "Westen") {
+			nachWesten();
+		} else if (letzteRichtung == "Osten") {
+			nachOsten();
+		}
+	}
+
+	public void letztesFeld() {
+
 	}
 }
