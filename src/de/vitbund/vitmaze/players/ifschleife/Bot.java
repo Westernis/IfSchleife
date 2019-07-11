@@ -13,6 +13,14 @@ public class Bot {
 	// die Karte, die er gerade erkundet
 	protected Karte aktuelleKarte;
 
+	public Karte getAktuelleKarte() {
+		return aktuelleKarte;
+	}
+
+	public void setAktuelleKarte(Karte aktuelleKarte) {
+		this.aktuelleKarte = aktuelleKarte;
+	}
+
 	protected final int id;
 
 	// Die aktuellen Koordinaten des Bots
@@ -81,6 +89,38 @@ public class Bot {
 		this.y--;
 
 		System.out.println("go north");
+	}
+	
+	//bequemlichkeit übersetzung der strings in unsere Methoden
+	public void fahren(String richtung) {
+
+
+		if ("go west".equals(richtung)) {
+			this.nachWesten();
+			System.err.println("AB HIER VORHERIGE KARTE");
+			System.err.println("Bot Standort: " + this.x + " " + this.y);
+			System.err.println("nach Western");
+		}
+		if ("go north".equals(richtung)) {
+			this.nachNorden();
+			System.err.println("AB HIER VORHERIGE KARTE");
+			System.err.println("Bot Standort: " + this.x + " " + this.y);
+			System.err.println("nach Norden");
+		}
+		if ("go east".equals(richtung)) {
+			this.nachOsten();
+			System.err.println("AB HIER VORHERIGE KARTE");
+			System.err.println("Bot Standort: " + this.x + " " + this.y);
+			System.err.println("nach osten");
+		} 
+		if("go south".equals(richtung)) {
+			this.nachSueden();
+			System.err.println("AB HIER VORHERIGE KARTE");
+			System.err.println("Bot Standort: " + this.x + " " + this.y);
+			System.err.println("nach süden");
+		}
+		this.aktuelleKarte.ausgabe();
+		System.err.flush();
 	}
 
 	public int getId() {

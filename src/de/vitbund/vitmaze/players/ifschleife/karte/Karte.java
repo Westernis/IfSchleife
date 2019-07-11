@@ -131,18 +131,18 @@ public class Karte {
 		int y = felder[0].length;
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
-				if (felder[i][j] == null) {
-					System.err.println("0");
+				if (felder[j][i] == null) {
+					System.err.print("0");
 				}
-				else if (felder[i][j].istBegehbar() == true) {
-					System.err.println("|");
+				else if (felder[j][i].istBegehbar() == true) {
+					System.err.print("|");
 				}
 				else {
-					System.err.println("W");
+					System.err.print("W");
 					
 				}
-				
 			}
+			System.err.println("");
 		}
 	}
 	

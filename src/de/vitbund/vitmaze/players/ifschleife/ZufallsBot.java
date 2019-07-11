@@ -27,7 +27,6 @@ public class ZufallsBot extends Bot {
 	private String letzteRichtung = "";
 
 	public void machAktion() {
-//		System.out.println(zufallsRichtung());
 
 		aktuelleKarte.aktualisiereFeld(x, y - 1, Init.northCellStatus);
 		aktuelleKarte.aktualisiereFeld(x, y + 1, Init.southCellStatus);
@@ -35,6 +34,7 @@ public class ZufallsBot extends Bot {
 		aktuelleKarte.aktualisiereFeld(x - 1, y, Init.westCellStatus);
 		aktuelleKarte.aktualisiereFeld(x, y, Init.currentCellStatus);
 
+		nochSchlauereZufallsrichtung();
 	}
 
 	/**
@@ -62,6 +62,7 @@ public class ZufallsBot extends Bot {
 	/*
 	 * TODO: fertig implementieren
 	 */
+
 	public String schlauereZufallsrichtung() {
 
 		int moeglicheRichtungen = 0;
@@ -150,9 +151,10 @@ public class ZufallsBot extends Bot {
 		String zufaelligeRichtung = "";
 		do {
 			zufaelligeRichtung = zufallsRichtung();
-		} while (wegGleichWand(zufaelligeRichtung)); // hier müsste man die gewürfelte Richtung gegen Wand prüfen but
-														// how?
-		System.out.println(zufaelligeRichtung);
+
+		} while (wegGleichWand(zufaelligeRichtung)); // prüfung ob wand
+
+		this.fahren(zufaelligeRichtung);
 
 	}
 
@@ -190,9 +192,13 @@ public class ZufallsBot extends Bot {
 			} else
 				return false;
 //			break;
+		default:
+			return true;
 		}
-		return false; // TODO: warum muss hier ein Return stehen? Für den Fall dass SCase nicht
-						// durchlaufen wird???
+
+		// return false; // TODO: warum muss hier ein Return stehen? Für den Fall dass
+		// SCase nicht
+		// durchlaufen wird??? -> default hat gefehlt
 
 //		return true;
 	}
