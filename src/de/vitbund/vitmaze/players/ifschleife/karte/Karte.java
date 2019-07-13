@@ -1,5 +1,12 @@
 package de.vitbund.vitmaze.players.ifschleife.karte;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+
 /**
  * TODO
  * 
@@ -142,4 +149,80 @@ public class Karte {
 		}
 	}
 
+	public LinkedList<Feld> findenWeg(int startX, int startY, int zielX, int zielY) {
+//		List<Feld> begehbareFelder = new ArrayList<Feld>();
+//		// alle Felder zur Liste hinzufügen
+//		for (Feld[] zeile : felder) {
+//			for (Feld feld : zeile) {
+//				if (feld.istBegehbar()) {
+//					begehbareFelder.add(feld); // eventuell für die karte speichern und nicht jedes mal neu erstellen
+//												// TODO
+//
+//				}
+//			}
+//
+//		}
+
+//		Start und Zielfeld prüfen ob korrekt
+
+		if (felder[startX][startY] == null || !felder[startX][startY].istBegehbar() || felder[zielX][zielY] == null
+				|| !felder[zielX][zielY].istBegehbar()) {
+			return null;
+		}
+
+//		Wegetabelle anlegen
+
+		Map<Feld, VorhergehenderSchritt> wege = new HashMap(felder.length * felder[0].length * 2);
+		List<Feld> arbeitsliste = new ArrayList<Feld>();
+		List<Feld> fertigFelder = new ArrayList<Feld>();
+
+//		Startknoten abarbeiten
+
+		wege.put(felder[startX][startY], new VorhergehenderSchritt(0, null));
+		arbeitsliste.add(felder[startX][startY]);
+
+// 		Algorithmus abarbeiten
+
+		while (!arbeitsliste.isEmpty()) {
+			Feld arbeit = arbeitsliste.get(0);
+
+//			Arbeitsliste aktualisieren
+
+			arbeitslisteAktualisieren(arbeit.getNord(), fertigFelder, arbeitsliste);
+			arbeitslisteAktualisieren(arbeit.getSued(), fertigFelder, arbeitsliste);
+			arbeitslisteAktualisieren(arbeit.getWest(), fertigFelder, arbeitsliste);
+			arbeitslisteAktualisieren(arbeit.getOst(), fertigFelder, arbeitsliste);
+
+			// aktuellen Knoten umsetzen
+			arbeitsliste.remove(0);
+			fertigFelder.add(arbeit);
+
+			wegelisteAktualisieren(arbeit, arbeit.getNord(), wege);
+			wegelisteAktualisieren(arbeit, arbeit.getSued(), wege);
+			wegelisteAktualisieren(arbeit, arbeit.getWest(), wege);
+			wegelisteAktualisieren(arbeit, arbeit.getOst(), wege);
+		}
+
+		return null;
+	}
+
+	public void arbeitslisteAktualisieren(Feld arbeitnachbar, List<Feld> fertigFelder, List<Feld> arbeitsliste) {
+		if (arbeitnachbar != null) {
+			if (!fertigFelder.contains(arbeitnachbar) && !arbeitsliste.contains(arbeitnachbar)) {
+				arbeitsliste.add(arbeitnachbar);
+			}
+		}
+	}
+
+	public void wegelisteAktualisieren(Feld arbeit, Feld nachbar, Map<Feld, VorhergehenderSchritt> wege) {
+
+		int weglaenge = wege.get(arbeit).getWeglaenge();
+
+		if (!wege.containsKey(nachbar)) {
+			wege.put(nachbar, new VorhergehenderSchritt(weglaenge + 1, arbeit));
+		} else {
+			// TODO ist es nötig bereits vorhandene Felder zu aktualisieren? Oder ist das
+			// zuerst gefundene Feld immer der kürzste Weg?
+		}
+	}
 }
