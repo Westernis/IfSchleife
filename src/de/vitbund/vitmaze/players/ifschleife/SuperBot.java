@@ -12,9 +12,9 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
  *         Die Klasse stellt einen Bot dar (soll darstellen), der ausschließlich
  *         nach dem Zufall seine Wegfindung ableitet.
  */
-public class ZufallsBot2 extends Bot {
+public class SuperBot extends Bot {
 
-	public ZufallsBot2(Karte karte, int playerId, int x, int y) {
+	public SuperBot(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
 		// TODO Automatisch generierter Konstruktorstub
 	}
@@ -120,41 +120,41 @@ public class ZufallsBot2 extends Bot {
 		case 2:
 		case 3:
 		case 4:
-
-//			if (richtungsliste.contains(letzteRichtung)) {
-//				weiterGehen();
-//			} else {
+			if (richtungsliste.contains(letzteRichtung)) {
+				weiterGehen();
+			} else {
 
 //				students.removeIf(n -> (n.charAt(0) == 'S')); 
 
-			// removeIf um letzte Richtung aus der Liste zu entfernen und danach in eine
-			// neue zu gehen
+				// removeIf um letzte Richtung aus der Liste zu entfernen und danach in eine
+				// neue zu gehen
 
 //				richtungsliste.removeIf(n -> (letzteRichtung.equals(n)));
 //				kann man nich benutzen geht nicht
 
-			int index = -1;
-			System.err.println(richtungUmkehren(letzteRichtung));
-			for (String string : richtungsliste) {
-				System.err.println("Liste: " + string);
-				if (string.equals(richtungUmkehren(letzteRichtung))) {
-					// zu riskant im foreach was zu entfernen, daher index speichern.
-					index = richtungsliste.indexOf(string);
+				int index = -1;
+				System.err.println(richtungUmkehren(letzteRichtung));
+				for (String string : richtungsliste) {
+					System.err.println("Liste: " + string);
+					if (string.equals(richtungUmkehren(letzteRichtung))) {
+						// zu riskant im foreach was zu entfernen, daher index speichern.
+						index = richtungsliste.indexOf(string);
 
+					}
 				}
+				//Element entfernen
+				if (index > -1) {
+					richtungsliste.remove(index);
+				}
+				
+
+				System.err.println("das ist der zweite spass: " + richtungsliste.size());
+
+				int x = (int) (Math.random() * richtungsliste.size());
+				letzteRichtung = richtungsliste.get(x);
+				weiterGehen();
+
 			}
-			// Element entfernen
-			if (index > -1) {
-				richtungsliste.remove(index);
-			}
-
-			System.err.println("das ist der zweite spass: " + richtungsliste.size());
-
-			int x = (int) (Math.random() * richtungsliste.size());
-			letzteRichtung = richtungsliste.get(x);
-			weiterGehen();
-
-//			}
 			/*
 			 * if (richtungsliste.contains(letzteRichtung)) { weiterGehen(); } else if () {
 			 * 
