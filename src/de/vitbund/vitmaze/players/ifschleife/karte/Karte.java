@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.SortedSet;
 
 /**
@@ -150,19 +151,6 @@ public class Karte {
 	}
 
 	public LinkedList<Feld> findenWeg(int startX, int startY, int zielX, int zielY) {
-//		List<Feld> begehbareFelder = new ArrayList<Feld>();
-//		// alle Felder zur Liste hinzufügen
-//		for (Feld[] zeile : felder) {
-//			for (Feld feld : zeile) {
-//				if (feld.istBegehbar()) {
-//					begehbareFelder.add(feld); // eventuell für die karte speichern und nicht jedes mal neu erstellen
-//												// TODO
-//
-//				}
-//			}
-//
-//		}
-
 //		Start und Zielfeld prüfen ob korrekt
 
 		if (felder[startX][startY] == null || !felder[startX][startY].istBegehbar() || felder[zielX][zielY] == null
@@ -203,6 +191,10 @@ public class Karte {
 			wegelisteAktualisieren(arbeit, arbeit.getOst(), wege);
 		}
 
+		// zum testen:
+		System.out.println("hier");
+		ausgabeWegliste(wege);
+		// test ende
 		return null;
 	}
 
@@ -215,14 +207,52 @@ public class Karte {
 	}
 
 	public void wegelisteAktualisieren(Feld arbeit, Feld nachbar, Map<Feld, VorhergehenderSchritt> wege) {
+		if (nachbar != null) {
+			int weglaenge = wege.get(arbeit).getWeglaenge();
 
-		int weglaenge = wege.get(arbeit).getWeglaenge();
-
-		if (!wege.containsKey(nachbar)) {
-			wege.put(nachbar, new VorhergehenderSchritt(weglaenge + 1, arbeit));
-		} else {
-			// TODO ist es nötig bereits vorhandene Felder zu aktualisieren? Oder ist das
-			// zuerst gefundene Feld immer der kürzste Weg?
+			if (!wege.containsKey(nachbar)) {
+				wege.put(nachbar, new VorhergehenderSchritt(weglaenge + 1, arbeit));
+			} else {
+				// TODO ist es nötig bereits vorhandene Felder zu aktualisieren? Oder ist das
+				// zuerst gefundene Feld immer der kürzste Weg?
+			}
 		}
+	}
+
+	public void ausgabeWegliste(Map<Feld, VorhergehenderSchritt> wege) {
+
+		for (Entry<Feld, VorhergehenderSchritt> feld : wege.entrySet()) {
+			if (feld.getValue().getVorgaenger() == null) {
+				System.out.println("Ziel " + feld.getKey().getX() + " " + feld.getKey().getY() + " Startknoten \t Weg "
+						+ feld.getValue().getWeglaenge());
+			} else {
+
+				System.out.println("Ziel " + feld.getKey().getX() + " " + feld.getKey().getY() + " Vorgaenger "
+						+ feld.getValue().getVorgaenger().getX() + " " + feld.getValue().getVorgaenger().getY()
+						+ "\t Weg " + feld.getValue().getWeglaenge());
+			}
+		}
+
+	}
+
+	public static void main(String[] args) {
+		Karte karte = new Karte(4, 4);
+		// x Richtung
+		for (int i = 0; i < 4; i++) {
+			karte.aktualisiereFeld(i, 0, "WALL");
+			karte.aktualisiereFeld(i, 3, "WALL");
+		}
+		// y Richtung
+		for (int i = 0; i < 4; i++) {
+			karte.aktualisiereFeld(0, i, "WALL");
+			karte.aktualisiereFeld(3, i, "WALL");
+		}
+
+		karte.aktualisiereFeld(1, 1, "FLOOR");
+		karte.aktualisiereFeld(2, 1, "FLOOR");
+		karte.aktualisiereFeld(1, 2, "FLOOR");
+		karte.aktualisiereFeld(2, 2, "FLOOR");
+		karte.findenWeg(2, 2, 1, 1);
+
 	}
 }

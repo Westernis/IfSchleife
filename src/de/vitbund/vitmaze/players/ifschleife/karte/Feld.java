@@ -74,4 +74,14 @@ public abstract class Feld {
 	public void setWest(Feld west) {
 		this.west = west;
 	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+	
+	
 }
