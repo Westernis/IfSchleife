@@ -3,6 +3,7 @@ package de.vitbund.vitmaze.players.ifschleife;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 
 /**
@@ -40,7 +41,41 @@ public class ZufallsBot2 extends Bot {
 		if (aktuelleKarte.getFeld(x, y) != null) {
 			aktuelleKarte.getFeld(x, y).pruefenErkundet();
 		}
+		
+//		//test wie oft die Wegfindung durchlaufen kann, 100 mal 30x40 ging OHNE syserr Ausgaben
+//		for(int z =0; z<10;z++) {
+//		getAktuelleKarte().findenWeg(x, y, x, y);
+//		getAktuelleKarte().findenWeg(x, y, x, y);
+//		getAktuelleKarte().findenWeg(x, y, x, y);
+//		getAktuelleKarte().findenWeg(x, y, x, y);
+//		getAktuelleKarte().findenWeg(x, y, x, y);
+//		getAktuelleKarte().findenWeg(x, y, x, y);
+//		getAktuelleKarte().findenWeg(x, y, x, y);
+//		getAktuelleKarte().findenWeg(x, y, x, y);
+//		getAktuelleKarte().findenWeg(x, y, x, y);
+//		getAktuelleKarte().findenWeg(x, y, x, y);
+//		getAktuelleKarte().findenWeg(x, y, x, y);
+//		}
+		
+//		//testen der Funktion pruefenErkundet der Karte
+//		Feld[][] karte = aktuelleKarte.getFelder();
+//		for (int y = 0; y < karte[0].length; y++) {
+//			for (int x = 0; x < karte.length; x++) {
+//				if(karte[x][y] == null) {
+//					System.err.print(" |");
+//					
+//				}else if(karte[x][y].pruefenErkundet()) {
+//					System.err.print("E|");
+//				}else {
+//					System.err.print("U|");
+//				}
+//			}
+//			System.err.println("");
+//		}
 
+		// System.err.print(/*"X: " + feld.getX() + " Y: "+ feld.getY() + " erkundet "
+		// +*/ feld.pruefenErkundet()+ " ");
+		
 		schlauereZufallsrichtung();
 	}
 

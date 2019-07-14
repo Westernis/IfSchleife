@@ -170,9 +170,12 @@ public class Karte {
 		arbeitsliste.add(felder[startX][startY]);
 
 // 		Algorithmus abarbeiten
-
-		while (!arbeitsliste.isEmpty()) {
-			Feld arbeit = arbeitsliste.get(0);
+		Feld arbeit = null;
+		if(!arbeitsliste.isEmpty()) {
+			 arbeit = arbeitsliste.get(0);
+		}
+		while (!arbeitsliste.isEmpty() && arbeit.pruefenErkundet()) {
+			arbeit = arbeitsliste.get(0);
 
 //			Arbeitsliste aktualisieren
 
@@ -192,8 +195,7 @@ public class Karte {
 		}
 
 		// zum testen:
-		System.out.println("hier");
-		ausgabeWegliste(wege);
+		//ausgabeWegliste(wege);
 		// test ende
 		return null;
 	}
@@ -223,11 +225,11 @@ public class Karte {
 
 		for (Entry<Feld, VorhergehenderSchritt> feld : wege.entrySet()) {
 			if (feld.getValue().getVorgaenger() == null) {
-				System.out.println("Ziel " + feld.getKey().getX() + " " + feld.getKey().getY() + " Startknoten \t Weg "
+				System.err.println("Ziel " + feld.getKey().getX() + " " + feld.getKey().getY() + " Startknoten \t Weg "
 						+ feld.getValue().getWeglaenge());
 			} else {
 
-				System.out.println("Ziel " + feld.getKey().getX() + " " + feld.getKey().getY() + " Vorgaenger "
+				System.err.println("Ziel " + feld.getKey().getX() + " " + feld.getKey().getY() + " Vorgaenger "
 						+ feld.getValue().getVorgaenger().getX() + " " + feld.getValue().getVorgaenger().getY()
 						+ "\t Weg " + feld.getValue().getWeglaenge());
 			}
