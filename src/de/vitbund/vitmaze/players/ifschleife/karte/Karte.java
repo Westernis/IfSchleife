@@ -173,7 +173,7 @@ public class Karte {
 		if(!arbeitsliste.isEmpty()) {
 			 arbeit = arbeitsliste.get(0);
 		}
-		while (!arbeitsliste.isEmpty() && arbeit.pruefenErkundet()) {
+		while (!arbeitsliste.isEmpty()) {
 			arbeit = arbeitsliste.get(0);
 
 //			Arbeitsliste aktualisieren
@@ -194,7 +194,7 @@ public class Karte {
 		}
 
 		// zum testen:
-		//ausgabeWegliste(wege);
+		ausgabeWegliste(wege);
 		// test ende
 		return wege;
 	}

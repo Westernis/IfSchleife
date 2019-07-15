@@ -41,24 +41,12 @@ public class ZufallsBot2 extends Bot {
 		if (aktuelleKarte.getFeld(x, y) != null) {
 			aktuelleKarte.getFeld(x, y).pruefenErkundet();
 		}
-		
-//		//test wie oft die Wegfindung durchlaufen kann, 100 mal 30x40 ging OHNE syserr Ausgaben
-//		for(int z =0; z<10;z++) {
-//		getAktuelleKarte().findenWeg(x, y, x, y);
-//		getAktuelleKarte().findenWeg(x, y, x, y);
-//		getAktuelleKarte().findenWeg(x, y, x, y);
-//		getAktuelleKarte().findenWeg(x, y, x, y);
-//		getAktuelleKarte().findenWeg(x, y, x, y);
-//		getAktuelleKarte().findenWeg(x, y, x, y);
-//		getAktuelleKarte().findenWeg(x, y, x, y);
-//		getAktuelleKarte().findenWeg(x, y, x, y);
-//		getAktuelleKarte().findenWeg(x, y, x, y);
-//		getAktuelleKarte().findenWeg(x, y, x, y);
-//		getAktuelleKarte().findenWeg(x, y, x, y);
-//		}
+
+		//getAktuelleKarte().findeWege(x, y);
+
 		
 //		//testen der Funktion pruefenErkundet der Karte
-		aktuelleKarte.toSysErrErkundeteFelder();
+		//aktuelleKarte.toSysErrErkundeteFelder();
 
 		// System.err.print(/*"X: " + feld.getX() + " Y: "+ feld.getY() + " erkundet "
 		// +*/ feld.pruefenErkundet()+ " ");
