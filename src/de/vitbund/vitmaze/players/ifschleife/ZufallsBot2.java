@@ -137,9 +137,9 @@ public class ZufallsBot2 extends Bot {
 //				kann man nich benutzen geht nicht -> TODO noch mal testen
 
 			int index = -1;
-			System.err.println(richtungUmkehren(letzteRichtung));
+			//System.err.println(richtungUmkehren(letzteRichtung));
 			for (String string : richtungsliste) {
-				System.err.println("Liste: " + string);
+				//System.err.println("Liste: " + string);
 				if (string.equals(richtungUmkehren(letzteRichtung))) {
 					// zu riskant im foreach was zu entfernen, daher index speichern.
 					index = richtungsliste.indexOf(string);
@@ -151,7 +151,7 @@ public class ZufallsBot2 extends Bot {
 				richtungsliste.remove(index);
 			}
 
-			System.err.println("das ist der zweite spass: " + richtungsliste.size());
+			//System.err.println("das ist der zweite spass: " + richtungsliste.size());
 
 			int x = (int) (Math.random() * richtungsliste.size());
 			letzteRichtung = richtungsliste.get(x);

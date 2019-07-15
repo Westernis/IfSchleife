@@ -2,11 +2,10 @@ package de.vitbund.vitmaze.players.ifschleife.karte;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.SortedSet;
 
 /**
  * TODO
@@ -150,7 +149,23 @@ public class Karte {
 		}
 	}
 
-	public Map<Feld, VorhergehenderSchritt> findeWege(int startX, int startY) {
+	/**
+	 * 
+	 * @param startX
+	 * @param startY
+	 * @return
+	 */
+	/*
+	 * LinkedHashMap für wege wurde gewählt, weil die Reihenfolge, in der die Felder
+	 * hinzugefügt wurden, erhalten bleibt und ein Iterator die Werte in dieser
+	 * Reihenfolge zurückgeben kann. Das ist in soweit hilfreich, da der
+	 * Dijkstra-Algorithmus die Felder nach Weglänge sortiert findet. Somit ist auch
+	 * unsere Liste nach Weglänge sortiert
+	 * 
+	 * https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html
+	 *
+	 */
+	public LinkedHashMap<Feld, VorhergehenderSchritt> findeWege(int startX, int startY) {
 //		Start und Zielfeld prüfen ob korrekt
 
 		if (felder[startX][startY] == null || !felder[startX][startY].istBegehbar()) {
@@ -159,7 +174,9 @@ public class Karte {
 
 //		Wegetabelle anlegen
 
-		Map<Feld, VorhergehenderSchritt> wege = new HashMap<Feld, VorhergehenderSchritt>(felder.length * felder[0].length * 2);
+		LinkedHashMap<Feld, VorhergehenderSchritt> wege = new LinkedHashMap<Feld, VorhergehenderSchritt>(
+				felder.length * felder[0].length * 2);
+		// Grund für den 2. parameter siehe hashmaps und Verhalten "rehash"
 		List<Feld> arbeitsliste = new ArrayList<Feld>();
 		List<Feld> fertigFelder = new ArrayList<Feld>();
 
@@ -236,6 +253,11 @@ public class Karte {
 
 	}
 
+	/**
+	 * Diese main dient dem Testen der Karte und Wegfindung.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Karte karte = new Karte(4, 4);
 		// x Richtung
