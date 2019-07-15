@@ -44,19 +44,37 @@ public class Init {
 
 		// Hier wird der Bot initialisiert, der Karte, der playerID und dem Level
 		// zugeordnet
-		/*
-		 * Erstellen einer Bot-Instanz (namentlich unserBot). Klasse ist BotLevel1 (erbt
-		 * von Bot). TODO: Hier könnte man eine einfache Überprüfung des Levels für die
-		 * Erstellung eines passenden Bots erstellen à Level2 > BotLevel2 unserBot = new
-		 * BotLevel2 Vorschläge: (BotLevel(level)) unserBot2 = new (BotLevel(level))???
-		 * 
-		 * String botTyp = "BotLevel" + level; botTyp unserBot2 =
-		 * botTyp(blabla,soso,aha);
-		 */
+		
 
-		// TODO Auswahl welcher Bot benutzt wird
-		//TODO: hier noch eine Verzweigung für Level -> passender Bot bauen
-		Bot unserBot = new ZufallsBot2(karte, playerId, startX, startY) ;
+		/*
+		 * hier entscheiden wir anhand der Level-ID welchen Bot wir als "unserBot" verwenden.
+		 */
+		
+		Bot unserBot;
+		
+		switch (level) {
+		case 1:
+			unserBot = new ZufallsBot2(karte, playerId, startX, startY);
+			break;
+		case 2:
+			unserBot = new ZufallsBot2(karte, playerId, startX, startY);
+			break;
+		case 3:
+			unserBot = new ZufallsBot2(karte, playerId, startX, startY);
+			break;
+		case 4:
+			unserBot = new ZufallsBot2(karte, playerId, startX, startY);
+			break;
+		case 5:
+			unserBot = new ZufallsBot2(karte, playerId, startX, startY);
+			break;
+
+		default:
+			unserBot = new ZufallsBot2(karte, playerId, startX, startY);
+			break;
+		}
+		
+		
 
 		while (input.hasNext()) {
 

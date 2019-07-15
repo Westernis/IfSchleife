@@ -1,6 +1,6 @@
 package de.vitbund.vitmaze.players.ifschleife.karte;
 
-public class VorhergehenderSchritt {
+public class VorhergehenderSchritt implements Comparable<VorhergehenderSchritt> {
 
 	private int weglaenge; // speichert die Weglänge zu Startknoten des Weges
 	private Feld vorgaenger;
@@ -10,7 +10,7 @@ public class VorhergehenderSchritt {
 	}
 
 	public VorhergehenderSchritt(int weglaenge) {
-		this.weglaenge = weglaenge; 
+		this.weglaenge = weglaenge;
 	}
 
 	public VorhergehenderSchritt(int weglaenge, Feld vorgaenger) {
@@ -32,6 +32,16 @@ public class VorhergehenderSchritt {
 
 	public void setVorgaenger(Feld vorgaenger) {
 		this.vorgaenger = vorgaenger;
+	}
+
+	@Override // eine Methode vom Interface "comparable"; sie vergleicht ein übergeb. Objekt mit dieser Instanz
+	public int compareTo(VorhergehenderSchritt o) {
+		if (o.getWeglaenge() > this.weglaenge) {
+			return -1;
+		} else if (o.getWeglaenge() == this.weglaenge) {
+			return 0;
+		}
+		return 1;
 	}
 
 }

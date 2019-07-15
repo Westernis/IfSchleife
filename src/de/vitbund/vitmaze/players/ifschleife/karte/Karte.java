@@ -159,7 +159,7 @@ public class Karte {
 
 //		Wegetabelle anlegen
 
-		Map<Feld, VorhergehenderSchritt> wege = new HashMap(felder.length * felder[0].length * 2);
+		Map<Feld, VorhergehenderSchritt> wege = new HashMap<Feld, VorhergehenderSchritt>(felder.length * felder[0].length * 2);
 		List<Feld> arbeitsliste = new ArrayList<Feld>();
 		List<Feld> fertigFelder = new ArrayList<Feld>();
 
@@ -170,8 +170,8 @@ public class Karte {
 
 // 		Algorithmus abarbeiten
 		Feld arbeit = null;
-		if(!arbeitsliste.isEmpty()) {
-			 arbeit = arbeitsliste.get(0);
+		if (!arbeitsliste.isEmpty()) {
+			arbeit = arbeitsliste.get(0);
 		}
 		while (!arbeitsliste.isEmpty()) {
 			arbeit = arbeitsliste.get(0);
@@ -256,22 +256,38 @@ public class Karte {
 		karte.findeWege(2, 2);
 
 	}
-	
+
 	public void toSysErrErkundeteFelder() {
 		for (int y = 0; y < felder[0].length; y++) {
 			for (int x = 0; x < felder.length; x++) {
-				if(felder[x][y] == null) {
+				if (felder[x][y] == null) {
 					System.err.print(" |");
-					
-				}else if(felder[x][y].pruefenErkundet()) {
+
+				} else if (felder[x][y].pruefenErkundet()) {
 					System.err.print("E|");
-				}else {
+				} else {
 					System.err.print("U|");
 				}
 			}
 			System.err.println("");
 		}
 
-		
 	}
+
+	public ArrayList<Feld> werteListeAus(Map<Feld, VorhergehenderSchritt> karte, Feld wunschZiel) {
+		ArrayList<Feld> rueckgabe = new ArrayList<Feld>();
+		rueckgabe.add(wunschZiel);
+
+		Feld arbeitsVariable = karte.get(wunschZiel).getVorgaenger();
+
+		// der erste Wert (Startknoten) hat als Feld null, daher prüfen wir gegen null.
+		while (arbeitsVariable != null) {
+			rueckgabe.add(0, arbeitsVariable);
+			arbeitsVariable = karte.get(arbeitsVariable).getVorgaenger();
+		}
+
+		return rueckgabe;
+
+	}
+
 }
