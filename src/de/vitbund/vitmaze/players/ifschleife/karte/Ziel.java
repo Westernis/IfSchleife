@@ -9,8 +9,8 @@ public class Ziel extends Flur {
 	private int playerID;
 	private int formID;
 	
-	public Ziel(int x, int y, Karte karte, int playerID, int formID) {
-		super(x, y, karte);
+	public Ziel(Koordinaten punkt, Karte karte, int playerID, int formID) {
+		super(punkt, karte);
 		this.playerID = playerID;
 		this.formID = formID;
 	}

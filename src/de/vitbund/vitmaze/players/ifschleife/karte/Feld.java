@@ -4,6 +4,7 @@ public abstract class Feld {
 
 	final int x;
 	final int y;
+	final Koordinaten punkt;
 
 	boolean erkundet;
 
@@ -14,9 +15,10 @@ public abstract class Feld {
 	private Feld west = null;
 	private Karte karte; // Karte, zu der das Feld gehört
 
-	public Feld(int x, int y, Karte karte) {
-		this.x = x;
-		this.y = y;
+	public Feld(Koordinaten punkt, Karte karte) {
+		this.punkt = punkt;
+		this.x = punkt.getX();
+		this.y = punkt.getY();
 		this.karte = karte;
 	}
 
@@ -32,8 +34,8 @@ public abstract class Feld {
 		}
 		// FIXME Arraygrenzen /Mapborders
 
-		if (karte.isFeldBekannt(x + 1, y) && karte.isFeldBekannt(x - 1, y) && karte.isFeldBekannt(x, y + 1)
-				&& karte.isFeldBekannt(x, y - 1)) {
+		if (karte.isFeldBekannt(punkt.norden()) && karte.isFeldBekannt(punkt.osten()) && karte.isFeldBekannt(punkt.sueden())
+				&& karte.isFeldBekannt(punkt.westen())) {
 			erkundet = true;
 			return erkundet;
 		}
@@ -75,12 +77,20 @@ public abstract class Feld {
 		this.west = west;
 	}
 
-	public int getX() {
-		return x;
+	/**
+	 * Sollte nur zur Ausgabe in Texten genutzt werden
+	 * @return
+	 */
+	public String getX() {
+		return ""+x;
 	}
 
-	public int getY() {
-		return y;
+	/**
+	 * Sollte nur zur Ausgabe in Texten genutzt werden
+	 * @return
+	 */
+	public String getY() {
+		return ""+y;
 	}
 	
 	

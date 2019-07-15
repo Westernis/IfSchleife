@@ -3,7 +3,6 @@ package de.vitbund.vitmaze.players.ifschleife;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 
 /**
@@ -33,24 +32,26 @@ public class ZufallsBot2 extends Bot {
 			System.out.println("finish");
 		}
 
-		aktuelleKarte.aktualisiereFeld(x, y - 1, Init.northCellStatus);
-		aktuelleKarte.aktualisiereFeld(x, y + 1, Init.southCellStatus);
-		aktuelleKarte.aktualisiereFeld(x + 1, y, Init.eastCellStatus);
-		aktuelleKarte.aktualisiereFeld(x - 1, y, Init.westCellStatus);
-		aktuelleKarte.aktualisiereFeld(x, y, Init.currentCellStatus);
+		int x = this.getPunkt().getX();
+		int y = this.getPunkt().getY();
+		
+		aktuelleKarte.aktualisiereFeld(getPunkt().norden()/* y - 1 */, Init.northCellStatus);
+		aktuelleKarte.aktualisiereFeld(getPunkt().sueden() /* y + 1 */, Init.southCellStatus);
+		aktuelleKarte.aktualisiereFeld(getPunkt().osten()/*x + 1*/, Init.eastCellStatus);
+		aktuelleKarte.aktualisiereFeld(getPunkt().westen()/*x - 1*/,  Init.westCellStatus);
+		aktuelleKarte.aktualisiereFeld(getPunkt(), Init.currentCellStatus);
 		if (aktuelleKarte.getFeld(x, y) != null) {
 			aktuelleKarte.getFeld(x, y).pruefenErkundet();
 		}
 
-		//getAktuelleKarte().findeWege(x, y);
+		// getAktuelleKarte().findeWege(x, y);
 
-		
 //		//testen der Funktion pruefenErkundet der Karte
-		//aktuelleKarte.toSysErrErkundeteFelder();
+		// aktuelleKarte.toSysErrErkundeteFelder();
 
 		// System.err.print(/*"X: " + feld.getX() + " Y: "+ feld.getY() + " erkundet "
 		// +*/ feld.pruefenErkundet()+ " ");
-		
+
 		schlauereZufallsrichtung();
 	}
 
@@ -137,9 +138,9 @@ public class ZufallsBot2 extends Bot {
 //				kann man nich benutzen geht nicht -> TODO noch mal testen
 
 			int index = -1;
-			//System.err.println(richtungUmkehren(letzteRichtung));
+			// System.err.println(richtungUmkehren(letzteRichtung));
 			for (String string : richtungsliste) {
-				//System.err.println("Liste: " + string);
+				// System.err.println("Liste: " + string);
 				if (string.equals(richtungUmkehren(letzteRichtung))) {
 					// zu riskant im foreach was zu entfernen, daher index speichern.
 					index = richtungsliste.indexOf(string);
@@ -151,7 +152,7 @@ public class ZufallsBot2 extends Bot {
 				richtungsliste.remove(index);
 			}
 
-			//System.err.println("das ist der zweite spass: " + richtungsliste.size());
+			// System.err.println("das ist der zweite spass: " + richtungsliste.size());
 
 			int x = (int) (Math.random() * richtungsliste.size());
 			letzteRichtung = richtungsliste.get(x);
@@ -220,8 +221,8 @@ public class ZufallsBot2 extends Bot {
 		}
 	}
 
-	public void letztesFeld() {
-		aktuelleKarte.isFeldBekannt(x, y);
-
-	}
+//	public void letztesFeld() {
+//		aktuelleKarte.isFeldBekannt(x, y);
+//
+//	}
 }

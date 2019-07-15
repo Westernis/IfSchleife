@@ -7,8 +7,8 @@ package de.vitbund.vitmaze.players.ifschleife.karte;
  */
 public class Wand extends Feld {
 
-	public Wand(int x, int y, Karte karte, boolean erkundet) {
-		super(x, y, karte);
+	public Wand(Koordinaten punkt, Karte karte, boolean erkundet) {
+		super(punkt, karte);
 		this.erkundet = true;
 		// TODO Automatisch generierter Konstruktorstub
 	}

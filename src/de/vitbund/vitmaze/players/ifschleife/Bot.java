@@ -1,6 +1,7 @@
 package de.vitbund.vitmaze.players.ifschleife;
 
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
+import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 
 /**
  * 
@@ -24,8 +25,9 @@ public class Bot {
 	protected final int id;
 
 	// Die aktuellen Koordinaten des Bots
-	protected int x;
-	protected int y;
+	//protected int x;
+	//protected int y;
+	private Koordinaten punkt;
 
 	/**
 	 * 
@@ -37,8 +39,9 @@ public class Bot {
 	public Bot(Karte karte, int playerId, int x, int y) {
 		this.aktuelleKarte = karte;
 		this.id = playerId;
-		this.x = x;
-		this.y = y;
+		punkt = new Koordinaten(x,y);
+		//this.x = x;
+		//this.y = y;
 	}
 
 	/**
@@ -91,23 +94,26 @@ public class Bot {
 
 	// Bewegungsfunktionen
 	protected void nachWesten() {
-		this.x--;
+		//this.x--;
+		this.punkt.setX(punkt.getX()-1);
 		System.out.println("go west");
 	}
 
 	protected void nachSueden() {
-		this.y++;
+		//this.y++;
+		this.punkt.setX(punkt.getY()+1);
 		System.out.println("go south");
 	}
 
 	protected void nachOsten() {
-		this.x++;
+		//this.x++;
+		this.punkt.setX(punkt.getX()+1);
 		System.out.println("go east");
 	}
 
 	protected void nachNorden() {
-		this.y--;
-
+		//this.y--;
+		this.punkt.setX(punkt.getY()-1);
 		System.out.println("go north");
 	}
 	
@@ -118,25 +124,25 @@ public class Bot {
 		if ("go west".equals(richtung)) {
 			this.nachWesten();
 			System.err.println("AB HIER VORHERIGE KARTE");
-			System.err.println("Bot Standort: " + this.x + " " + this.y);
+			System.err.println("Bot Standort: " + this.punkt.getX() + " " + this.punkt.getY());
 			System.err.println("nach Western");
 		}
 		if ("go north".equals(richtung)) {
 			this.nachNorden();
 			System.err.println("AB HIER VORHERIGE KARTE");
-			System.err.println("Bot Standort: " + this.x + " " + this.y);
+			System.err.println("Bot Standort: " + this.punkt.getX() + " " + this.punkt.getY());
 			System.err.println("nach Norden");
 		}
 		if ("go east".equals(richtung)) {
 			this.nachOsten();
 			System.err.println("AB HIER VORHERIGE KARTE");
-			System.err.println("Bot Standort: " + this.x + " " + this.y);
+			System.err.println("Bot Standort: " + this.punkt.getX() + " " + this.punkt.getY());
 			System.err.println("nach osten");
 		} 
 		if("go south".equals(richtung)) {
 			this.nachSueden();
 			System.err.println("AB HIER VORHERIGE KARTE");
-			System.err.println("Bot Standort: " + this.x + " " + this.y);
+			System.err.println("Bot Standort: " + this.punkt.getX() + " " + this.punkt.getY());
 			System.err.println("nach süden");
 		}
 		this.aktuelleKarte.ausgabe();
@@ -147,13 +153,17 @@ public class Bot {
 		return id;
 	}
 
-	public int getX() {
-		return x;
+	public Koordinaten getPunkt() {
+		return punkt;
 	}
 
-	public int getY() {
-		return y;
-	}
+//	public int getX() {
+//		return this.punkt.getX();
+//	}
+
+//	public int getY() {
+//		return this.punkt.getY();
+//	}
 
 	// TODO Methode finish
 }

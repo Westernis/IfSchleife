@@ -19,46 +19,13 @@ public class Karte {
 	// y-Koordinate(Höhe)
 	private final Feld[][] felder;
 
-	public Karte(int x, int y) {
-		this.felder = new Feld[x][y];
+	public Karte(int sizeX, int sizeY) {
+		this.felder = new Feld[sizeX][sizeY];
 	}
 
 	public void getFeldtyp(int x, int y) {
 		// FIXME nicht sicher ob wir die brauchen ^^
 		// TODO soll Eigenschaften zum Feld zurück geben, eventuell das Feld selbst?
-	}
-
-	/**
-	 * Diese Methode soll den kürzesten Weg zwischen 2 Felder bestimmen.
-	 * Berücksichtigt werden dabei nur Felder, die zum Zeitpunkt des Aufrufs bekannt
-	 * sind.
-	 * 
-	 * @param xStart
-	 * @param yStart
-	 * @param xZiel
-	 * @param yZiel
-	 * @return Ein Array mit den zu gehenden Feldern, angefangen mit dem Feld
-	 *         (xStart,yStart).
-	 */
-	public Feld[] getWeg(int xStart, int yStart, int xZiel, int yZiel) {
-		// TODO
-		return null;
-	}
-
-	/**
-	 * Gibt eine Reihe von Anweisungen als String[] zurück die den mittels
-	 * {@code getWeg(int xStart, int yStart, int xZiel, int yZiel)} ermittelten Weg
-	 * abfahren.
-	 * 
-	 * @param xStart
-	 * @param yStart
-	 * @param xZiel
-	 * @param yZiel
-	 * @return
-	 */
-	public String[] getWegAnweisungen(int xStart, int yStart, int xZiel, int yZiel) {
-		// TODO
-		return null;
 	}
 
 	/**
@@ -72,63 +39,86 @@ public class Karte {
 
 	// Festestellen, ob bei den Koordinaten schon ein Feldobjekt existiert. Wenn
 	// nein->Anlegen. Welche Wege müssen hinzugefügt werden?
-	public void aktualisiereFeld(int x, int y, String feldbeschreibung) {
-		if (felder[x][y] == null) {
+	public void aktualisiereFeld(Koordinaten punkt, String feldbeschreibung) {
+		Feld ort = this.getFeld(punkt);
+		Feld nachbar;
+		if (ort == null) {
 			// TODO switch mit feldbeschreibung, greift entsprechend auf Klassen Flur und
 
 			// Wand zu
 			switch (feldbeschreibung) {
 			case "FLOOR":
-				felder[x][y] = new Flur(x, y, this);
+				ort = new Flur(punkt, this); // neues Feld anlegen
+				felder[punkt.getX()][punkt.getY()] = ort; // Feld sichern
 				// Wege erstellen
 
-				// prüfen, ob das Feld auch wirklich schon bekannt (!=null) ist UND das Feld
-				// begehbar ist.
-				// wenn ja dann Weg setzen (setHimmelsrichtung), und auch umgekehrt
-				// wenn nein dann bleibt die
-				// Variable auf null
+				// prüfen, ob das benachbarte Feld auch schon bekannt (!=null) ist UND
+				// ob das Feld begehbar ist.
+				// Wenn ja, dann Weg setzen (set"Himmelsrichtun"g()), und auch umgekehrt.
+				// Wenn nein, dann bleibt die Variable auf null, daher es muss nix gemacht werden
 
-				// TODO Himmelsrichtungen überprüfen, Arraygrenzen
+				// Wege setzen
+				// Osten
+				nachbar = getFeld(punkt.osten()); // das zu betrachtende Nachbarfeld holen
+				if (this.isFeldBekannt(punkt.osten()) && nachbar.istBegehbar()) { // Ost
+					ort.setOst(nachbar);
+					nachbar.setWest(ort);
+				}
+				// Westen
+				nachbar = getFeld(punkt.westen()); // das zu betrachtende Nachbarfeld holen
+				if (this.isFeldBekannt(punkt.osten()) && nachbar.istBegehbar()) { // Ost
+					ort.setWest(nachbar);
+					nachbar.setOst(ort);
+				}
+				// Norden
+				nachbar = getFeld(punkt.norden()); // das zu betrachtende Nachbarfeld holen
+				if (this.isFeldBekannt(punkt.norden()) && nachbar.istBegehbar()) { // Ost
+					ort.setNord(nachbar);
+					nachbar.setSued(ort);
+				}
+				// Süden
+				nachbar = getFeld(punkt.sueden()); // das zu betrachtende Nachbarfeld holen
+				if (this.isFeldBekannt(punkt.osten()) && nachbar.istBegehbar()) { // Ost
+					ort.setSued(nachbar);
+					nachbar.setNord(ort);
+				}
 
-				if (this.isFeldBekannt(x + 1, y) && felder[x + 1][y].istBegehbar()) { // Ost
-					felder[x][y].setOst(felder[x + 1][y]);
-					felder[x + 1][y].setWest(felder[x][y]);
-					// else nicht nötig, da die Variable Ost auf null bleibt (siehe Feld ost)
-				}
-				if (this.isFeldBekannt(x - 1, y) && felder[x - 1][y].istBegehbar()) { // West
-					felder[x][y].setWest(felder[x - 1][y]);
-					felder[x - 1][y].setOst(felder[x][y]);
-				}
-				if (this.isFeldBekannt(x, y + 1) && felder[x][y + 1].istBegehbar()) { // Süd
-					felder[x][y].setSued(felder[x][y + 1]);
-					felder[x][y + 1].setNord(felder[x][y]);
-				}
-				if (this.isFeldBekannt(x, y - 1) && felder[x][y - 1].istBegehbar()) { // Nord
-					felder[x][y].setNord(felder[x][y - 1]);
-					felder[x][y - 1].setSued(felder[x][y]);
-				}
 				break;
 			case "WALL":
-				felder[x][y] = new Wand(x, y, this, true); // Bei Wand keine Wege nötig
+				felder[punkt.getX()][punkt.getY()] = new Wand(punkt, this, true); // Bei Wand keine Wege nötig
 				break;
 			// TODO case "FINISH"
 			// TODO case "FORM"
+			// TODO Bot?
 			}
 
 		}
 	}
 
-	public boolean isFeldBekannt(int x, int y) {
-		if (felder[x][y] == null) {
+	public boolean isFeldBekannt(Koordinaten ort) {
+		//return isFeldBekannt(ort.getX(), ort.getY());
+		if (felder[ort.getX()][ort.getY()] == null) {
 			return false;
 		}
 		return true;
 	}
 
+//	private boolean isFeldBekannt(int x, int y) {
+//		if (felder[x][y] == null) {
+//			return false;
+//		}
+//		return true;
+//	}
+
 	// Vielleicht brauchen wir das noch
 	public Feld getFeld(int x, int y) {
 		// TODO Arraygrenzen abfangen
 		return felder[x][y];
+	}
+
+	public Feld getFeld(Koordinaten punkt) {
+		// TODO Arraygrenzen abfangen
+		return felder[punkt.getX()][punkt.getY()];
 	}
 
 	public void ausgabe() {
@@ -149,6 +139,10 @@ public class Karte {
 		}
 	}
 
+	public LinkedHashMap<Feld, VorhergehenderSchritt> findeWege(int startX, int startY) {
+		return this.findeWege(new Koordinaten(startX, startY));
+	}
+
 	/**
 	 * 
 	 * @param startX
@@ -165,10 +159,11 @@ public class Karte {
 	 * https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html
 	 *
 	 */
-	public LinkedHashMap<Feld, VorhergehenderSchritt> findeWege(int startX, int startY) {
+	public LinkedHashMap<Feld, VorhergehenderSchritt> findeWege(Koordinaten startpunkt) {
 //		Start und Zielfeld prüfen ob korrekt
 
-		if (felder[startX][startY] == null || !felder[startX][startY].istBegehbar()) {
+		if (felder[startpunkt.getX()][startpunkt.getY()] == null
+				|| !felder[startpunkt.getX()][startpunkt.getY()].istBegehbar()) {
 			return null;
 		}
 
@@ -182,8 +177,8 @@ public class Karte {
 
 //		Startknoten abarbeiten
 
-		wege.put(felder[startX][startY], new VorhergehenderSchritt(0, null));
-		arbeitsliste.add(felder[startX][startY]);
+		wege.put(felder[startpunkt.getX()][startpunkt.getY()], new VorhergehenderSchritt(0, null));
+		arbeitsliste.add(felder[startpunkt.getX()][startpunkt.getY()]);
 
 // 		Algorithmus abarbeiten
 		Feld arbeit = null;
@@ -262,23 +257,24 @@ public class Karte {
 		Karte karte = new Karte(4, 4);
 		// x Richtung
 		for (int i = 0; i < 4; i++) {
-			karte.aktualisiereFeld(i, 0, "WALL");
-			karte.aktualisiereFeld(i, 3, "WALL");
+			karte.aktualisiereFeld(new Koordinaten(i, 0), "WALL");
+			karte.aktualisiereFeld(new Koordinaten(i, 3), "WALL");
 		}
 		// y Richtung
 		for (int i = 0; i < 4; i++) {
-			karte.aktualisiereFeld(0, i, "WALL");
-			karte.aktualisiereFeld(3, i, "WALL");
+			karte.aktualisiereFeld(new Koordinaten(0, i), "WALL");
+			karte.aktualisiereFeld(new Koordinaten(3, i), "WALL");
 		}
 
-		karte.aktualisiereFeld(1, 1, "FLOOR");
-		karte.aktualisiereFeld(2, 1, "FLOOR");
-		karte.aktualisiereFeld(1, 2, "FLOOR");
-		karte.aktualisiereFeld(2, 2, "FLOOR");
+		karte.aktualisiereFeld(new Koordinaten(1, 1), "FLOOR");
+		karte.aktualisiereFeld(new Koordinaten(2, 1), "FLOOR");
+		karte.aktualisiereFeld(new Koordinaten(1, 2), "FLOOR");
+		karte.aktualisiereFeld(new Koordinaten(2, 2), "FLOOR");
 		karte.findeWege(2, 2);
 
 	}
 
+	// Testfunktion Koordinatennutzung nicht nötig
 	public void toSysErrErkundeteFelder() {
 		for (int y = 0; y < felder[0].length; y++) {
 			for (int x = 0; x < felder.length; x++) {

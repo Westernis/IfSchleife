@@ -124,6 +124,38 @@ public class Koordinaten {
 //		}
 //	}
 
+	/**
+	 * 
+	 * @return den Koordinatensatz den man erhält, würde man ein Schritt nach Norden fahren.
+	 */
+	public Koordinaten norden() {
+		return new Koordinaten(this.x, this.y - 1);
+	}
+
+	/**
+	 * 
+	 * @return den Koordinatensatz den man erhält, würde man ein Schritt nach Süden fahren.
+	 */
+	public Koordinaten sueden() {
+		return new Koordinaten(this.x, this.y + 1);
+	}
+
+	/**
+	 * 
+	 * @return den Koordinatensatz den man erhält, würde man ein Schritt nach Westen fahren.
+	 */
+	public Koordinaten westen() {
+		return new Koordinaten(this.x - 1,this.y -1);
+	}
+
+	/**
+	 * 
+	 * @return den Koordinatensatz den man erhält, würde man ein Schritt nach Osten fahren.
+	 */
+	public Koordinaten osten() {
+		return new Koordinaten(this.x + 1,this.y);
+	}
+
 	@Override
 	public String toString() {
 		return "" + x + " " + y;

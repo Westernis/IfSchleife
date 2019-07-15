@@ -2,8 +2,8 @@ package de.vitbund.vitmaze.players.ifschleife.karte;
 
 public class Flur extends Feld {
 
-	public Flur(int x, int y, Karte karte) {
-		super(x, y, karte);
+	public Flur(Koordinaten punkt, Karte karte) {
+		super(punkt, karte);
 		// TODO Automatisch generierter Konstruktorstub
 	}
 

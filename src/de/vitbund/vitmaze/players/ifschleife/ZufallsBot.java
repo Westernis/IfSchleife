@@ -28,11 +28,11 @@ public class ZufallsBot extends Bot {
 
 	public void machAktion() {
 
-		aktuelleKarte.aktualisiereFeld(x, y - 1, Init.northCellStatus);
-		aktuelleKarte.aktualisiereFeld(x, y + 1, Init.southCellStatus);
-		aktuelleKarte.aktualisiereFeld(x + 1, y, Init.eastCellStatus);
-		aktuelleKarte.aktualisiereFeld(x - 1, y, Init.westCellStatus);
-		aktuelleKarte.aktualisiereFeld(x, y, Init.currentCellStatus);
+		aktuelleKarte.aktualisiereFeld(getPunkt().norden()/* y - 1 */, Init.northCellStatus);
+		aktuelleKarte.aktualisiereFeld(getPunkt().sueden() /* y + 1 */, Init.southCellStatus);
+		aktuelleKarte.aktualisiereFeld(getPunkt().osten()/*x + 1*/, Init.eastCellStatus);
+		aktuelleKarte.aktualisiereFeld(getPunkt().westen()/*x - 1*/,  Init.westCellStatus);
+		aktuelleKarte.aktualisiereFeld(getPunkt(), Init.currentCellStatus);
 
 		nochSchlauereZufallsrichtung();
 	}
