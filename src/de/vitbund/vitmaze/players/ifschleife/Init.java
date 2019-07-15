@@ -3,6 +3,7 @@ package de.vitbund.vitmaze.players.ifschleife;
 import java.util.Scanner;
 
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
+import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 
 /**
  * Diese Klasse soll die Initialisierung durchführen. Das heißt es wird ein Bot
@@ -41,17 +42,18 @@ public class Init {
 		input.nextLine(); // Beenden der zweiten Zeile
 
 		Karte karte = new Karte(sizeX, sizeY);
+		// maximale Kartenparameter setzen für die umrechnung der koordinaten
+		Koordinaten.setzeMaximaleKoordinaten(sizeX, sizeY);
 
 		// Hier wird der Bot initialisiert, der Karte, der playerID und dem Level
 		// zugeordnet
-		
-
 		/*
-		 * hier entscheiden wir anhand der Level-ID welchen Bot wir als "unserBot" verwenden.
+		 * hier entscheiden wir anhand der Level-ID welchen Bot wir als "unserBot"
+		 * verwenden.
 		 */
-		
+
 		Bot unserBot;
-		
+
 		switch (level) {
 		case 1:
 			unserBot = new ZufallsBot2(karte, playerId, startX, startY);
@@ -73,8 +75,6 @@ public class Init {
 			unserBot = new ZufallsBot2(karte, playerId, startX, startY);
 			break;
 		}
-		
-		
 
 		while (input.hasNext()) {
 
@@ -93,19 +93,12 @@ public class Init {
 			/*
 			 * Darstellung eines kleinen Kompass mit den jeweils zugehörigen Zellstati.
 			 */
-//			System.err.println("Ergebnis Vorrunde Aktion: " + lastActionsResult);
-//			System.err.println("Ergebnis Vorrunde Norden: " + "               " + northCellStatus);
-//			System.err.println("Ergebnis Vorrunde Westen / Osten: " + "   " + westCellStatus + " / " + eastCellStatus);
-//			System.err.println("Ergebnis Vorrunde Sueden: " + "                " + southCellStatus);
-
-
-// aus Testgründen deaktiviert für den ZufallsBOT			
- // man könnte hier auch mehrer Bots benutzen, z.B. einen zum Erkunden, einen zum
-			// Einsammeln und einen um zum Ziel zu fahren
-			
+			System.err.println("Ergebnis Vorrunde Aktion: " + lastActionsResult);
+			System.err.println("Ergebnis Vorrunde Norden: " + "               " + northCellStatus);
+			System.err.println("Ergebnis Vorrunde Westen / Osten: " + "   " + westCellStatus + " / " + eastCellStatus);
+			System.err.println("Ergebnis Vorrunde Sueden: " + "                " + southCellStatus);
 
 			unserBot.machAktion();
-
 		}
 
 		// Alles fertig -> aufräumen
@@ -115,12 +108,10 @@ public class Init {
 	public static Bot erstelleBotLevel1(Karte karte, int playerId, int startX, int startY) {
 		return new BotLevel1(karte, playerId, startX, startY);
 	}
-	
+
 	public static Bot erstelleBotLevel2(Karte karte, int playerId, int startX, int startY) {
 		return new BotLevel2(karte, playerId, startX, startY);
 	}
-	
-	
 
 }
 // TODO 

@@ -1,9 +1,13 @@
 package de.vitbund.vitmaze.players.ifschleife;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
+import de.vitbund.vitmaze.players.ifschleife.karte.VorhergehenderSchritt;
 
 /**
  * 
@@ -32,25 +36,27 @@ public class ZufallsBot2 extends Bot {
 			System.out.println("finish");
 		}
 
-		int x = this.getPunkt().getX();
-		int y = this.getPunkt().getY();
-		
+//		int x = this.getPunkt().getX();
+//		int y = this.getPunkt().getY();
+
 		aktuelleKarte.aktualisiereFeld(getPunkt().norden()/* y - 1 */, Init.northCellStatus);
 		aktuelleKarte.aktualisiereFeld(getPunkt().sueden() /* y + 1 */, Init.southCellStatus);
-		aktuelleKarte.aktualisiereFeld(getPunkt().osten()/*x + 1*/, Init.eastCellStatus);
-		aktuelleKarte.aktualisiereFeld(getPunkt().westen()/*x - 1*/,  Init.westCellStatus);
+		aktuelleKarte.aktualisiereFeld(getPunkt().osten()/* x + 1 */, Init.eastCellStatus);
+		aktuelleKarte.aktualisiereFeld(getPunkt().westen()/* x - 1 */, Init.westCellStatus);
 		aktuelleKarte.aktualisiereFeld(getPunkt(), Init.currentCellStatus);
-		if (aktuelleKarte.getFeld(x, y) != null) {
-			aktuelleKarte.getFeld(x, y).pruefenErkundet();
+		if (aktuelleKarte.getFeld(getPunkt()) != null) {
+			aktuelleKarte.getFeld(getPunkt()).pruefenErkundet();
 		}
 
-		// getAktuelleKarte().findeWege(x, y);
+		// test Wegfindung
+//		LinkedHashMap<Feld, VorhergehenderSchritt> wege = getAktuelleKarte().findeWege(getPunkt());
+//		getAktuelleKarte().ausgabeWegliste(wege);
 
-//		//testen der Funktion pruefenErkundet der Karte
+		// testen der Funktion pruefenErkundet der Karte
 		// aktuelleKarte.toSysErrErkundeteFelder();
 
-		// System.err.print(/*"X: " + feld.getX() + " Y: "+ feld.getY() + " erkundet "
-		// +*/ feld.pruefenErkundet()+ " ");
+//		System.err.print(
+//				" Ort: " + this.getPunkt() + " erkundet " + this.aktuelleKarte.getFeld(getPunkt()).pruefenErkundet());
 
 		schlauereZufallsrichtung();
 	}

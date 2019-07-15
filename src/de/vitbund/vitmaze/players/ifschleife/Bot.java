@@ -25,8 +25,8 @@ public class Bot {
 	protected final int id;
 
 	// Die aktuellen Koordinaten des Bots
-	//protected int x;
-	//protected int y;
+	// protected int x;
+	// protected int y;
 	private Koordinaten punkt;
 
 	/**
@@ -39,9 +39,10 @@ public class Bot {
 	public Bot(Karte karte, int playerId, int x, int y) {
 		this.aktuelleKarte = karte;
 		this.id = playerId;
-		punkt = new Koordinaten(x,y);
-		//this.x = x;
-		//this.y = y;
+		punkt = new Koordinaten(x, y);
+		System.err.println("ini bot" + punkt);
+		// this.x = x;
+		// this.y = y;
 	}
 
 	/**
@@ -71,12 +72,13 @@ public class Bot {
 
 		// Methode als boolean lassen??
 	}
-	
+
 	/**
 	 * mögliche Inputs Norden Sueden Osten Westen
+	 * 
 	 * @return gegenteil, bei falscher eingabe -> null
 	 */
-	public String richtungUmkehren(String richtung){
+	public String richtungUmkehren(String richtung) {
 		switch (richtung) {
 		case "Norden":
 			return "Sueden";
@@ -94,32 +96,35 @@ public class Bot {
 
 	// Bewegungsfunktionen
 	protected void nachWesten() {
-		//this.x--;
-		this.punkt.setX(punkt.getX()-1);
+		// this.x--;
+		System.err.println("\nBotstandort " + punkt);
+		this.punkt.setX(punkt.getX() - 1);
 		System.out.println("go west");
 	}
 
 	protected void nachSueden() {
-		//this.y++;
-		this.punkt.setX(punkt.getY()+1);
+		// this.y++;
+		System.err.println("\nBotstandort " + punkt);
+		this.punkt.setY(punkt.getY() + 1);
 		System.out.println("go south");
 	}
 
 	protected void nachOsten() {
-		//this.x++;
-		this.punkt.setX(punkt.getX()+1);
+		// this.x++;
+		System.err.println("\nBotstandort " + punkt);
+		this.punkt.setX(punkt.getX() + 1);
 		System.out.println("go east");
 	}
 
 	protected void nachNorden() {
-		//this.y--;
-		this.punkt.setX(punkt.getY()-1);
+		// this.y--;
+		System.err.println("\nBotstandort " + punkt);
+		this.punkt.setY(punkt.getY() - 1);
 		System.out.println("go north");
 	}
-	
-	//bequemlichkeit übersetzung der strings in unsere Methoden
-	public void fahren(String richtung) {
 
+	// bequemlichkeit übersetzung der strings in unsere Methoden
+	public void fahren(String richtung) {
 
 		if ("go west".equals(richtung)) {
 			this.nachWesten();
@@ -138,8 +143,8 @@ public class Bot {
 			System.err.println("AB HIER VORHERIGE KARTE");
 			System.err.println("Bot Standort: " + this.punkt.getX() + " " + this.punkt.getY());
 			System.err.println("nach osten");
-		} 
-		if("go south".equals(richtung)) {
+		}
+		if ("go south".equals(richtung)) {
 			this.nachSueden();
 			System.err.println("AB HIER VORHERIGE KARTE");
 			System.err.println("Bot Standort: " + this.punkt.getX() + " " + this.punkt.getY());

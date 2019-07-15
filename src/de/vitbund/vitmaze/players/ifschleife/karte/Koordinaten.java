@@ -29,6 +29,15 @@ public class Koordinaten {
 		this.y = korrigiereY(y);
 	}
 
+	/**
+	 * Setzt einmalig für den Programmablauf die Grenzen an denen die Kartengrenzen
+	 * verlaufen und "umkippen". Die Koordinaten bilden zwei Restklassenringe ->
+	 * modulo x bzw. y.
+	 * 
+	 * @param x Anzahl der Felder entlang der X-Achse. Die Zählung beginnt bei 1.
+	 * @param y Anzahl der Felder entlang der Y-Achse. Die Zählung beginnt bei 1.
+	 * @return
+	 */
 	// Setzt die max. Koordinaten und verhindert gleich zeitig das sie danach
 	// verändert werden können
 	public static boolean setzeMaximaleKoordinaten(int x, int y) {
@@ -67,11 +76,11 @@ public class Koordinaten {
 		return yMax;
 	}
 
-	// TODO Annahme maximum ist der höchste Wert, der tatsächlich auftreten kann.
+	// Annahme maximum - 1 ist der höchste Wert, der tatsächlich auftreten kann.
 	public static int korrigiere(int zahl, int maximum) {
-		zahl = (zahl % (maximum + 1));
+		zahl = (zahl % (maximum));
 		if (zahl < 0) {// Zahl ins positive Korrigieren
-			zahl += (maximum + 1);
+			zahl += (maximum);
 			// zahl*= -1;
 		}
 		return zahl;
@@ -126,7 +135,8 @@ public class Koordinaten {
 
 	/**
 	 * 
-	 * @return den Koordinatensatz den man erhält, würde man ein Schritt nach Norden fahren.
+	 * @return den Koordinatensatz den man erhält, würde man ein Schritt nach Norden
+	 *         fahren.
 	 */
 	public Koordinaten norden() {
 		return new Koordinaten(this.x, this.y - 1);
@@ -134,7 +144,8 @@ public class Koordinaten {
 
 	/**
 	 * 
-	 * @return den Koordinatensatz den man erhält, würde man ein Schritt nach Süden fahren.
+	 * @return den Koordinatensatz den man erhält, würde man ein Schritt nach Süden
+	 *         fahren.
 	 */
 	public Koordinaten sueden() {
 		return new Koordinaten(this.x, this.y + 1);
@@ -142,23 +153,25 @@ public class Koordinaten {
 
 	/**
 	 * 
-	 * @return den Koordinatensatz den man erhält, würde man ein Schritt nach Westen fahren.
+	 * @return den Koordinatensatz den man erhält, würde man ein Schritt nach Westen
+	 *         fahren.
 	 */
 	public Koordinaten westen() {
-		return new Koordinaten(this.x - 1,this.y -1);
+		return new Koordinaten(this.x - 1, this.y);
 	}
 
 	/**
 	 * 
-	 * @return den Koordinatensatz den man erhält, würde man ein Schritt nach Osten fahren.
+	 * @return den Koordinatensatz den man erhält, würde man ein Schritt nach Osten
+	 *         fahren.
 	 */
 	public Koordinaten osten() {
-		return new Koordinaten(this.x + 1,this.y);
+		return new Koordinaten(this.x + 1, this.y);
 	}
 
 	@Override
 	public String toString() {
-		return "" + x + " " + y;
+		return ("" + this.x + " " + this.y);
 	}
 
 }
