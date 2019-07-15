@@ -58,20 +58,7 @@ public class ZufallsBot2 extends Bot {
 //		}
 		
 //		//testen der Funktion pruefenErkundet der Karte
-//		Feld[][] karte = aktuelleKarte.getFelder();
-//		for (int y = 0; y < karte[0].length; y++) {
-//			for (int x = 0; x < karte.length; x++) {
-//				if(karte[x][y] == null) {
-//					System.err.print(" |");
-//					
-//				}else if(karte[x][y].pruefenErkundet()) {
-//					System.err.print("E|");
-//				}else {
-//					System.err.print("U|");
-//				}
-//			}
-//			System.err.println("");
-//		}
+		aktuelleKarte.toSysErrErkundeteFelder();
 
 		// System.err.print(/*"X: " + feld.getX() + " Y: "+ feld.getY() + " erkundet "
 		// +*/ feld.pruefenErkundet()+ " ");
@@ -155,18 +142,11 @@ public class ZufallsBot2 extends Bot {
 		case 2:
 		case 3:
 		case 4:
-
-//			if (richtungsliste.contains(letzteRichtung)) {
-//				weiterGehen();
-//			} else {
-
-//				students.removeIf(n -> (n.charAt(0) == 'S')); 
-
 			// removeIf um letzte Richtung aus der Liste zu entfernen und danach in eine
 			// neue zu gehen
 
 //				richtungsliste.removeIf(n -> (letzteRichtung.equals(n)));
-//				kann man nich benutzen geht nicht
+//				kann man nich benutzen geht nicht -> TODO noch mal testen
 
 			int index = -1;
 			System.err.println(richtungUmkehren(letzteRichtung));
@@ -189,20 +169,6 @@ public class ZufallsBot2 extends Bot {
 			letzteRichtung = richtungsliste.get(x);
 			weiterGehen();
 
-//			}
-			/*
-			 * if (richtungsliste.contains(letzteRichtung)) { weiterGehen(); } else if () {
-			 * 
-			 * }
-			 * 
-			 * break; case 3: if (richtungsliste.contains(letzteRichtung)) { weiterGehen();
-			 * } else
-			 * 
-			 * break; case 4: if (richtungsliste.contains(letzteRichtung)) { weiterGehen();
-			 * } else
-			 * 
-			 * break;
-			 */
 		default:
 		}
 

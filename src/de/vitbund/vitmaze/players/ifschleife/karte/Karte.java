@@ -150,11 +150,10 @@ public class Karte {
 		}
 	}
 
-	public LinkedList<Feld> findenWeg(int startX, int startY, int zielX, int zielY) {
+	public Map<Feld, VorhergehenderSchritt> findeWege(int startX, int startY) {
 //		Start und Zielfeld prüfen ob korrekt
 
-		if (felder[startX][startY] == null || !felder[startX][startY].istBegehbar() || felder[zielX][zielY] == null
-				|| !felder[zielX][zielY].istBegehbar()) {
+		if (felder[startX][startY] == null || !felder[startX][startY].istBegehbar()) {
 			return null;
 		}
 
@@ -197,7 +196,7 @@ public class Karte {
 		// zum testen:
 		//ausgabeWegliste(wege);
 		// test ende
-		return null;
+		return wege;
 	}
 
 	public void arbeitslisteAktualisieren(Feld arbeitnachbar, List<Feld> fertigFelder, List<Feld> arbeitsliste) {
@@ -254,7 +253,25 @@ public class Karte {
 		karte.aktualisiereFeld(2, 1, "FLOOR");
 		karte.aktualisiereFeld(1, 2, "FLOOR");
 		karte.aktualisiereFeld(2, 2, "FLOOR");
-		karte.findenWeg(2, 2, 1, 1);
+		karte.findeWege(2, 2);
 
+	}
+	
+	public void toSysErrErkundeteFelder() {
+		for (int y = 0; y < felder[0].length; y++) {
+			for (int x = 0; x < felder.length; x++) {
+				if(felder[x][y] == null) {
+					System.err.print(" |");
+					
+				}else if(felder[x][y].pruefenErkundet()) {
+					System.err.print("E|");
+				}else {
+					System.err.print("U|");
+				}
+			}
+			System.err.println("");
+		}
+
+		
 	}
 }
