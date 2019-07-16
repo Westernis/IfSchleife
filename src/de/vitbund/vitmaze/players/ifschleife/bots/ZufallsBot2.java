@@ -1,14 +1,10 @@
 package de.vitbund.vitmaze.players.ifschleife.bots;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import de.vitbund.vitmaze.players.ifschleife.Init;
-import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
-import de.vitbund.vitmaze.players.ifschleife.karte.VorhergehenderSchritt;
 
 /**
  * 
@@ -59,7 +55,6 @@ public class ZufallsBot2 extends Bot {
 	public String schlauereZufallsrichtung() {
 
 //		letzteRichtung = "";
-		double zufallsZahl = Math.random();
 		List<String> richtungsliste = new ArrayList<String>();
 
 		if (!"WALL".equals(Init.northCellStatus)) {

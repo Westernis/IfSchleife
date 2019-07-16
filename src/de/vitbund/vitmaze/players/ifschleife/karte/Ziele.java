@@ -34,7 +34,7 @@ public class Ziele extends Flur {
 	}
 
 	public String toString() {// TODO form und player id mit rausgeben oder nur ziel??
-		return Feld.ziel + " " + playerID + " formID";
+		return this.getTyp() + " " + playerID + " formID";
 	}
 
 }

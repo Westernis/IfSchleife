@@ -2,12 +2,26 @@ package de.vitbund.vitmaze.players.ifschleife.karte;
 
 public abstract class Feld {
 
-	// geht wahrscheinlich schöner über enums oder ähnlich, keine Lust mehr
-	// nachzulesen TODO siehe links
-	public static String flur = "FLOOR";
-	public static String wand = "WALL";
-	public static String ziel = "FINISH";
-	public static String formular = "FORM";
+	/*
+	 * geht wahrscheinlich schöner über enums oder ähnlich, keine Lust mehr
+	 * nachzulesen TODO schöner machen?
+	 */
+	/**
+	 * Text für die Flurfelder.
+	 */
+	public static final String flur = "FLOOR";
+	/**
+	 * Text für die Wandfelder.
+	 */
+	public static final String wand = "WALL";
+	/**
+	 * Text für die Zielfelder (Sachbearbeiter).
+	 */
+	public static final String ziel = "FINISH";
+	/**
+	 * Text für die Formularfelder.
+	 */
+	public static final String formular = "FORM";
 
 	private final int x;
 	private final int y;

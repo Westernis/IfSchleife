@@ -1,7 +1,6 @@
 package de.vitbund.vitmaze.players.ifschleife.karte;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +40,10 @@ public class Karte {
 	public void aktualisiereFeld(Koordinaten punkt, String feldbeschreibung) {
 		Feld ort = this.getFeld(punkt);
 		Feld nachbar;
+		// FIXME UMBAU hier soll nur noch die Wege Aktualisierung stattfinden, das
+		// anlegen eines Korrektenfeldtyps wird in eine statische Methode der Feld
+		// Klasse verlegt -> Feld.konstruiereFeld(String input)
+
 		if (ort == null) {
 			switch (feldbeschreibung) {
 			case "WALL":
@@ -52,12 +55,12 @@ public class Karte {
 				felder[punkt.getX()][punkt.getY()] = ort; // Feld sichern
 				// Wege erstellen
 
-				// prüfen, ob das benachbarte Feld auch schon bekannt (!=null) ist UND
-				// ob das Feld begehbar ist.
-				// Wenn ja, dann Weg setzen (set"Himmelsrichtun"g()), und auch umgekehrt.
-				// Wenn nein, dann bleibt die Variable auf null, daher es muss nix gemacht
-				// werden
-
+				/*
+				 * prüfen, ob das benachbarte Feld auch schon bekannt (!=null) ist UND ob das
+				 * Feld begehbar ist. Wenn ja, dann Weg setzen (set"Himmelsrichtun"g()), und
+				 * auch umgekehrt. Wenn nein, dann bleibt die Variable auf null, daher es muss
+				 * nix gemacht werden
+				 */
 				// Wege setzen
 				// Osten
 				nachbar = getFeld(punkt.osten()); // das zu betrachtende Nachbarfeld holen

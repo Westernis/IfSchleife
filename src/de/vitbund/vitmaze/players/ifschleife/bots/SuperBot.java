@@ -39,7 +39,6 @@ public class SuperBot extends Bot {
 	public String schlauereZufallsrichtung() {
 
 //		letzteRichtung = "";
-		double zufallsZahl = Math.random();
 		List<String> richtungsliste = new ArrayList<String>();
 
 		if (!"WALL".equals(Init.northCellStatus)) {
