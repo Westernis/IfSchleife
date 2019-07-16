@@ -11,10 +11,10 @@ package de.vitbund.vitmaze.players.ifschleife.karte;
 public class Koordinaten {
 
 	// speichert den höchsten Erlaubten Koordinatensatz für ALLE Koordinaten
-	private static int xMax;// TODO prüfen ob das Labyrinth den index wert oder die Anzahl liefert
+	private static int xMax;//
 	private static int yMax;
 	private static boolean maxKoordinatenGesetzt;
-
+	// Koordinaten des Feldes
 	private int x;
 	private int y;
 

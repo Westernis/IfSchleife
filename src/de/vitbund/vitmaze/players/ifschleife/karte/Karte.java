@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * TODO
+ * TODO javadoc
  * 
  * @author IFSchleife
  *
@@ -24,7 +24,6 @@ public class Karte {
 	}
 
 	public void getFeldtyp(int x, int y) {
-		// FIXME nicht sicher ob wir die brauchen ^^
 		// TODO soll Eigenschaften zum Feld zurück geben, eventuell das Feld selbst?
 	}
 
@@ -43,9 +42,6 @@ public class Karte {
 		Feld ort = this.getFeld(punkt);
 		Feld nachbar;
 		if (ort == null) {
-			// TODO switch mit feldbeschreibung, greift entsprechend auf Klassen Flur und
-
-			// Wand zu
 			switch (feldbeschreibung) {
 			case "WALL":
 				felder[punkt.getX()][punkt.getY()] = new Wand(punkt, this, true); // Bei Wand keine Wege nötig
@@ -92,7 +88,7 @@ public class Karte {
 
 				// TODO case "FINISH"
 				// TODO case "FORM"
-				// TODO Bot?
+				// TODO gegnerischer Bot?
 			}
 
 		}
@@ -106,21 +102,9 @@ public class Karte {
 		return true;
 	}
 
-//	private boolean isFeldBekannt(int x, int y) {
-//		if (felder[x][y] == null) {
-//			return false;
-//		}
-//		return true;
-//	}
-
-	// Vielleicht brauchen wir das noch
-//	public Feld getFeld(int x, int y) {
-//		// TODO Arraygrenzen abfangen
-//		return felder[x][y];
-//	}
-
 	public Feld getFeld(Koordinaten punkt) {
-		// TODO Arraygrenzen abfangen
+		// Arraygrenzen abfangen sollte nicht nötig sein, dafür ist die
+		// koordinatenklassse zuständig
 		return felder[punkt.getX()][punkt.getY()];
 	}
 
@@ -226,8 +210,11 @@ public class Karte {
 			if (!wege.containsKey(nachbar)) {
 				wege.put(nachbar, new VorhergehenderSchritt(weglaenge + 1, arbeit));
 			} else {
-				// TODO ist es nötig bereits vorhandene Felder zu aktualisieren? Oder ist das
-				// zuerst gefundene Feld immer der kürzste Weg?
+				/*
+				 * keine Arbeit nötig, da wir immer bidirektionale Wege der Gewichtung 1 haben.
+				 * Beim Dijkstra-Algorithmus führt das dazu, dass immer einer der kürzesten Wege
+				 * zu einem Feld zuerst gefunden wird. -> keine Aktualisierungen nötig
+				 */
 			}
 		}
 	}

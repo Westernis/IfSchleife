@@ -34,7 +34,8 @@ public class VorhergehenderSchritt implements Comparable<VorhergehenderSchritt> 
 		this.vorgaenger = vorgaenger;
 	}
 
-	@Override // eine Methode vom Interface "comparable"; sie vergleicht ein übergeb. Objekt mit dieser Instanz
+	@Override // eine Methode vom Interface "comparable"; sie vergleicht ein übergeb. Objekt
+				// mit dieser Instanz
 	public int compareTo(VorhergehenderSchritt o) {
 		if (o.getWeglaenge() > this.weglaenge) {
 			return -1;

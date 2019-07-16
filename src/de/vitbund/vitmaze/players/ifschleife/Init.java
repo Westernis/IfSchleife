@@ -28,11 +28,14 @@ public class Init {
 	public static String westCellStatus = "";
 	public static String eastCellStatus = "";
 
+	/**
+	 * TODO JAVADOC
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
-		// TODO Initialisierung (ersten Text einlesen, Karten initialisieren für lvl 2?)
 
 		Scanner input = new Scanner(System.in);
-		// TODO Java-Doc-Comments statt Einzeiler?
 		// INIT - Auslesen der Initialdaten
 		// 1. Zeile: Maze Infos
 		int sizeX = input.nextInt(); // X-Groesse des Spielfeldes (Breite)
@@ -49,11 +52,10 @@ public class Init {
 		// maximale Kartenparameter setzen für die umrechnung der koordinaten
 		Koordinaten.setzeMaximaleKoordinaten(sizeX, sizeY);
 
-		// Hier wird der Bot initialisiert, der Karte, der playerID und dem Level
-		// zugeordnet
 		/*
-		 * hier entscheiden wir anhand der Level-ID welchen Bot wir als "unserBot"
-		 * verwenden.
+		 * Hier entscheiden wir anhand der Level-ID welchen Bot wir als "unserBot"
+		 * verwenden. Danach wird der Bot initialisiert und ihm eine Karte und die
+		 * playerID zugeordnet.
 		 */
 
 		Bot unserBot;
@@ -118,5 +120,3 @@ public class Init {
 	}
 
 }
-// TODO 
-// Rückgängig machen: unserBot wieder aktivieren (Zeile 87 und Zeile 60: Erstellung des unserBot)

@@ -1,4 +1,5 @@
 package de.vitbund.vitmaze.players.ifschleife.karte;
+
 /**
  * 
  * @author IFSchleife
@@ -8,9 +9,8 @@ package de.vitbund.vitmaze.players.ifschleife.karte;
 public class Wand extends Feld {
 
 	public Wand(Koordinaten punkt, Karte karte, boolean erkundet) {
-		super(punkt, karte);
+		super(punkt, karte, Feld.wand);
 		this.erkundet = true;
-		// TODO Automatisch generierter Konstruktorstub
 	}
 
 	public boolean istBegehbar() {

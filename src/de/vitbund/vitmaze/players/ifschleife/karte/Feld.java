@@ -2,11 +2,20 @@ package de.vitbund.vitmaze.players.ifschleife.karte;
 
 public abstract class Feld {
 
-	final int x;
-	final int y;
-	final Koordinaten punkt;
+	// geht wahrscheinlich schöner über enums oder ähnlich, keine Lust mehr
+	// nachzulesen TODO siehe links
+	public static String flur = "FLOOR";
+	public static String wand = "WALL";
+	public static String ziel = "FINISH";
+	public static String formular = "FORM";
 
-	boolean erkundet;
+	private final int x;
+	private final int y;
+	private final Koordinaten punkt;
+
+	private String typ = "";
+
+	protected boolean erkundet;
 
 	// Wege, keine echten Felder
 	private Feld nord = null;
@@ -15,7 +24,7 @@ public abstract class Feld {
 	private Feld west = null;
 	private Karte karte; // Karte, zu der das Feld gehört
 
-	public Feld(Koordinaten punkt, Karte karte) {
+	public Feld(Koordinaten punkt, Karte karte, String typ) {
 		this.punkt = punkt;
 		this.x = punkt.getX();
 		this.y = punkt.getY();
@@ -27,15 +36,12 @@ public abstract class Feld {
 	 * erkundet gesetzt werden kann Variable -> erkundet
 	 */
 	public boolean pruefenErkundet() {
-		// TODO
-		// Das Feld ist bereits erkundet
 		if (erkundet) {
 			return erkundet;
 		}
-		// FIXME Arraygrenzen /Mapborders
 
-		if (karte.isFeldBekannt(punkt.norden()) && karte.isFeldBekannt(punkt.osten()) && karte.isFeldBekannt(punkt.sueden())
-				&& karte.isFeldBekannt(punkt.westen())) {
+		if (karte.isFeldBekannt(punkt.norden()) && karte.isFeldBekannt(punkt.osten())
+				&& karte.isFeldBekannt(punkt.sueden()) && karte.isFeldBekannt(punkt.westen())) {
 			erkundet = true;
 			return erkundet;
 		}
@@ -79,19 +85,33 @@ public abstract class Feld {
 
 	/**
 	 * Sollte nur zur Ausgabe in Texten genutzt werden
+	 * 
 	 * @return
 	 */
 	public String getX() {
-		return ""+x;
+		return "" + x;
 	}
 
 	/**
 	 * Sollte nur zur Ausgabe in Texten genutzt werden
+	 * 
 	 * @return
 	 */
 	public String getY() {
-		return ""+y;
+		return "" + y;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "ABSTRACT FIELD";
+	}
+
+	public String getTyp() {
+		return typ;
+	}
+
+	public void setTyp(String typ) {
+		this.typ = typ;
+	}
+
 }

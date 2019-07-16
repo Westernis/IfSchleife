@@ -1,18 +1,20 @@
 package de.vitbund.vitmaze.players.ifschleife.karte;
+
 /**
  * 
  * @author IFSchleife
  *
  */
-public class Ziel extends Flur {
+public class Ziele extends Flur {
 
 	private int playerID;
 	private int formID;
-	
-	public Ziel(Koordinaten punkt, Karte karte, int playerID, int formID) {
+
+	public Ziele(Koordinaten punkt, Karte karte, int playerID, int formID) {
 		super(punkt, karte);
 		this.playerID = playerID;
 		this.formID = formID;
+		this.setTyp(Feld.ziel);
 	}
 
 	public int getPlayerID() {
@@ -29,6 +31,10 @@ public class Ziel extends Flur {
 
 	public void setFormID(int formID) {
 		this.formID = formID;
+	}
+
+	public String toString() {// TODO form und player id mit rausgeben oder nur ziel??
+		return Feld.ziel + " " + playerID + " formID";
 	}
 
 }

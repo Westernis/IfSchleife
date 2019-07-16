@@ -9,7 +9,7 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
  *
  *         Die Grundklasse für alle anderen Bots.
  */
-public class Bot {
+public abstract class Bot {
 
 	// die Karte, die er gerade erkundet
 	protected Karte aktuelleKarte;
@@ -46,32 +46,15 @@ public class Bot {
 	}
 
 	/**
-	 * Die Methode wird von jeder Unterklasse individuell implementiert.
+	 * Die Methode wird von jeder Unterklasse individuell implementiert und dient
+	 * dem aufruf der Entscheidungsfindung und Ausführung durch den jeweiligen Bot
 	 */
-	public void machAktion() {
+	public abstract void machAktion();
 
-		// TODO hier das Hirn aufrufen oder einbauen, die Schleife befindet sich in der
-		// Klasse Init
+	// Bei Erweiterung hier das Hirn einbauen, die Schleife befindet sich in der
+	// Klasse Init
 
-		// IDEE diese Klasse abstract machen genau wie diese Methode und
-		// dann die verschiedenen Varianten von diesem Bot erben lassen?
-		// mögliche Vorteile:
-		// - Bewegungsfkt. könnten die Koordinatenänderung für bots übernehmen,
-		// bei denen angenommen wird es klappt immer
-		// - Die Level 2 Hirne/bots könnten zusätzliche bekannte Karten und Fkt.
-		// bekommen,
-		// ohne das sie für die nicht relevanten Level stören
-		// - man könnte Bots durch weiter vererbung verfeinern, z.B. bräuchte man
-		// eventuell
-		// nur den Umgang mit neuen Sachen hinzufügen für höhere Lvl
-		//
-		// mögliche Nachteile:
-		// - Bot und Ki nicht mehr getrennt, wobei immer noch jede Ki einzeln
-		// implementiert werden kann
-		//
-
-		// Methode als boolean lassen??
-	}
+	// Methode als boolean lassen??
 
 	/**
 	 * mögliche Inputs Norden Sueden Osten Westen
@@ -86,7 +69,6 @@ public class Bot {
 			return "Norden";
 		case "Osten":
 			return "Westen";
-
 		case "Westen":
 			return "Osten";
 		default:
@@ -170,5 +152,5 @@ public class Bot {
 //		return this.punkt.getY();
 //	}
 
-	// TODO Methode finish
+	// TODO Methode finish für alle Bots bereitstellen
 }

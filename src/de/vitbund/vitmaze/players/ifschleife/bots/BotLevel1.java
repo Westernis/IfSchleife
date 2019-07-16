@@ -28,7 +28,7 @@ public class BotLevel1 extends Bot {
 
 			/*
 			 * Wenn der Status des nördlichen Felds nicht "WALL" beeinhaltet gebe "go north"
-			 * aus. TODO: FIXME Ist das schon eine IF-Else-Ladder oder ist es noch unsauber
+			 * aus. FIXME Ist das schon eine IF-Else-Ladder oder ist es noch unsauber
 			 * programmiert iS von "prüfe erst das dann das dann das.... wobei nur der
 			 * letzte Status genommen bzw. überschrieben wird?
 			 */

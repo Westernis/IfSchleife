@@ -17,13 +17,7 @@ public class ZufallsBot extends Bot {
 
 	public ZufallsBot(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
-		// TODO Automatisch generierter Konstruktorstub
 	}
-
-	/**
-	 * TODO: testen füge in machAktion() die aktuelle Implementierung von
-	 * zufallsRichtung() aus und gebe es aus.
-	 */
 
 	private String letzteRichtung = "";
 
@@ -31,8 +25,8 @@ public class ZufallsBot extends Bot {
 
 		aktuelleKarte.aktualisiereFeld(getPunkt().norden()/* y - 1 */, Init.northCellStatus);
 		aktuelleKarte.aktualisiereFeld(getPunkt().sueden() /* y + 1 */, Init.southCellStatus);
-		aktuelleKarte.aktualisiereFeld(getPunkt().osten()/*x + 1*/, Init.eastCellStatus);
-		aktuelleKarte.aktualisiereFeld(getPunkt().westen()/*x - 1*/,  Init.westCellStatus);
+		aktuelleKarte.aktualisiereFeld(getPunkt().osten()/* x + 1 */, Init.eastCellStatus);
+		aktuelleKarte.aktualisiereFeld(getPunkt().westen()/* x - 1 */, Init.westCellStatus);
 		aktuelleKarte.aktualisiereFeld(getPunkt(), Init.currentCellStatus);
 
 		nochSchlauereZufallsrichtung();
@@ -44,7 +38,7 @@ public class ZufallsBot extends Bot {
 	 * 
 	 * @return
 	 */
-	public String zufallsRichtung() {
+	private String zufallsRichtung() {
 		double zufallsZahl = Math.random();
 
 		if (zufallsZahl < 0.25) {
@@ -59,7 +53,7 @@ public class ZufallsBot extends Bot {
 			return "go south";
 		}
 	}
-	
+
 	/**
 	 * eine noch bessere Version des ZufallsWegFindungs-Algorithmus, nun mit Prüfung
 	 * ob Wände im Weg sind...
@@ -119,7 +113,7 @@ public class ZufallsBot extends Bot {
 			return true;
 		}
 
-		// return false; // TODO: warum muss hier ein Return stehen? Für den Fall dass
+		// return false; //warum muss hier ein Return stehen? Für den Fall dass
 		// SCase nicht
 		// durchlaufen wird??? -> default hat gefehlt
 
