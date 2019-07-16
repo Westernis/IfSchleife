@@ -9,4 +9,9 @@ public class Flur extends Feld {
 	public boolean istBegehbar() {
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		return this.getTyp();
+	}
 }
