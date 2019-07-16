@@ -1,5 +1,6 @@
-package de.vitbund.vitmaze.players.ifschleife;
+package de.vitbund.vitmaze.players.ifschleife.bots;
 
+import de.vitbund.vitmaze.players.ifschleife.Init;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 
 /**

@@ -2,6 +2,10 @@ package de.vitbund.vitmaze.players.ifschleife;
 
 import java.util.Scanner;
 
+import de.vitbund.vitmaze.players.ifschleife.bots.Bot;
+import de.vitbund.vitmaze.players.ifschleife.bots.BotLevel1;
+import de.vitbund.vitmaze.players.ifschleife.bots.BotLevel2;
+import de.vitbund.vitmaze.players.ifschleife.bots.ZufallsBot2;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 
