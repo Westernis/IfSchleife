@@ -3,7 +3,7 @@ package de.vitbund.vitmaze.players.ifschleife;
 import java.util.Scanner;
 
 import de.vitbund.vitmaze.players.ifschleife.bots.Bot;
-import de.vitbund.vitmaze.players.ifschleife.bots.BotLevel2;
+import de.vitbund.vitmaze.players.ifschleife.bots.SuperBot;
 import de.vitbund.vitmaze.players.ifschleife.bots.ZufallsBot2Lvl1;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
@@ -61,10 +61,10 @@ public class Init {
 
 		switch (level) {
 		case 1:
-			unserBot = new ZufallsBot2Lvl1(karte, playerId, startX, startY);
+			unserBot = new SuperBot(karte, playerId, startX, startY);
 			break;
 		case 2:
-			unserBot = new ZufallsBot2Lvl1(karte, playerId, startX, startY);
+			unserBot = new SuperBot(karte, playerId, startX, startY);
 			break;
 		case 3:
 			unserBot = new ZufallsBot2Lvl1(karte, playerId, startX, startY);

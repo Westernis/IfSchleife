@@ -1,5 +1,8 @@
 package de.vitbund.vitmaze.players.ifschleife.bots;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.vitbund.vitmaze.players.ifschleife.Init;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
@@ -14,6 +17,7 @@ public abstract class Bot {
 
 	// die Karte, die er gerade erkundet
 	protected Karte aktuelleKarte;
+	private String letzteRichtung = "";
 
 	public Karte getAktuelleKarte() {
 		return aktuelleKarte;
@@ -144,7 +148,7 @@ public abstract class Bot {
 	public Koordinaten getOrt() {
 		return ort;
 	}
-	
+
 	public void rundeInitialisiern() {
 
 		aktuelleKarte.aktualisiereFeld(getOrt().norden()/* y - 1 */, Init.northCellStatus);
@@ -154,7 +158,16 @@ public abstract class Bot {
 		aktuelleKarte.aktualisiereFeld(getOrt(), Init.currentCellStatus);
 		if (aktuelleKarte.getFeld(getOrt()) != null) {
 			aktuelleKarte.getFeld(getOrt()).pruefenErkundet();
-		};
+		}
+		;
+	}
+
+	protected void aufsammeln() {
+		System.out.println("take");
+	}
+	
+	protected void beenden() {
+		System.out.println("finish");
 	}
 
 //	public int getX() {
@@ -166,4 +179,98 @@ public abstract class Bot {
 //	}
 
 	// TODO Methode finish für alle Bots bereitstellen
+
+	public String schlauereZufallsrichtung() {
+
+//		letzteRichtung = "";
+		List<String> richtungsliste = new ArrayList<String>();
+
+		if (!"WALL".equals(Init.northCellStatus)) {
+			richtungsliste.add("Norden");
+		}
+		if (!"WALL".equals(Init.southCellStatus)) {
+			richtungsliste.add("Sueden");
+		}
+		if (!"WALL".equals(Init.westCellStatus)) {
+			richtungsliste.add("Westen");
+		}
+		if (!"WALL".equals(Init.eastCellStatus)) {
+			richtungsliste.add("Osten");
+		}
+
+		System.err.println(richtungsliste.size());
+
+		if ("OK NORTH".equals(Init.lastActionsResult)) {
+			letzteRichtung = "Norden";
+		} else if ("OK SOUTH".equals(Init.lastActionsResult)) {
+			letzteRichtung = "Sueden";
+		} else if ("OK EAST".equals(Init.lastActionsResult)) {
+			letzteRichtung = "Osten";
+		} else if ("OK WEST".equals(Init.lastActionsResult)) {
+			letzteRichtung = "Westen";
+		}
+
+		switch (richtungsliste.size()) {
+
+		case 1:
+
+			if (richtungsliste.contains("Norden")) {
+				nachNorden();
+			} else if (richtungsliste.contains("Sueden")) {
+				nachSueden();
+			} else if (richtungsliste.contains("Westen")) {
+				nachWesten();
+			} else if (richtungsliste.contains("Osten")) {
+				nachOsten();
+			}
+
+			break;
+// 			case 2,3,4 zusammengefasst weil die aufgrund der entfernung der letzten Richtung das selbe machen
+		case 2:
+		case 3:
+		case 4:
+			// removeIf um letzte Richtung aus der Liste zu entfernen und danach in eine
+			// neue zu gehen
+
+//				richtungsliste.removeIf(n -> (letzteRichtung.equals(n)));
+//				kann man nich benutzen geht nicht -> TODO noch mal testen
+
+			int index = -1;
+			// System.err.println(richtungUmkehren(letzteRichtung));
+			for (String string : richtungsliste) {
+				// System.err.println("Liste: " + string);
+				if (string.equals(richtungUmkehren(letzteRichtung))) {
+					// zu riskant im foreach was zu entfernen, daher index speichern.
+					index = richtungsliste.indexOf(string);
+
+				}
+			}
+			// Element entfernen
+			if (index > -1) {
+				richtungsliste.remove(index);
+			}
+
+			// System.err.println("das ist der zweite spass: " + richtungsliste.size());
+
+			int x = (int) (Math.random() * richtungsliste.size());
+			letzteRichtung = richtungsliste.get(x);
+			weiterGehen();
+
+		default:
+		}
+
+		return "hallooooo";
+	}
+
+	public void weiterGehen() {
+		if (letzteRichtung == "Norden") {
+			nachNorden();
+		} else if (letzteRichtung == "Sueden") {
+			nachSueden();
+		} else if (letzteRichtung == "Westen") {
+			nachWesten();
+		} else if (letzteRichtung == "Osten") {
+			nachOsten();
+		}
+	}
 }

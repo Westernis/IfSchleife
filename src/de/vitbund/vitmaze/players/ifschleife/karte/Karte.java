@@ -107,7 +107,8 @@ public class Karte {
 
 	public Feld getFeld(Koordinaten punkt) {
 		// Arraygrenzen abfangen sollte nicht nötig sein, dafür ist die
-		// koordinatenklassse zuständig
+		// koordinatenklassse zuständig7
+		System.err.println("helmut " + felder[punkt.getX()][punkt.getY()]+ " xy "+ punkt.getX() + " "+ punkt.getY());
 		return felder[punkt.getX()][punkt.getY()];
 	}
 

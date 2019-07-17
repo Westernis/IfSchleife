@@ -34,8 +34,8 @@ public class Ziele extends Flur {
 	}
 
 	public String toString() {// TODO form und player id mit rausgeben oder nur ziel??
-		//TODO Ziel vom Dokument unterscheiden bei der Rückgabe
-		return this.getTyp() + " " + playerID + " formID";
+		// TODO Ziel vom Dokument unterscheiden bei der Rückgabe
+		return this.getTyp() + " " + playerID + " " + formID;
 	}
 
 }
