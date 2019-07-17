@@ -3,9 +3,8 @@ package de.vitbund.vitmaze.players.ifschleife;
 import java.util.Scanner;
 
 import de.vitbund.vitmaze.players.ifschleife.bots.Bot;
-import de.vitbund.vitmaze.players.ifschleife.bots.BotLevel1;
 import de.vitbund.vitmaze.players.ifschleife.bots.BotLevel2;
-import de.vitbund.vitmaze.players.ifschleife.bots.ZufallsBot2;
+import de.vitbund.vitmaze.players.ifschleife.bots.ZufallsBot2Lvl1;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 
@@ -62,23 +61,23 @@ public class Init {
 
 		switch (level) {
 		case 1:
-			unserBot = new ZufallsBot2(karte, playerId, startX, startY);
+			unserBot = new ZufallsBot2Lvl1(karte, playerId, startX, startY);
 			break;
 		case 2:
-			unserBot = new ZufallsBot2(karte, playerId, startX, startY);
+			unserBot = new ZufallsBot2Lvl1(karte, playerId, startX, startY);
 			break;
 		case 3:
-			unserBot = new ZufallsBot2(karte, playerId, startX, startY);
+			unserBot = new ZufallsBot2Lvl1(karte, playerId, startX, startY);
 			break;
 		case 4:
-			unserBot = new ZufallsBot2(karte, playerId, startX, startY);
+			unserBot = new ZufallsBot2Lvl1(karte, playerId, startX, startY);
 			break;
 		case 5:
-			unserBot = new ZufallsBot2(karte, playerId, startX, startY);
+			unserBot = new ZufallsBot2Lvl1(karte, playerId, startX, startY);
 			break;
 
 		default:
-			unserBot = new ZufallsBot2(karte, playerId, startX, startY);
+			unserBot = new ZufallsBot2Lvl1(karte, playerId, startX, startY);
 			break;
 		}
 
@@ -110,13 +109,4 @@ public class Init {
 		// Alles fertig -> aufräumen
 		input.close();
 	}
-
-	public static Bot erstelleBotLevel1(Karte karte, int playerId, int startX, int startY) {
-		return new BotLevel1(karte, playerId, startX, startY);
-	}
-
-	public static Bot erstelleBotLevel2(Karte karte, int playerId, int startX, int startY) {
-		return new BotLevel2(karte, playerId, startX, startY);
-	}
-
 }

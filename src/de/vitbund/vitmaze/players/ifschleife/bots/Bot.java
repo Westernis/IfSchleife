@@ -1,5 +1,6 @@
 package de.vitbund.vitmaze.players.ifschleife.bots;
 
+import de.vitbund.vitmaze.players.ifschleife.Init;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 
@@ -142,6 +143,18 @@ public abstract class Bot {
 
 	public Koordinaten getOrt() {
 		return ort;
+	}
+	
+	public void rundeInitialisiern() {
+
+		aktuelleKarte.aktualisiereFeld(getOrt().norden()/* y - 1 */, Init.northCellStatus);
+		aktuelleKarte.aktualisiereFeld(getOrt().sueden() /* y + 1 */, Init.southCellStatus);
+		aktuelleKarte.aktualisiereFeld(getOrt().osten()/* x + 1 */, Init.eastCellStatus);
+		aktuelleKarte.aktualisiereFeld(getOrt().westen()/* x - 1 */, Init.westCellStatus);
+		aktuelleKarte.aktualisiereFeld(getOrt(), Init.currentCellStatus);
+		if (aktuelleKarte.getFeld(getOrt()) != null) {
+			aktuelleKarte.getFeld(getOrt()).pruefenErkundet();
+		};
 	}
 
 //	public int getX() {

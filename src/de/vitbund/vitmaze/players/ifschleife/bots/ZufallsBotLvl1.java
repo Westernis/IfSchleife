@@ -10,9 +10,9 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
  *         Die Klasse stellt einen Bot dar (soll darstellen), der ausschlieﬂlich
  *         nach dem Zufall seine Wegfindung ableitet.
  */
-public class ZufallsBot extends Bot {
+public class ZufallsBotLvl1 extends Bot {
 
-	public ZufallsBot(Karte karte, int playerId, int x, int y) {
+	public ZufallsBotLvl1(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
 	}
 
@@ -20,12 +20,7 @@ public class ZufallsBot extends Bot {
 
 	public void machAktion() {
 
-		aktuelleKarte.aktualisiereFeld(getOrt().norden()/* y - 1 */, Init.northCellStatus);
-		aktuelleKarte.aktualisiereFeld(getOrt().sueden() /* y + 1 */, Init.southCellStatus);
-		aktuelleKarte.aktualisiereFeld(getOrt().osten()/* x + 1 */, Init.eastCellStatus);
-		aktuelleKarte.aktualisiereFeld(getOrt().westen()/* x - 1 */, Init.westCellStatus);
-		aktuelleKarte.aktualisiereFeld(getOrt(), Init.currentCellStatus);
-
+		this.rundeInitialisiern();
 		nochSchlauereZufallsrichtung();
 	}
 

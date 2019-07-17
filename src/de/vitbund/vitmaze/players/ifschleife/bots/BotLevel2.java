@@ -33,7 +33,11 @@ public class BotLevel2 extends Bot {
 		 * 3. Alles eingesammelt -> zu dem Ziel fahren
 		 * 
 		 */	
-		
-
 	}
+	
+	protected void aufsammeln() {
+		System.out.println("take");
+	}
+	
+	
 }
