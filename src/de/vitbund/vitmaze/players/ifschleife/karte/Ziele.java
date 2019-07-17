@@ -10,11 +10,11 @@ public class Ziele extends Flur {
 	private int playerID;
 	private int formID;
 
-	public Ziele(Koordinaten punkt, Karte karte, int playerID, int formID) {
+	public Ziele(Koordinaten punkt, Karte karte, int playerID, int formID, String typ) {
 		super(punkt, karte);
 		this.playerID = playerID;
 		this.formID = formID;
-		this.setTyp(Feld.ziel);
+		this.setTyp(typ);
 	}
 
 	public int getPlayerID() {

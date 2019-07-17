@@ -43,6 +43,7 @@ public abstract class Feld {
 		this.x = punkt.getX();
 		this.y = punkt.getY();
 		this.karte = karte;
+		this.typ = typ;
 	}
 
 	/**

@@ -108,7 +108,7 @@ public class Karte {
 	public Feld getFeld(Koordinaten punkt) {
 		// Arraygrenzen abfangen sollte nicht nötig sein, dafür ist die
 		// koordinatenklassse zuständig7
-		System.err.println("helmut " + felder[punkt.getX()][punkt.getY()]+ " xy "+ punkt.getX() + " "+ punkt.getY());
+		//System.err.println("helmut " + felder[punkt.getX()][punkt.getY()] + " xy " + punkt.getX() + " " + punkt.getY());
 		return felder[punkt.getX()][punkt.getY()];
 	}
 
@@ -120,7 +120,10 @@ public class Karte {
 				if (felder[j][i] == null) {
 					System.err.print("0");
 				} else if (felder[j][i].istBegehbar() == true) {
-					System.err.print("|");
+					if (felder[j][i].getTyp().equals(Feld.flur)) {
+						System.err.print("_");
+					} else
+						System.err.print("|");
 				} else {
 					System.err.print("W");
 

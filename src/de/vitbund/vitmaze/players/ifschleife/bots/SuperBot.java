@@ -26,8 +26,10 @@ public class SuperBot extends Bot {
 		// Vergleich ob aktuelles Feld ein Ziel ist, wenn ja dann Ende
 
 //		Wenn Helmuts Feld wieder funktioniert, dann damit Ziel prüfen: this.aktuelleKarte.getFeld(getOrt()).toString()
-		if (("FINISH " + super.id + " 0").equals(Init.currentCellStatus)) {
+		if (Init.currentCellStatus.startsWith(("FINISH"/* + super.id + " 0"*/))) {
+			System.err.println("ZIEL");
 			beenden();
+			return; // mit beenden ist eine Aktion gewählt!
 		}
 		
 		schlauereZufallsrichtung();
