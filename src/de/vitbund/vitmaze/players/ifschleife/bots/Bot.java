@@ -55,6 +55,11 @@ public abstract class Bot {
 	 * dem aufruf der Entscheidungsfindung und Ausführung durch den jeweiligen Bot
 	 */
 	public abstract void machAktion();
+	// LEARN Was ist der Unterschied zwischen einer abstrakten Methode und einer
+	// statischen?
+	// Beide sind Instanzunabhängig oder? Aber von Abstraktem kann man keine
+	// Instanzen bilden -> muss man überschreiben
+	// und eine statische kann man Instanzunabhängig ausführen...
 
 	// Bei Erweiterung hier das Hirn einbauen, die Schleife befindet sich in der
 	// Klasse Init
@@ -165,7 +170,7 @@ public abstract class Bot {
 	protected void aufsammeln() {
 		System.out.println("take");
 	}
-	
+
 	protected void beenden() {
 		System.out.println("finish");
 	}
@@ -272,5 +277,49 @@ public abstract class Bot {
 		} else if (letzteRichtung == "Osten") {
 			nachOsten();
 		}
+	}
+
+	// TODO könnte man eig in den Bot verschieben...
+	/**
+	 * Die Methode überprüft ob ein Weg eine Wand ist.
+	 * 
+	 * @return
+	 */
+	public boolean wegGleichWand(String zufaelligeRichtung) {
+		switch (zufaelligeRichtung) {
+		case "go west":
+			if ("WALL".equals(Init.westCellStatus)) {
+				return true;
+			} else
+				return false;
+//				break; benötigt man nicht, weil alle Fälle mit Return beendet werden?
+
+		case "go east":
+			if ("WALL".equals(Init.eastCellStatus)) {
+				return true;
+			} else
+				return false;
+//				break;
+
+		case "go north":
+			if ("WALL".equals(Init.northCellStatus)) {
+				return true;
+			} else
+				return false;
+//				break;
+
+		case "go south":
+			if ("WALL".equals(Init.southCellStatus)) {
+				return true;
+			} else
+				return false;
+//				break;
+		default:
+			return true;
+		}
+
+//			return false; warum muss hier ein Return stehen? Für den Fall dass Case nicht
+		// durchlaufen wird??? -> default hat gefehlt
+
 	}
 }

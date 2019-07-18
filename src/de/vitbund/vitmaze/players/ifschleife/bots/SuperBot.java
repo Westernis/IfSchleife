@@ -29,7 +29,7 @@ public class SuperBot extends Bot {
 		if (Init.currentCellStatus.startsWith(("FINISH"/* + super.id + " 0"*/))) {
 			System.err.println("ZIEL");
 			beenden();
-			return; // mit beenden ist eine Aktion gewählt!
+			return; // mit beenden ist eine Aktion gewählt! TK: Ist ein Return nicht unsauber da eig Rückgabe?
 		}
 		
 		schlauereZufallsrichtung();

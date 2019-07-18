@@ -56,7 +56,7 @@ public class ZufallsBot2Lvl1 extends Bot {
 	}
 
 	
-
+	//TODO könnte man eig in den Bot verschieben...
 	/**
 	 * Die Methode überprüft ob ein Weg eine Wand ist.
 	 * 
