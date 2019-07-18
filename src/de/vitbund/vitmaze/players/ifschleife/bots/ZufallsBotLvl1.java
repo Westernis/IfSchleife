@@ -16,7 +16,8 @@ public class ZufallsBotLvl1 extends Bot {
 		super(karte, playerId, x, y);
 	}
 
-	private String letzteRichtung = "";
+	//TODO kann man den entfernen? Ist doch schlieﬂlich im Bot enthalten... - erledigt + auf protected statt private ge‰ndert...
+//	private String letzteRichtung = "";
 
 	public void machAktion() {
 

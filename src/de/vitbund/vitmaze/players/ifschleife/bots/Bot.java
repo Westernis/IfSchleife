@@ -17,7 +17,7 @@ public abstract class Bot {
 
 	// die Karte, die er gerade erkundet
 	protected Karte aktuelleKarte;
-	private String letzteRichtung = "";
+	protected String letzteRichtung = "";
 
 	public Karte getAktuelleKarte() {
 		return aktuelleKarte;
@@ -279,7 +279,6 @@ public abstract class Bot {
 		}
 	}
 
-	// TODO könnte man eig in den Bot verschieben...
 	/**
 	 * Die Methode überprüft ob ein Weg eine Wand ist.
 	 * 
@@ -322,4 +321,20 @@ public abstract class Bot {
 		// durchlaufen wird??? -> default hat gefehlt
 
 	}
+
+	/**
+	 * @return letzteRichtung
+	 */
+	public String getLetzteRichtung() {
+		return letzteRichtung;
+	}
+
+	/**
+	 * @param letzteRichtung das zu setzende Objekt letzteRichtung
+	 */
+	public void setLetzteRichtung(String letzteRichtung) {
+		this.letzteRichtung = letzteRichtung;
+	}
+	
+	
 }
