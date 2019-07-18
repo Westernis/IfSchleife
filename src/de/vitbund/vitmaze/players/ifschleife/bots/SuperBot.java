@@ -32,7 +32,7 @@ public class SuperBot extends Bot {
 			return; // mit beenden ist eine Aktion gewählt! TK: Ist ein Return nicht unsauber da eig Rückgabe?
 		}
 		
-		schlauereZufallsrichtung();
+		schlauereZufallsrichtung(); //das ist nun unser erkunden; 
 		
 		
 		

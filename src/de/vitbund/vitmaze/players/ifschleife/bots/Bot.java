@@ -184,7 +184,14 @@ public abstract class Bot {
 //	}
 
 	// TODO Methode finish für alle Bots bereitstellen
-
+/**
+ * 
+ * @return
+ * 
+ * Die Methode basiert auf einer zufälligen Weg"findung". Zusätzlich implementiert wurde:
+ *  - eine Erkennung ob eine Wand in der Nähe ist
+ *  - eine Entscheidung auf Basis der freien Richtungen.
+ */
 	public String schlauereZufallsrichtung() {
 
 //		letzteRichtung = "";
@@ -215,8 +222,10 @@ public abstract class Bot {
 			letzteRichtung = "Westen";
 		}
 
+		// hier wird kontrolliert wie viele freie Felder in der Nähe sind
 		switch (richtungsliste.size()) {
 
+		//wenn nur ein Weg frei ist, gehe den freien Weg
 		case 1:
 
 			if (richtungsliste.contains("Norden")) {
