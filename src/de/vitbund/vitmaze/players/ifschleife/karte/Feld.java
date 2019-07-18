@@ -47,6 +47,45 @@ public abstract class Feld {
 	}
 
 	/**
+	 * Diese Methode gibt ein zum {@code String typ} passendes Feldobjekt zurück.
+	 * 
+	 * @param punkt    Die Koordinaten, die das Feld haben soll. Nicht mehr
+	 *                 änderbar.
+	 * @param karte    Die Karte, zu der das Feld gehört.
+	 * @param typ      Typ legt die Art des konstruierten Feldes fest. Für Übergaben
+	 *                 die nicht einer der Konstanten aus der Feld Klasse
+	 *                 entsprechen, wird {@code null} zurückgegeben. Gültige Werte
+	 *                 sind zum Bsp. {@code Feld.wand} oder {@code Feld.flur}
+	 * @param playerID Für relevante Felder hier den Spieler eintragen, dem es
+	 *                 zugeordnet werden soll.
+	 * @param formID   Für Formulare hier die Formularnummer eintragen. Für
+	 *                 Sachbearbeiter(Ziel) die Anzahl der benötigten Formulare
+	 *                 eintragen.
+	 * @return Gibt die zum {@code String typ} passende Unterklasse von {@code Feld} zurück.
+	 */
+	public static Feld konstruiereFeld(Koordinaten punkt, Karte karte, String typ, int playerID, int formID) {
+		
+		switch (typ) {
+		case Feld.flur:
+			
+			return null;
+		case Feld.formular:
+			
+			return null;
+		case Feld.wand:
+			
+			return null;
+		case Feld.ziel:
+			
+			return null;
+
+		default:
+			return null;
+		}
+
+	}
+
+	/**
 	 * prüft anhand der benachbarten Felder (sind alle angelegt?) ob das Feld auf
 	 * erkundet gesetzt werden kann Variable -> erkundet
 	 */
@@ -123,6 +162,10 @@ public abstract class Feld {
 
 	public String getTyp() {
 		return typ;
+	}
+
+	public Koordinaten getPunkt() {
+		return punkt;
 	}
 
 	public void setTyp(String typ) {

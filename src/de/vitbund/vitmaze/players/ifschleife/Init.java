@@ -3,6 +3,7 @@ package de.vitbund.vitmaze.players.ifschleife;
 import java.util.Scanner;
 
 import de.vitbund.vitmaze.players.ifschleife.bots.Bot;
+import de.vitbund.vitmaze.players.ifschleife.bots.BspBotKartennutzung;
 import de.vitbund.vitmaze.players.ifschleife.bots.SuperBot;
 import de.vitbund.vitmaze.players.ifschleife.bots.ZufallsBot2Lvl1;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
@@ -26,6 +27,12 @@ public class Init {
 	public static String southCellStatus = "";
 	public static String westCellStatus = "";
 	public static String eastCellStatus = "";
+	
+	public static ZellStatus currentCell = new ZellStatus();
+	public static ZellStatus northCell = new ZellStatus();
+	public static ZellStatus southCell = new ZellStatus();
+	public static ZellStatus westCell = new ZellStatus();
+	public static ZellStatus eastCell = new ZellStatus();
 
 	/**
 	 * TODO JAVADOC
@@ -61,7 +68,7 @@ public class Init {
 
 		switch (level) {
 		case 1:
-			unserBot = new SuperBot(karte, playerId, startX, startY);
+			unserBot = new ZufallsBot2Lvl1(karte, playerId, startX, startY);
 			break;
 		case 2:
 			unserBot = new SuperBot(karte, playerId, startX, startY);
@@ -92,16 +99,22 @@ public class Init {
 			southCellStatus = input.nextLine();
 			westCellStatus = input.nextLine();
 
+			currentCell.rueckgabeAuswerten(currentCellStatus);
+			northCell.rueckgabeAuswerten(northCellStatus);
+			eastCell.rueckgabeAuswerten(eastCellStatus);
+			southCell.rueckgabeAuswerten(southCellStatus);
+			westCell.rueckgabeAuswerten(westCellStatus);
+			System.err.println("|"+westCell.getOrginalText()+"| "+westCell.getTyp());
 			// Karte befüllen
 
 			// Debug Information ausgeben (optional möglich)
 			/*
 			 * Darstellung eines kleinen Kompass mit den jeweils zugehörigen Zellstati.
 			 */
-			System.err.println("Ergebnis Vorrunde Aktion: " + lastActionsResult);
-			System.err.println("Ergebnis Vorrunde Norden: " + "               " + northCellStatus);
-			System.err.println("Ergebnis Vorrunde Westen / Osten: " + "   " + westCellStatus + " / " + eastCellStatus);
-			System.err.println("Ergebnis Vorrunde Sueden: " + "                " + southCellStatus);
+//			System.err.println("Ergebnis Vorrunde Aktion: " + lastActionsResult);
+//			System.err.println("Ergebnis Vorrunde Norden: " + "               " + northCellStatus);
+//			System.err.println("Ergebnis Vorrunde Westen / Osten: " + "   " + westCellStatus + " / " + eastCellStatus);
+//			System.err.println("Ergebnis Vorrunde Sueden: " + "                " + southCellStatus);
 
 			unserBot.machAktion();
 		}

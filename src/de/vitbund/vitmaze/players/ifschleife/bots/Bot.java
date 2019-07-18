@@ -113,25 +113,25 @@ public abstract class Bot {
 	// bequemlichkeit übersetzung der strings in unsere Methoden
 	public void fahren(String richtung) {
 
-		if ("go west".equals(richtung)) {
+		if ("Westen".equals(richtung)) {
 			this.nachWesten();
 			System.err.println("AB HIER VORHERIGE KARTE");
 			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
 			System.err.println("nach Western");
 		}
-		if ("go north".equals(richtung)) {
+		if ("Norden".equals(richtung)) {
 			this.nachNorden();
 			System.err.println("AB HIER VORHERIGE KARTE");
 			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
 			System.err.println("nach Norden");
 		}
-		if ("go east".equals(richtung)) {
+		if ("Osten".equals(richtung)) {
 			this.nachOsten();
 			System.err.println("AB HIER VORHERIGE KARTE");
 			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
 			System.err.println("nach osten");
 		}
-		if ("go south".equals(richtung)) {
+		if ("Sueden".equals(richtung)) {
 			this.nachSueden();
 			System.err.println("AB HIER VORHERIGE KARTE");
 			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
@@ -151,11 +151,11 @@ public abstract class Bot {
 
 	public void rundeInitialisiern() {
 
-		aktuelleKarte.aktualisiereFeld(getOrt().norden()/* y - 1 */, Init.northCellStatus);
-		aktuelleKarte.aktualisiereFeld(getOrt().sueden() /* y + 1 */, Init.southCellStatus);
-		aktuelleKarte.aktualisiereFeld(getOrt().osten()/* x + 1 */, Init.eastCellStatus);
-		aktuelleKarte.aktualisiereFeld(getOrt().westen()/* x - 1 */, Init.westCellStatus);
-		aktuelleKarte.aktualisiereFeld(getOrt(), Init.currentCellStatus);
+		aktuelleKarte.aktualisiereFeld(getOrt().norden(), Init.northCell);
+		aktuelleKarte.aktualisiereFeld(getOrt().sueden(), Init.southCell);
+		aktuelleKarte.aktualisiereFeld(getOrt().osten(), Init.eastCell);
+		aktuelleKarte.aktualisiereFeld(getOrt().westen(), Init.westCell);
+		aktuelleKarte.aktualisiereFeld(getOrt(), Init.currentCell);
 		if (aktuelleKarte.getFeld(getOrt()) != null) {
 			aktuelleKarte.getFeld(getOrt()).pruefenErkundet();
 		}
@@ -165,7 +165,7 @@ public abstract class Bot {
 	protected void aufsammeln() {
 		System.out.println("take");
 	}
-	
+
 	protected void beenden() {
 		System.out.println("finish");
 	}
@@ -178,7 +178,7 @@ public abstract class Bot {
 //		return this.punkt.getY();
 //	}
 
-	// TODO Methode finish für alle Bots bereitstellen
+	// FIXME umbauen auf zellstatus abfragen oder auf Kartenabfragen.
 
 	public String schlauereZufallsrichtung() {
 

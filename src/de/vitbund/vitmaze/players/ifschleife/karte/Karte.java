@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import de.vitbund.vitmaze.players.ifschleife.ZellStatus;
+
 /**
  * TODO javadoc
  * 
@@ -35,65 +37,55 @@ public class Karte {
 		return felder;
 	}
 
-	// Festestellen, ob bei den Koordinaten schon ein Feldobjekt existiert. Wenn
-	// nein->Anlegen. Welche Wege müssen hinzugefügt werden?
-	public void aktualisiereFeld(Koordinaten punkt, String feldbeschreibung) {
+
+	public void aktualisiereFeld(Koordinaten punkt, ZellStatus feldtyp) {
 		Feld ort = this.getFeld(punkt);
 		Feld nachbar;
-		// FIXME UMBAU hier soll nur noch die Wege Aktualisierung stattfinden, das
-		// anlegen eines Korrektenfeldtyps wird in eine statische Methode der Feld
-		// Klasse verlegt -> Feld.konstruiereFeld(String input)
 
-		if (ort == null) {
-			switch (feldbeschreibung) {
-			case "WALL":
-				felder[punkt.getX()][punkt.getY()] = new Wand(punkt, this, true); // Bei Wand keine Wege nötig
-				break;
-			case "FLOOR":
-			default:
-				ort = new Flur(punkt, this); // neues Feld anlegen
-				felder[punkt.getX()][punkt.getY()] = ort; // Feld sichern
-				// Wege erstellen
+		System.err.println("Punkt " + punkt);
+		
+		// Wenn kein Feld vorhanden ist ODER das vorhandene Feld ein Formular und das
+		// neu ein Flur ist (oder andersherum) wird eine neue passende Feldinstanz
+		// angelegt und gespeichert
+		if (ort == null || ((Feld.formular.equals(feldtyp.getTyp()) || Feld.flur.equals(feldtyp.getTyp()))
+				&& !ort.getTyp().equals(feldtyp.getTyp()))) {
 
-				/*
-				 * prüfen, ob das benachbarte Feld auch schon bekannt (!=null) ist UND ob das
-				 * Feld begehbar ist. Wenn ja, dann Weg setzen (set"Himmelsrichtun"g()), und
-				 * auch umgekehrt. Wenn nein, dann bleibt die Variable auf null, daher es muss
-				 * nix gemacht werden
-				 */
-				// Wege setzen
-				// Osten
-				nachbar = getFeld(punkt.osten()); // das zu betrachtende Nachbarfeld holen
-				if (this.isFeldBekannt(punkt.osten()) && nachbar.istBegehbar()) { // Ost
-					ort.setOst(nachbar);
-					nachbar.setWest(ort);
-				}
-				// Westen
-				nachbar = getFeld(punkt.westen()); // das zu betrachtende Nachbarfeld holen
-				if (this.isFeldBekannt(punkt.westen()) && nachbar.istBegehbar()) { // Ost
-					ort.setWest(nachbar);
-					nachbar.setOst(ort);
-				}
-				// Norden
-				nachbar = getFeld(punkt.norden()); // das zu betrachtende Nachbarfeld holen
-				if (this.isFeldBekannt(punkt.norden()) && nachbar.istBegehbar()) { // Ost
-					ort.setNord(nachbar);
-					nachbar.setSued(ort);
-				}
-				// Süden
-				nachbar = getFeld(punkt.sueden()); // das zu betrachtende Nachbarfeld holen
-				if (this.isFeldBekannt(punkt.sueden()) && nachbar.istBegehbar()) { // Ost
-					ort.setSued(nachbar);
-					nachbar.setNord(ort);
-				}
+			System.err.println("anzulegen: "+feldtyp.getTyp());
+			// Feldkonstruktionsmethode aufrufen und im Array speichern
+			Feld test =  Feld.konstruiereFeld(punkt, this, feldtyp.getTyp(),
+					feldtyp.getPlayerID(), feldtyp.getFormNumber());
+			System.err.println("Feld anlegen "+ test);
+			felder[punkt.getX()][punkt.getY()] = test;
+		}
+		//abfangen falls zwei Formular durch verschieben die Plätze getauscht haben
+		if(Feld.formular.equals(feldtyp.getTyp())) {
+			//TODO abfangen fertig machen
+		}
 
-				// break;
-
-				// TODO case "FINISH"
-				// TODO case "FORM"
-				// TODO gegnerischer Bot?
-			}
-
+		// Wege setzen
+		// Osten
+		nachbar = getFeld(punkt.osten()); // das zu betrachtende Nachbarfeld holen
+		if (this.isFeldBekannt(punkt.osten()) && nachbar.istBegehbar()) { // Ost
+			ort.setOst(nachbar);
+			nachbar.setWest(ort);
+		}
+		// Westen
+		nachbar = getFeld(punkt.westen()); // das zu betrachtende Nachbarfeld holen
+		if (this.isFeldBekannt(punkt.westen()) && nachbar.istBegehbar()) { // Ost
+			ort.setWest(nachbar);
+			nachbar.setOst(ort);
+		}
+		// Norden
+		nachbar = getFeld(punkt.norden()); // das zu betrachtende Nachbarfeld holen
+		if (this.isFeldBekannt(punkt.norden()) && nachbar.istBegehbar()) { // Ost
+			ort.setNord(nachbar);
+			nachbar.setSued(ort);
+		}
+		// Süden
+		nachbar = getFeld(punkt.sueden()); // das zu betrachtende Nachbarfeld holen
+		if (this.isFeldBekannt(punkt.sueden()) && nachbar.istBegehbar()) { // Ost
+			ort.setSued(nachbar);
+			nachbar.setNord(ort);
 		}
 	}
 
@@ -108,7 +100,8 @@ public class Karte {
 	public Feld getFeld(Koordinaten punkt) {
 		// Arraygrenzen abfangen sollte nicht nötig sein, dafür ist die
 		// koordinatenklassse zuständig7
-		//System.err.println("helmut " + felder[punkt.getX()][punkt.getY()] + " xy " + punkt.getX() + " " + punkt.getY());
+		// System.err.println("helmut " + felder[punkt.getX()][punkt.getY()] + " xy " +
+		// punkt.getX() + " " + punkt.getY());
 		return felder[punkt.getX()][punkt.getY()];
 	}
 
@@ -250,21 +243,21 @@ public class Karte {
 	public static void main(String[] args) {
 		Karte karte = new Karte(4, 4);
 		// x Richtung
-		for (int i = 0; i < 4; i++) {
-			karte.aktualisiereFeld(new Koordinaten(i, 0), "WALL");
-			karte.aktualisiereFeld(new Koordinaten(i, 3), "WALL");
-		}
-		// y Richtung
-		for (int i = 0; i < 4; i++) {
-			karte.aktualisiereFeld(new Koordinaten(0, i), "WALL");
-			karte.aktualisiereFeld(new Koordinaten(3, i), "WALL");
-		}
-
-		karte.aktualisiereFeld(new Koordinaten(1, 1), "FLOOR");
-		karte.aktualisiereFeld(new Koordinaten(2, 1), "FLOOR");
-		karte.aktualisiereFeld(new Koordinaten(1, 2), "FLOOR");
-		karte.aktualisiereFeld(new Koordinaten(2, 2), "FLOOR");
-		karte.findeWege(new Koordinaten(2, 2));
+//		for (int i = 0; i < 4; i++) {
+//			karte.aktualisiereFeld(new Koordinaten(i, 0), "WALL");
+//			karte.aktualisiereFeld(new Koordinaten(i, 3), "WALL");
+//		}
+//		// y Richtung
+//		for (int i = 0; i < 4; i++) {
+//			karte.aktualisiereFeld(new Koordinaten(0, i), "WALL");
+//			karte.aktualisiereFeld(new Koordinaten(3, i), "WALL");
+//		}
+//
+//		karte.aktualisiereFeld(new Koordinaten(1, 1), "FLOOR");
+//		karte.aktualisiereFeld(new Koordinaten(2, 1), "FLOOR");
+//		karte.aktualisiereFeld(new Koordinaten(1, 2), "FLOOR");
+//		karte.aktualisiereFeld(new Koordinaten(2, 2), "FLOOR");
+//		karte.findeWege(new Koordinaten(2, 2));
 
 	}
 
@@ -286,16 +279,16 @@ public class Karte {
 
 	}
 
-	public ArrayList<Feld> werteListeAus(Map<Feld, VorhergehenderSchritt> karte, Feld wunschZiel) {
+	public ArrayList<Feld> werteListeAus(Map<Feld, VorhergehenderSchritt> wege, Feld wunschZiel) {
 		ArrayList<Feld> rueckgabe = new ArrayList<Feld>();
 		rueckgabe.add(wunschZiel);
 
-		Feld arbeitsVariable = karte.get(wunschZiel).getVorgaenger();
+		Feld arbeitsVariable = wege.get(wunschZiel).getVorgaenger();
 
 		// der erste Wert (Startknoten) hat als Feld null, daher prüfen wir gegen null.
 		while (arbeitsVariable != null) {
 			rueckgabe.add(0, arbeitsVariable);
-			arbeitsVariable = karte.get(arbeitsVariable).getVorgaenger();
+			arbeitsVariable = wege.get(arbeitsVariable).getVorgaenger();
 		}
 
 		return rueckgabe;

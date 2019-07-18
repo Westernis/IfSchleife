@@ -27,18 +27,6 @@ public class ZufallsBot2Lvl1 extends Bot {
 			System.out.println("finish");
 		}
 
-//		int x = this.getPunkt().getX();
-//		int y = this.getPunkt().getY();
-
-//		//in die Bot Klasse verschoben
-//		aktuelleKarte.aktualisiereFeld(getOrt().norden()/* y - 1 */, Init.northCellStatus);
-//		aktuelleKarte.aktualisiereFeld(getOrt().sueden() /* y + 1 */, Init.southCellStatus);
-//		aktuelleKarte.aktualisiereFeld(getOrt().osten()/* x + 1 */, Init.eastCellStatus);
-//		aktuelleKarte.aktualisiereFeld(getOrt().westen()/* x - 1 */, Init.westCellStatus);
-//		aktuelleKarte.aktualisiereFeld(getOrt(), Init.currentCellStatus);
-//		if (aktuelleKarte.getFeld(getOrt()) != null) {
-//			aktuelleKarte.getFeld(getOrt()).pruefenErkundet();
-//		}
 		this.rundeInitialisiern(); // TODO überlegen muss das für jeden Bot gemacht werden, wenn ja in die Init
 									// verschieben?
 

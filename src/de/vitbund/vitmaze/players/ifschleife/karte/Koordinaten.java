@@ -169,6 +169,44 @@ public class Koordinaten {
 		return new Koordinaten(this.x + 1, this.y);
 	}
 
+	/**
+	 * Gibt für direkt benachbarte Koordinaten die Richtung zurück.
+	 * 
+	 * @param start 
+	 * @param ziel
+	 * @return Gibt {@code null} wenn es keine benachbarten Knoten sind. 
+	 */
+	public static String getRichtung(Koordinaten start, Koordinaten ziel) {
+		//TODO die Strings durch konstanten ersetzen
+		if(start.getXPlus(1) == ziel.getX()) {
+			return "Sueden"; 
+		}
+		if(start.getXPlus(-1) == ziel.getX()) {
+			return "Norden"; 
+		}
+		if(start.getYPlus(1) == ziel.getX()) {
+			return "Osten"; 
+		}
+		if(start.getYPlus(-1) == ziel.getX()) {
+			return "Westen"; 
+		}
+		return null;
+	}
+
+	public static void main(String[] args) {
+		Koordinaten.setzeMaximaleKoordinaten(10, 5);
+		Koordinaten p1 = new Koordinaten(0, 0);
+		Koordinaten p2 = new Koordinaten(8, 0);
+		Koordinaten p3 = new Koordinaten(1, 0);
+		Koordinaten p4 = new Koordinaten(9, 0);
+
+		System.err.println(p1);
+		System.err.println(p2);
+		System.err.println(p3);
+		System.err.println(p4);
+		System.err.println(getRichtung(p1, p4));
+	}
+
 	@Override
 	public String toString() {
 		return ("" + this.x + " " + this.y);
