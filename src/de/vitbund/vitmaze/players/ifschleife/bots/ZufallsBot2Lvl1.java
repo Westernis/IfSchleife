@@ -45,49 +45,7 @@ public class ZufallsBot2Lvl1 extends Bot {
 	}
 
 	
-
-	/**
-	 * Die Methode überprüft ob ein Weg eine Wand ist.
-	 * 
-	 * @return
-	 */
-	public boolean wegGleichWand(String zufaelligeRichtung) {
-		switch (zufaelligeRichtung) {
-		case "go west":
-			if ("WALL".equals(Init.westCellStatus)) {
-				return true;
-			} else
-				return false;
-//			break; benötigt man nicht, weil alle Fälle mit Return beendet werden?
-
-		case "go east":
-			if ("WALL".equals(Init.eastCellStatus)) {
-				return true;
-			} else
-				return false;
-//			break;
-
-		case "go north":
-			if ("WALL".equals(Init.northCellStatus)) {
-				return true;
-			} else
-				return false;
-//			break;
-
-		case "go south":
-			if ("WALL".equals(Init.southCellStatus)) {
-				return true;
-			} else
-				return false;
-//			break;
-		default:
-			return true;
-		}
-
-//		return false; warum muss hier ein Return stehen? Für den Fall dass Case nicht
-		// durchlaufen wird??? -> default hat gefehlt
-
-	}
+	
 
 //	public void letztesFeld() {
 //		aktuelleKarte.isFeldBekannt(x, y);

@@ -116,6 +116,7 @@ public class Karte {
 		}
 	}
 
+	//Methode in "istFeld..." statt "isFeld..." umbenennen? - Nein, weil Getter von Boolean
 	public boolean isFeldBekannt(Koordinaten ort) {
 		// return isFeldBekannt(ort.getX(), ort.getY());
 		if (felder[ort.getX()][ort.getY()] == null) {

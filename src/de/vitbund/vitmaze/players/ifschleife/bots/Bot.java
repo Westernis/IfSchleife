@@ -17,7 +17,7 @@ public abstract class Bot {
 
 	// die Karte, die er gerade erkundet
 	protected Karte aktuelleKarte;
-	private String letzteRichtung = "";
+	protected String letzteRichtung = "";
 
 	public Karte getAktuelleKarte() {
 		return aktuelleKarte;
@@ -45,7 +45,7 @@ public abstract class Bot {
 		this.aktuelleKarte = karte;
 		this.id = playerId;
 		ort = new Koordinaten(x, y);
-		//System.err.println("ini bot" + ort);
+		// System.err.println("ini bot" + ort);
 		// this.x = x;
 		// this.y = y;
 	}
@@ -55,6 +55,11 @@ public abstract class Bot {
 	 * dem aufruf der Entscheidungsfindung und Ausführung durch den jeweiligen Bot
 	 */
 	public abstract void machAktion();
+	// LEARN Was ist der Unterschied zwischen einer abstrakten Methode und einer
+	// statischen?
+	// Beide sind Instanzunabhängig oder? Aber von Abstraktem kann man keine
+	// Instanzen bilden -> muss man überschreiben
+	// und eine statische kann man Instanzunabhängig ausführen...
 
 	// Bei Erweiterung hier das Hirn einbauen, die Schleife befindet sich in der
 	// Klasse Init
@@ -84,35 +89,35 @@ public abstract class Bot {
 	// Bewegungsfunktionen
 	protected void nachWesten() {
 		// this.x--;
-		//System.err.println("\nBotstandort " + ort);
+		// System.err.println("\nBotstandort " + ort);
 		this.ort = this.ort.westen();
 		System.out.println("go west");
 	}
 
 	protected void nachSueden() {
 		// this.y++;
-		//System.err.println("\nBotstandort " + ort);
+		// System.err.println("\nBotstandort " + ort);
 		this.ort = this.ort.sueden();
 		System.out.println("go south");
 	}
 
 	protected void nachOsten() {
 		// this.x++;
-		//System.err.println("\nBotstandort " + ort);
+		// System.err.println("\nBotstandort " + ort);
 		this.ort = this.ort.osten();
 		System.out.println("go east");
 	}
 
 	protected void nachNorden() {
 		// this.y--;
-		//System.err.println("\nBotstandort " + ort);
+		// System.err.println("\nBotstandort " + ort);
 		this.ort = this.ort.norden();
 		System.out.println("go north");
 	}
 
 	// bequemlichkeit übersetzung der strings in unsere Methoden
 	public void fahren(String richtung) {
-		System.err.println("fahren"+ richtung);
+		System.err.println("fahren" + richtung);
 		if ("Westen".equals(richtung)) {
 			this.nachWesten();
 //			System.err.println("AB HIER VORHERIGE KARTE");
@@ -137,8 +142,8 @@ public abstract class Bot {
 //			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
 			System.err.println("nach süden");
 		}
-		//this.aktuelleKarte.ausgabe();
-		//System.err.flush();
+		// this.aktuelleKarte.ausgabe();
+		// System.err.flush();
 	}
 
 	public int getId() {
@@ -178,8 +183,14 @@ public abstract class Bot {
 //		return this.punkt.getY();
 //	}
 
-	// FIXME umbauen auf zellstatus abfragen oder auf Kartenabfragen.
-
+	/**
+	 * 
+	 * @return
+	 * 
+	 *         Die Methode basiert auf einer zufälligen Weg"findung". Zusätzlich
+	 *         implementiert wurde: - eine Erkennung ob eine Wand in der Nähe ist -
+	 *         eine Entscheidung auf Basis der freien Richtungen.
+	 */
 	public String schlauereZufallsrichtung() {
 
 //		letzteRichtung = "";
@@ -210,8 +221,10 @@ public abstract class Bot {
 			letzteRichtung = "Westen";
 		}
 
+		// hier wird kontrolliert wie viele freie Felder in der Nähe sind
 		switch (richtungsliste.size()) {
 
+		// wenn nur ein Weg frei ist, gehe den freien Weg
 		case 1:
 
 			if (richtungsliste.contains("Norden")) {
@@ -273,4 +286,62 @@ public abstract class Bot {
 			nachOsten();
 		}
 	}
+
+	/**
+	 * Die Methode überprüft ob ein Weg eine Wand ist.
+	 * 
+	 * @return
+	 */
+	public boolean wegGleichWand(String zufaelligeRichtung) {
+		switch (zufaelligeRichtung) {
+		case "go west":
+			if ("WALL".equals(Init.westCellStatus)) {
+				return true;
+			} else
+				return false;
+//				break; benötigt man nicht, weil alle Fälle mit Return beendet werden?
+
+		case "go east":
+			if ("WALL".equals(Init.eastCellStatus)) {
+				return true;
+			} else
+				return false;
+//				break;
+
+		case "go north":
+			if ("WALL".equals(Init.northCellStatus)) {
+				return true;
+			} else
+				return false;
+//				break;
+
+		case "go south":
+			if ("WALL".equals(Init.southCellStatus)) {
+				return true;
+			} else
+				return false;
+//				break;
+		default:
+			return true;
+		}
+
+//			return false; warum muss hier ein Return stehen? Für den Fall dass Case nicht
+		// durchlaufen wird??? -> default hat gefehlt
+
+	}
+
+	/**
+	 * @return letzteRichtung
+	 */
+	public String getLetzteRichtung() {
+		return letzteRichtung;
+	}
+
+	/**
+	 * @param letzteRichtung das zu setzende Objekt letzteRichtung
+	 */
+	public void setLetzteRichtung(String letzteRichtung) {
+		this.letzteRichtung = letzteRichtung;
+	}
+
 }
