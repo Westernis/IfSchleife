@@ -68,7 +68,7 @@ public class Init {
 
 		switch (level) {
 		case 1:
-			unserBot = new ZufallsBot2Lvl1(karte, playerId, startX, startY);
+			unserBot = new BspBotKartennutzung(karte, playerId, startX, startY);
 			break;
 		case 2:
 			unserBot = new SuperBot(karte, playerId, startX, startY);
@@ -104,7 +104,6 @@ public class Init {
 			eastCell.rueckgabeAuswerten(eastCellStatus);
 			southCell.rueckgabeAuswerten(southCellStatus);
 			westCell.rueckgabeAuswerten(westCellStatus);
-			System.err.println("|"+westCell.getOrginalText()+"| "+westCell.getTyp());
 			// Karte befüllen
 
 			// Debug Information ausgeben (optional möglich)

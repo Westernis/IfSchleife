@@ -37,55 +37,82 @@ public class Karte {
 		return felder;
 	}
 
-
 	public void aktualisiereFeld(Koordinaten punkt, ZellStatus feldtyp) {
 		Feld ort = this.getFeld(punkt);
 		Feld nachbar;
+//		System.err.println("Aktu: " +punkt);
 
-		System.err.println("Punkt " + punkt);
-		
 		// Wenn kein Feld vorhanden ist ODER das vorhandene Feld ein Formular und das
 		// neu ein Flur ist (oder andersherum) wird eine neue passende Feldinstanz
 		// angelegt und gespeichert
 		if (ort == null || ((Feld.formular.equals(feldtyp.getTyp()) || Feld.flur.equals(feldtyp.getTyp()))
 				&& !ort.getTyp().equals(feldtyp.getTyp()))) {
 
-			System.err.println("anzulegen: "+feldtyp.getTyp());
 			// Feldkonstruktionsmethode aufrufen und im Array speichern
-			Feld test =  Feld.konstruiereFeld(punkt, this, feldtyp.getTyp(),
+			felder[punkt.getX()][punkt.getY()] = Feld.konstruiereFeld(punkt, this, feldtyp.getTyp(),
 					feldtyp.getPlayerID(), feldtyp.getFormNumber());
-			System.err.println("Feld anlegen "+ test);
-			felder[punkt.getX()][punkt.getY()] = test;
+			
 		}
-		//abfangen falls zwei Formular durch verschieben die Plätze getauscht haben
-		if(Feld.formular.equals(feldtyp.getTyp())) {
-			//TODO abfangen fertig machen
+		// abfangen falls zwei Formular durch verschieben die Plätze getauscht haben
+		if (Feld.formular.equals(feldtyp.getTyp())) {
+			// TODO abfangen fertig machen
 		}
 
+		
+		
 		// Wege setzen
-		// Osten
-		nachbar = getFeld(punkt.osten()); // das zu betrachtende Nachbarfeld holen
-		if (this.isFeldBekannt(punkt.osten()) && nachbar.istBegehbar()) { // Ost
-			ort.setOst(nachbar);
-			nachbar.setWest(ort);
-		}
-		// Westen
-		nachbar = getFeld(punkt.westen()); // das zu betrachtende Nachbarfeld holen
-		if (this.isFeldBekannt(punkt.westen()) && nachbar.istBegehbar()) { // Ost
-			ort.setWest(nachbar);
-			nachbar.setOst(ort);
-		}
-		// Norden
-		nachbar = getFeld(punkt.norden()); // das zu betrachtende Nachbarfeld holen
-		if (this.isFeldBekannt(punkt.norden()) && nachbar.istBegehbar()) { // Ost
-			ort.setNord(nachbar);
-			nachbar.setSued(ort);
-		}
-		// Süden
-		nachbar = getFeld(punkt.sueden()); // das zu betrachtende Nachbarfeld holen
-		if (this.isFeldBekannt(punkt.sueden()) && nachbar.istBegehbar()) { // Ost
-			ort.setSued(nachbar);
-			nachbar.setNord(ort);
+
+		ort = this.getFeld(punkt); // muss noch mal geholt werden, kann ja sein das oben gerade ein neues Feld
+//		System.err.println("\nWeg: " + ort.getPunkt() + " " +punkt + " X:"+punkt.getX()+ " Y:"+punkt.getY());
+									// angelegt wurde
+		if (ort != null && ort.istBegehbar()) {
+			// Osten
+//			System.err.println("Osten: " +punkt.osten());
+			nachbar = getFeld(punkt.osten()); // das zu betrachtende Nachbarfeld holen
+			if (this.isFeldBekannt(punkt.osten()) && nachbar.istBegehbar()) { // Ost
+				ort.setOst(nachbar);
+				nachbar.setWest(ort);
+			}
+
+			// Westen
+//			System.err.println("Westen: " +punkt.westen());
+			nachbar = getFeld(punkt.westen()); // das zu betrachtende Nachbarfeld holen
+			if (this.isFeldBekannt(punkt.westen()) && nachbar.istBegehbar()) { // Ost
+				ort.setWest(nachbar);
+				nachbar.setOst(ort);
+			}
+
+			// Norden
+//			System.err.println("Norden: " +punkt.norden());
+			nachbar = getFeld(punkt.norden()); // das zu betrachtende Nachbarfeld holen
+			if (this.isFeldBekannt(punkt.norden()) && nachbar.istBegehbar()) { // Ost
+				ort.setNord(nachbar);
+				nachbar.setSued(ort);
+			}
+
+			// Süden
+//			System.err.println("Sueden: " +punkt.sueden());
+			nachbar = getFeld(punkt.sueden()); // das zu betrachtende Nachbarfeld holen
+			if (this.isFeldBekannt(punkt.sueden()) && nachbar.istBegehbar()) { // Ost
+				ort.setSued(nachbar);
+				nachbar.setNord(ort);
+			}
+
+			// Ausgabe der Wege
+//			System.err.print("\nWeg: " + ort.getPunkt() + " " +punkt);
+//			if (ort.getNord() != null) {
+//				System.err.print("N"); 
+//			}
+//			if (ort.getSued() != null) {
+//				System.err.print("S");
+//			}
+//			if (ort.getOst() != null) {
+//				System.err.print("O");
+//			}
+//			if (ort.getWest() != null) {
+//				System.err.print("W");
+//			}
+//			System.err.println("\n");
 		}
 	}
 
@@ -100,8 +127,6 @@ public class Karte {
 	public Feld getFeld(Koordinaten punkt) {
 		// Arraygrenzen abfangen sollte nicht nötig sein, dafür ist die
 		// koordinatenklassse zuständig7
-		// System.err.println("helmut " + felder[punkt.getX()][punkt.getY()] + " xy " +
-		// punkt.getX() + " " + punkt.getY());
 		return felder[punkt.getX()][punkt.getY()];
 	}
 
@@ -223,13 +248,19 @@ public class Karte {
 
 		for (Entry<Feld, VorhergehenderSchritt> feld : wege.entrySet()) {
 			if (feld.getValue().getVorgaenger() == null) {
-				System.err.println("Ziel " + feld.getKey().getX() + " " + feld.getKey().getY() + " Startknoten \t Weg "
+				System.err.println("Ziel " + feld.getKey().getX() + " " + feld.getKey().getY() + "\t Startknoten \t Weg "
 						+ feld.getValue().getWeglaenge());
+				
 			} else {
 
-				System.err.println("Ziel " + feld.getKey().getX() + " " + feld.getKey().getY() + "\t Vorgaenger \t"
+				System.err.print("Ziel " + feld.getKey().getX() + " " + feld.getKey().getY() + "\t Vorgaenger \t"
 						+ feld.getValue().getVorgaenger().getX() + " " + feld.getValue().getVorgaenger().getY()
 						+ "\t Weg " + feld.getValue().getWeglaenge());
+				if(feld.getKey().pruefenErkundet()) {
+					System.err.println("\tE");
+				}else {
+					System.err.println(" ");
+				}
 			}
 		}
 

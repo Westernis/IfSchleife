@@ -45,7 +45,7 @@ public abstract class Bot {
 		this.aktuelleKarte = karte;
 		this.id = playerId;
 		ort = new Koordinaten(x, y);
-		System.err.println("ini bot" + ort);
+		//System.err.println("ini bot" + ort);
 		// this.x = x;
 		// this.y = y;
 	}
@@ -84,61 +84,61 @@ public abstract class Bot {
 	// Bewegungsfunktionen
 	protected void nachWesten() {
 		// this.x--;
-		System.err.println("\nBotstandort " + ort);
-		this.ort.setX(ort.getX() - 1);
+		//System.err.println("\nBotstandort " + ort);
+		this.ort = this.ort.westen();
 		System.out.println("go west");
 	}
 
 	protected void nachSueden() {
 		// this.y++;
-		System.err.println("\nBotstandort " + ort);
-		this.ort.setY(ort.getY() + 1);
+		//System.err.println("\nBotstandort " + ort);
+		this.ort = this.ort.sueden();
 		System.out.println("go south");
 	}
 
 	protected void nachOsten() {
 		// this.x++;
-		System.err.println("\nBotstandort " + ort);
-		this.ort.setX(ort.getX() + 1);
+		//System.err.println("\nBotstandort " + ort);
+		this.ort = this.ort.osten();
 		System.out.println("go east");
 	}
 
 	protected void nachNorden() {
 		// this.y--;
-		System.err.println("\nBotstandort " + ort);
-		this.ort.setY(ort.getY() - 1);
+		//System.err.println("\nBotstandort " + ort);
+		this.ort = this.ort.norden();
 		System.out.println("go north");
 	}
 
 	// bequemlichkeit übersetzung der strings in unsere Methoden
 	public void fahren(String richtung) {
-
+		System.err.println("fahren"+ richtung);
 		if ("Westen".equals(richtung)) {
 			this.nachWesten();
-			System.err.println("AB HIER VORHERIGE KARTE");
-			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
+//			System.err.println("AB HIER VORHERIGE KARTE");
+//			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
 			System.err.println("nach Western");
 		}
 		if ("Norden".equals(richtung)) {
 			this.nachNorden();
-			System.err.println("AB HIER VORHERIGE KARTE");
-			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
+//			System.err.println("AB HIER VORHERIGE KARTE");
+//			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
 			System.err.println("nach Norden");
 		}
 		if ("Osten".equals(richtung)) {
 			this.nachOsten();
-			System.err.println("AB HIER VORHERIGE KARTE");
-			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
+//			System.err.println("AB HIER VORHERIGE KARTE");
+//			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
 			System.err.println("nach osten");
 		}
 		if ("Sueden".equals(richtung)) {
 			this.nachSueden();
-			System.err.println("AB HIER VORHERIGE KARTE");
-			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
+//			System.err.println("AB HIER VORHERIGE KARTE");
+//			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
 			System.err.println("nach süden");
 		}
-		this.aktuelleKarte.ausgabe();
-		System.err.flush();
+		//this.aktuelleKarte.ausgabe();
+		//System.err.flush();
 	}
 
 	public int getId() {
@@ -151,6 +151,7 @@ public abstract class Bot {
 
 	public void rundeInitialisiern() {
 
+		aktuelleKarte.aktualisiereFeld(getOrt(), Init.currentCell);
 		aktuelleKarte.aktualisiereFeld(getOrt().norden(), Init.northCell);
 		aktuelleKarte.aktualisiereFeld(getOrt().sueden(), Init.southCell);
 		aktuelleKarte.aktualisiereFeld(getOrt().osten(), Init.eastCell);
@@ -159,7 +160,6 @@ public abstract class Bot {
 		if (aktuelleKarte.getFeld(getOrt()) != null) {
 			aktuelleKarte.getFeld(getOrt()).pruefenErkundet();
 		}
-		;
 	}
 
 	protected void aufsammeln() {

@@ -15,8 +15,8 @@ public class Koordinaten {
 	private static int yMax;
 	private static boolean maxKoordinatenGesetzt;
 	// Koordinaten des Feldes
-	private int x;
-	private int y;
+	private final int x;
+	private final int y;
 
 	/**
 	 * Konstruktor für ein Satz Koordinaten.
@@ -56,16 +56,8 @@ public class Koordinaten {
 		return x;
 	}
 
-	public void setX(int x) {
-		this.x = korrigiereX(x);
-	}
-
 	public int getY() {
 		return y;
-	}
-
-	public void setY(int y) {
-		this.y = korrigiereY(y);
 	}
 
 	public static int getxMax() {
@@ -179,16 +171,16 @@ public class Koordinaten {
 	public static String getRichtung(Koordinaten start, Koordinaten ziel) {
 		//TODO die Strings durch konstanten ersetzen
 		if(start.getXPlus(1) == ziel.getX()) {
-			return "Sueden"; 
-		}
-		if(start.getXPlus(-1) == ziel.getX()) {
-			return "Norden"; 
-		}
-		if(start.getYPlus(1) == ziel.getX()) {
 			return "Osten"; 
 		}
-		if(start.getYPlus(-1) == ziel.getX()) {
+		if(start.getXPlus(-1) == ziel.getX()) {
 			return "Westen"; 
+		}
+		if(start.getYPlus(1) == ziel.getY()) {
+			return "Sueden"; 
+		}
+		if(start.getYPlus(-1) == ziel.getY()) {
+			return "Norden"; 
 		}
 		return null;
 	}

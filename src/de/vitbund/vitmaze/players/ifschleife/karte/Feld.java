@@ -23,8 +23,8 @@ public abstract class Feld {
 	 */
 	public static final String formular = "FORM";
 
-	private final int x;
-	private final int y;
+//	private final int x;
+//	private final int y;
 	private final Koordinaten punkt;
 
 	private String typ = "";
@@ -40,8 +40,8 @@ public abstract class Feld {
 
 	public Feld(Koordinaten punkt, Karte karte, String typ) {
 		this.punkt = punkt;
-		this.x = punkt.getX();
-		this.y = punkt.getY();
+//		this.x = punkt.getX();
+//		this.y = punkt.getY();
 		this.karte = karte;
 		this.typ = typ;
 	}
@@ -61,23 +61,20 @@ public abstract class Feld {
 	 * @param formID   Für Formulare hier die Formularnummer eintragen. Für
 	 *                 Sachbearbeiter(Ziel) die Anzahl der benötigten Formulare
 	 *                 eintragen.
-	 * @return Gibt die zum {@code String typ} passende Unterklasse von {@code Feld} zurück.
+	 * @return Gibt die zum {@code String typ} passende Unterklasse von {@code Feld}
+	 *         zurück. Gibt {@code null} zurück bei unpassendem Feldtyp.
 	 */
 	public static Feld konstruiereFeld(Koordinaten punkt, Karte karte, String typ, int playerID, int formID) {
-		
+
 		switch (typ) {
 		case Feld.flur:
+			return new Flur(punkt, karte);
 			
-			return null;
-		case Feld.formular:
-			
-			return null;
 		case Feld.wand:
-			
-			return null;
+			return new Wand(punkt, karte);
+		case Feld.formular://fehlendes return/break ist Absicht, der unterschied ist im Parameter Typ drin
 		case Feld.ziel:
-			
-			return null;
+			return new Ziele(punkt, karte, playerID, formID, typ);
 
 		default:
 			return null;
@@ -143,7 +140,7 @@ public abstract class Feld {
 	 * @return
 	 */
 	public String getX() {
-		return "" + x;
+		return "" + punkt.getY();
 	}
 
 	/**
@@ -152,7 +149,7 @@ public abstract class Feld {
 	 * @return
 	 */
 	public String getY() {
-		return "" + y;
+		return "" + punkt.getX();
 	}
 
 	@Override

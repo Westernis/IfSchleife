@@ -35,7 +35,8 @@ public class ZufallsBot2Lvl1 extends Bot {
 //		getAktuelleKarte().ausgabeWegliste(wege);
 
 		// testen der Funktion pruefenErkundet der Karte
-		// aktuelleKarte.toSysErrErkundeteFelder();
+//		 aktuelleKarte.toSysErrErkundeteFelder();
+//		 aktuelleKarte.ausgabe();
 
 //		System.err.print(
 //				" Ort: " + this.getPunkt() + " erkundet " + this.aktuelleKarte.getFeld(getPunkt()).pruefenErkundet());

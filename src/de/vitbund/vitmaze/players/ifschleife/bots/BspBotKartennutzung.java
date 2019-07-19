@@ -18,11 +18,24 @@ public class BspBotKartennutzung extends Bot {
 
 	@Override
 	public void machAktion() {
-		// Wegeliste generieren
+		// input verarbeiten
 		this.rundeInitialisiern();
-		
+		// Wegeliste generieren
 		LinkedHashMap<Feld, VorhergehenderSchritt> wege = this.getAktuelleKarte().findeWege(this.getOrt());
+		
+		
+		//testausgaben
 		this.getAktuelleKarte().ausgabe();
+		this.getAktuelleKarte().toSysErrErkundeteFelder();
+
+		
+		fahreZumUnerkundetenFeld(wege);
+
+
+	}
+	
+	private void fahreZumUnerkundetenFeld(LinkedHashMap<Feld, VorhergehenderSchritt> wege) {
+		// this.aktuelleKarte.ausgabeWegliste(wege);
 		// Zielfeld
 		Feld ziel = null;
 
@@ -56,16 +69,17 @@ public class BspBotKartennutzung extends Bot {
 
 //		Weg zum Ziel bestimmen
 //	 	dazu kann man die Methode werteListeAus nutzen, dann hat man den kompletten Weg in der Hand
-		
-		ArrayList<Feld> meinWeg= this.getAktuelleKarte().werteListeAus(wege, ziel);
-		// der 1. Eintrag ist unser aktuelles feld, der zweite Eintrag enthält das nächste das man ansteuern muss
-		String richtung = Koordinaten.getRichtung(meinWeg.get(0).getPunkt(), meinWeg.get(1).getPunkt());
-		//jetzt hab ich in richtung "Norden", "Sueden", "Westen" oder "Osten" drin
 
-		//anweisung ausführen		
+		ArrayList<Feld> meinWeg = this.getAktuelleKarte().werteListeAus(wege, ziel);
+		// der 1. Eintrag ist unser aktuelles feld, der zweite Eintrag enthält das
+		// nächste das man ansteuern muss
+
+		String richtung = Koordinaten.getRichtung(meinWeg.get(0).getPunkt(), meinWeg.get(1).getPunkt());
+		// jetzt hab ich in richtung "Norden", "Sueden", "Westen" oder "Osten" drin
+		System.err.println(richtung);
+
+		// anweisung ausführen
 		fahren(richtung);
-		
-		
 
 	}
 
