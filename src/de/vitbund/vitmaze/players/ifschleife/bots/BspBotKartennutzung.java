@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
+import de.vitbund.vitmaze.players.ifschleife.Init;
 import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
@@ -33,8 +34,9 @@ public class BspBotKartennutzung extends Bot {
 		LinkedHashMap<Feld, VorhergehenderSchritt> wege = this.getAktuelleKarte().findeWege(this.getOrt());
 
 		// testausgaben
-		this.getAktuelleKarte().ausgabe();
-		this.getAktuelleKarte().toSysErrErkundeteFelder();
+		// this.getAktuelleKarte().ausgabe();
+		// this.getAktuelleKarte().toSysErrErkundeteFelder();
+		System.err.println(Init.currentCellStatus);
 
 		richtung = fahreZumUnerkundetenFeld(wege);//null => alles erkundet 
 		if (richtung != null) {

@@ -71,10 +71,10 @@ public class Init {
 			unserBot = new BspBotKartennutzung(karte, playerId, startX, startY);
 			break;
 		case 2:
-			unserBot = new SuperBot(karte, playerId, startX, startY);
+			unserBot = new BspBotKartennutzung(karte, playerId, startX, startY);
 			break;
 		case 3:
-			unserBot = new ZufallsBot2Lvl1(karte, playerId, startX, startY);
+			unserBot = new BspBotKartennutzung(karte, playerId, startX, startY);
 			break;
 		case 4:
 			unserBot = new ZufallsBot2Lvl1(karte, playerId, startX, startY);
