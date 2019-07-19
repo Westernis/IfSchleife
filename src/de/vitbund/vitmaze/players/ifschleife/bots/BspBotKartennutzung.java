@@ -10,6 +10,12 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 import de.vitbund.vitmaze.players.ifschleife.karte.VorhergehenderSchritt;
 
+/**
+ * Ein Bot an dem die Verwendung der navigation deutlich werden sollte
+ * 
+ * @author helmut.rietz
+ *
+ */
 public class BspBotKartennutzung extends Bot {
 
 	public BspBotKartennutzung(Karte karte, int playerId, int x, int y) {
@@ -18,25 +24,32 @@ public class BspBotKartennutzung extends Bot {
 
 	@Override
 	public void machAktion() {
-		// input verarbeiten
+		String richtung = null;
+
+		// input verarbeiten //TODO in die init verschieben weil in allen Bots drin?
 		this.rundeInitialisiern();
+
 		// Wegeliste generieren
 		LinkedHashMap<Feld, VorhergehenderSchritt> wege = this.getAktuelleKarte().findeWege(this.getOrt());
-		
-		
-		//testausgaben
+
+		// testausgaben
 		this.getAktuelleKarte().ausgabe();
 		this.getAktuelleKarte().toSysErrErkundeteFelder();
 
-		
-		fahreZumUnerkundetenFeld(wege);
+		richtung = fahreZumUnerkundetenFeld(wege);//null => alles erkundet 
+		if (richtung != null) {
+			fahren(richtung);
+		}
 
-
+		// zu testzwecken erst mal einfach finish versuchen damit keine
+		// Zeitüberschreitung auftritt
+		// FIXME sinnvolle alternative
+		System.err.println("finish");
+		System.err.println(this.aktuelleKarte.getZiel(id));
 	}
-	
-	private void fahreZumUnerkundetenFeld(LinkedHashMap<Feld, VorhergehenderSchritt> wege) {
-		// this.aktuelleKarte.ausgabeWegliste(wege);
-		// Zielfeld
+
+	// TODO sollte wahrscheinlich in die Botklasse rein, da es alle brauchen
+	private String fahreZumUnerkundetenFeld(LinkedHashMap<Feld, VorhergehenderSchritt> wege) {
 		Feld ziel = null;
 
 //		 Ich will jetzt die Felder durchgehen bis ich eins mit unerkundet gefunden habe.
@@ -50,21 +63,15 @@ public class BspBotKartennutzung extends Bot {
 			// <Feld,VorhergehenderSchritt>, da hole ich mir jetzt das Feld raus und schaue
 			// ob erkundet != true
 			if (!element.getKey().pruefenErkundet()) {
-
 				ziel = element.getKey();
 				break;// for Schleife abbrechen, wir haben ja ein Ziel
-
 			}
 		}
 
 		// falls kein Ziel gefunden wurde ist noch immer null drin, abfangen
 		if (ziel == null) {
-
-			// zu testzwecken erst mal einfach finish versuchen damit keine
-			// Zeitüberschreitung auftritt
-			// FIXME sinnvolle alternative
-			System.err.println("finish");
-			return;
+			System.err.println("Alles erkundet");
+			return null;
 		}
 
 //		Weg zum Ziel bestimmen
@@ -75,11 +82,13 @@ public class BspBotKartennutzung extends Bot {
 		// nächste das man ansteuern muss
 
 		String richtung = Koordinaten.getRichtung(meinWeg.get(0).getPunkt(), meinWeg.get(1).getPunkt());
-		// jetzt hab ich in richtung "Norden", "Sueden", "Westen" oder "Osten" drin
+		// jetzt hab ich in richtung eine der Werte "Norden", "Sueden", "Westen" oder
+		// "Osten" drin
+
 		System.err.println(richtung);
 
-		// anweisung ausführen
-		fahren(richtung);
+		// Rückgabe
+		return richtung;
 
 	}
 

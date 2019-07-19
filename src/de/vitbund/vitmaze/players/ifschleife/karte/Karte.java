@@ -1,6 +1,8 @@
 package de.vitbund.vitmaze.players.ifschleife.karte;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +21,12 @@ public class Karte {
 	// 1. Index ist die x-Koordinate(Breite), der 2. Index ist die
 	// y-Koordinate(Höhe)
 	private final Feld[][] felder;
+	private int anzahlFormulare = -1;
+	private HashMap<Integer, Ziele> ziele; // HashMap akzeptiert keine primitiven Typen daher Integer hier
 
 	public Karte(int sizeX, int sizeY) {
 		this.felder = new Feld[sizeX][sizeY];
+		this.ziele = new HashMap<Integer, Ziele>();
 	}
 
 	public void getFeldtyp(int x, int y) {
@@ -40,7 +45,6 @@ public class Karte {
 	public void aktualisiereFeld(Koordinaten punkt, ZellStatus feldtyp) {
 		Feld ort = this.getFeld(punkt);
 		Feld nachbar;
-//		System.err.println("Aktu: " +punkt);
 
 		// Wenn kein Feld vorhanden ist ODER das vorhandene Feld ein Formular und das
 		// neu ein Flur ist (oder andersherum) wird eine neue passende Feldinstanz
@@ -51,31 +55,33 @@ public class Karte {
 			// Feldkonstruktionsmethode aufrufen und im Array speichern
 			felder[punkt.getX()][punkt.getY()] = Feld.konstruiereFeld(punkt, this, feldtyp.getTyp(),
 					feldtyp.getPlayerID(), feldtyp.getFormNumber());
-			
+
 		}
 		// abfangen falls zwei Formular durch verschieben die Plätze getauscht haben
 		if (Feld.formular.equals(feldtyp.getTyp())) {
 			// TODO abfangen fertig machen
 		}
 
-		
-		
-		// Wege setzen
+		/*
+		 * ort muss noch mal geholt werden, kann ja sein das oben gerade ein neues Feld
+		 * angelegt wurde,
+		 */
+		ort = this.getFeld(punkt);
 
-		ort = this.getFeld(punkt); // muss noch mal geholt werden, kann ja sein das oben gerade ein neues Feld
-//		System.err.println("\nWeg: " + ort.getPunkt() + " " +punkt + " X:"+punkt.getX()+ " Y:"+punkt.getY());
-									// angelegt wurde
 		if (ort != null && ort.istBegehbar()) {
+
+//			Ziel hinzufügen
+			if (Feld.ziel.equals(ort.getTyp())) {
+				addZiel(ort);
+			}
+//			Wege setzen
 			// Osten
-//			System.err.println("Osten: " +punkt.osten());
 			nachbar = getFeld(punkt.osten()); // das zu betrachtende Nachbarfeld holen
 			if (this.isFeldBekannt(punkt.osten()) && nachbar.istBegehbar()) { // Ost
 				ort.setOst(nachbar);
 				nachbar.setWest(ort);
 			}
-
 			// Westen
-//			System.err.println("Westen: " +punkt.westen());
 			nachbar = getFeld(punkt.westen()); // das zu betrachtende Nachbarfeld holen
 			if (this.isFeldBekannt(punkt.westen()) && nachbar.istBegehbar()) { // Ost
 				ort.setWest(nachbar);
@@ -83,7 +89,6 @@ public class Karte {
 			}
 
 			// Norden
-//			System.err.println("Norden: " +punkt.norden());
 			nachbar = getFeld(punkt.norden()); // das zu betrachtende Nachbarfeld holen
 			if (this.isFeldBekannt(punkt.norden()) && nachbar.istBegehbar()) { // Ost
 				ort.setNord(nachbar);
@@ -91,32 +96,16 @@ public class Karte {
 			}
 
 			// Süden
-//			System.err.println("Sueden: " +punkt.sueden());
 			nachbar = getFeld(punkt.sueden()); // das zu betrachtende Nachbarfeld holen
 			if (this.isFeldBekannt(punkt.sueden()) && nachbar.istBegehbar()) { // Ost
 				ort.setSued(nachbar);
 				nachbar.setNord(ort);
 			}
-
-			// Ausgabe der Wege
-//			System.err.print("\nWeg: " + ort.getPunkt() + " " +punkt);
-//			if (ort.getNord() != null) {
-//				System.err.print("N"); 
-//			}
-//			if (ort.getSued() != null) {
-//				System.err.print("S");
-//			}
-//			if (ort.getOst() != null) {
-//				System.err.print("O");
-//			}
-//			if (ort.getWest() != null) {
-//				System.err.print("W");
-//			}
-//			System.err.println("\n");
 		}
 	}
 
-	//Methode in "istFeld..." statt "isFeld..." umbenennen? - Nein, weil Getter von Boolean
+	// Methode in "istFeld..." statt "isFeld..." umbenennen? - Nein, weil Getter von
+	// Boolean
 	public boolean isFeldBekannt(Koordinaten ort) {
 		// return isFeldBekannt(ort.getX(), ort.getY());
 		if (felder[ort.getX()][ort.getY()] == null) {
@@ -129,6 +118,34 @@ public class Karte {
 		// Arraygrenzen abfangen sollte nicht nötig sein, dafür ist die
 		// koordinatenklassse zuständig7
 		return felder[punkt.getX()][punkt.getY()];
+	}
+
+	/**
+	 * Fügt ein Ziel zur Zieleliste hinzu und setzt die Anzahl der nötigen Formulare
+	 * @param f
+	 * @return
+	 */
+	public boolean addZiel(Feld f) {
+		if (f.getTyp().equals(Feld.ziel))// Prüfen ob ich umwandeln darf
+		{
+			Ziele z = ((Ziele) f); // umwandeln
+			int id = z.getPlayerID();
+
+			this.ziele.put(id, z);
+			this.anzahlFormulare = z.getFormID();
+	
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 
+	 * @param playerID
+	 * @return {@code null} wenn es kein passendes Ziel gibt, ansonsten das Ziel
+	 */
+	public Ziele getZiel(int playerID) {
+		return ziele.get(playerID);
 	}
 
 	public void ausgabe() {
@@ -249,17 +266,17 @@ public class Karte {
 
 		for (Entry<Feld, VorhergehenderSchritt> feld : wege.entrySet()) {
 			if (feld.getValue().getVorgaenger() == null) {
-				System.err.println("Ziel " + feld.getKey().getX() + " " + feld.getKey().getY() + "\t Startknoten \t Weg "
-						+ feld.getValue().getWeglaenge());
-				
+				System.err.println("Ziel " + feld.getKey().getX() + " " + feld.getKey().getY()
+						+ "\t Startknoten \t Weg " + feld.getValue().getWeglaenge());
+
 			} else {
 
 				System.err.print("Ziel " + feld.getKey().getX() + " " + feld.getKey().getY() + "\t Vorgaenger \t"
 						+ feld.getValue().getVorgaenger().getX() + " " + feld.getValue().getVorgaenger().getY()
 						+ "\t Weg " + feld.getValue().getWeglaenge());
-				if(feld.getKey().pruefenErkundet()) {
+				if (feld.getKey().pruefenErkundet()) {
 					System.err.println("\tE");
-				}else {
+				} else {
 					System.err.println(" ");
 				}
 			}

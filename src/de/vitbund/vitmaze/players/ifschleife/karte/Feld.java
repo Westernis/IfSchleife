@@ -69,10 +69,11 @@ public abstract class Feld {
 		switch (typ) {
 		case Feld.flur:
 			return new Flur(punkt, karte);
-			
+
 		case Feld.wand:
 			return new Wand(punkt, karte);
-		case Feld.formular://fehlendes return/break ist Absicht, der unterschied ist im Parameter Typ drin
+
+		case Feld.formular:// fehlendes return/break ist Absicht, der einzige Uunterschied ist in Typ drin
 		case Feld.ziel:
 			return new Ziele(punkt, karte, playerID, formID, typ);
 
