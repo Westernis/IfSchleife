@@ -185,6 +185,10 @@ public class Koordinaten {
 		return null;
 	}
 
+	/**
+	 * Dient dem Testen der Koordinatenklasse
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Koordinaten.setzeMaximaleKoordinaten(10, 5);
 		Koordinaten p1 = new Koordinaten(0, 0);

@@ -11,6 +11,7 @@ public class ZellStatus {
 
 	public boolean rueckgabeAuswerten(String rueckgabe) {
 		this.orginalText = rueckgabe;// für testzwecke und Kontrollen beibehalten
+		System.err.println(orginalText);
 		String[] zerlegt; // ACHTUNG ARRAY von STRINGS
 		int i = 0; // index den wir anschauen
 
@@ -41,8 +42,14 @@ public class ZellStatus {
 			// i ist hier 1 oder 3 je nach dem ob Ziel/Form oder wand/freies Feld, dann
 			// prüfen ob noch 1 Feld mit dem ! und der nummer da sind
 			if (zerlegt.length > i) {
-				this.botentfernung = Integer.valueOf(zerlegt[i].substring(1));
-				// .substring(1) gibt String ohne erstes Zeichen zurück -> ! wird entfernt
+				String entfernung = zerlegt[i].substring(1);
+//				ACHTUNG wenn man auf dem selben Feld steht kommt nicht "!0" zurück sondern "!"
+//				deshalb erst länmge prüfen um NumberFormatException zu vermeiden
+				if (entfernung.length() > 0)
+					this.botentfernung = Integer.valueOf(entfernung);
+				else {
+					this.botentfernung = 0; // -> selbes Feld, wir quatschen...
+				}
 			} else {
 				this.botentfernung = -1; // daher nix zu sehen
 			}
@@ -75,7 +82,7 @@ public class ZellStatus {
 	public static void main(String[] args) {
 		ZellStatus a = new ZellStatus();
 		a.rueckgabeAuswerten("FORM 1 2 !2");
-		System.err.println(a.typ + "-" + a.playerID + "-" +a.formNumber + "-" +a.botentfernung);
+		System.err.println(a.typ + "-" + a.playerID + "-" + a.formNumber + "-" + a.botentfernung);
 	}
 }
 

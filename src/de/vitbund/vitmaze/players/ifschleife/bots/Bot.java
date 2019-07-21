@@ -117,30 +117,29 @@ public abstract class Bot {
 
 	// bequemlichkeit übersetzung der strings in unsere Methoden
 	public void fahren(String richtung) {
-		System.err.println("fahren" + richtung);
 		if ("Westen".equals(richtung)) {
 			this.nachWesten();
 //			System.err.println("AB HIER VORHERIGE KARTE");
 //			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
-			System.err.println("nach Western");
+//			System.err.println(" nach Western");
 		}
 		if ("Norden".equals(richtung)) {
 			this.nachNorden();
 //			System.err.println("AB HIER VORHERIGE KARTE");
 //			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
-			System.err.println("nach Norden");
+//			System.err.println(" nach Norden");
 		}
 		if ("Osten".equals(richtung)) {
 			this.nachOsten();
 //			System.err.println("AB HIER VORHERIGE KARTE");
 //			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
-			System.err.println("nach osten");
+//			System.err.println(" nach osten");
 		}
 		if ("Sueden".equals(richtung)) {
 			this.nachSueden();
 //			System.err.println("AB HIER VORHERIGE KARTE");
 //			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
-			System.err.println("nach süden");
+//			System.err.println(" nach süden");
 		}
 		// this.aktuelleKarte.ausgabe();
 		// System.err.flush();

@@ -22,6 +22,8 @@ public class Karte {
 	// y-Koordinate(Höhe)
 	private final Feld[][] felder;
 	private int anzahlFormulare = -1;
+	// Ziele sind statische Eigenschaften der Karte, Formulare nicht, deshalb werden
+	// letztere hier nicht mitgespeichert.
 	private HashMap<Integer, Ziele> ziele; // HashMap akzeptiert keine primitiven Typen daher Integer hier
 
 	public Karte(int sizeX, int sizeY) {
@@ -40,6 +42,35 @@ public class Karte {
 	 */
 	public Feld[][] getFelder() {
 		return felder;
+	}
+
+	public Feld getFeld(Koordinaten punkt) {
+		// Arraygrenzen abfangen sollte nicht nötig sein, dafür ist die
+		// koordinatenklassse zuständig7
+		return felder[punkt.getX()][punkt.getY()];
+	}
+
+	/**
+	 * 
+	 * @param playerID
+	 * @return {@code null} wenn es kein passendes Ziel gibt, ansonsten das Ziel
+	 */
+	public Ziele getZiel(int playerID) {
+		return ziele.get(playerID);
+	}
+
+	// Methode in "istFeld..." statt "isFeld..." umbenennen? - Nein, weil Getter von
+	// Boolean
+	public boolean isFeldBekannt(Koordinaten ort) {
+		// return isFeldBekannt(ort.getX(), ort.getY());
+		if (felder[ort.getX()][ort.getY()] == null) {
+			return false;
+		}
+		return true;
+	}
+
+	public int getAnzahlFormulare() {
+		return anzahlFormulare;
 	}
 
 	public void aktualisiereFeld(Koordinaten punkt, ZellStatus feldtyp) {
@@ -104,24 +135,9 @@ public class Karte {
 		}
 	}
 
-	// Methode in "istFeld..." statt "isFeld..." umbenennen? - Nein, weil Getter von
-	// Boolean
-	public boolean isFeldBekannt(Koordinaten ort) {
-		// return isFeldBekannt(ort.getX(), ort.getY());
-		if (felder[ort.getX()][ort.getY()] == null) {
-			return false;
-		}
-		return true;
-	}
-
-	public Feld getFeld(Koordinaten punkt) {
-		// Arraygrenzen abfangen sollte nicht nötig sein, dafür ist die
-		// koordinatenklassse zuständig7
-		return felder[punkt.getX()][punkt.getY()];
-	}
-
 	/**
 	 * Fügt ein Ziel zur Zieleliste hinzu und setzt die Anzahl der nötigen Formulare
+	 * 
 	 * @param f
 	 * @return
 	 */
@@ -133,19 +149,10 @@ public class Karte {
 
 			this.ziele.put(id, z);
 			this.anzahlFormulare = z.getFormID();
-	
+
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * 
-	 * @param playerID
-	 * @return {@code null} wenn es kein passendes Ziel gibt, ansonsten das Ziel
-	 */
-	public Ziele getZiel(int playerID) {
-		return ziele.get(playerID);
 	}
 
 	public void ausgabe() {
@@ -327,8 +334,27 @@ public class Karte {
 		}
 
 	}
+	
+	/**
+	 * 
+	 * @param ort
+	 * @return Formular, falls an den Koordinaten ein Formular ist, ansonsten null
+	 */
+	public Ziele getFormulare(Koordinaten ort) {
+		Feld feld = this.getFeld(ort);
+		Ziele formular = null;
+		
+		if (Feld.formular.equals(feld.getTyp())) {
+			formular = (Ziele) feld;
+		}
+		
+		return formular;
+	}
 
 	public ArrayList<Feld> werteListeAus(Map<Feld, VorhergehenderSchritt> wege, Feld wunschZiel) {
+		if (wege == null || wunschZiel == null || wege.isEmpty()) {
+			return null;
+		}
 		ArrayList<Feld> rueckgabe = new ArrayList<Feld>();
 		rueckgabe.add(wunschZiel);
 
@@ -343,5 +369,4 @@ public class Karte {
 		return rueckgabe;
 
 	}
-
 }
