@@ -345,13 +345,27 @@ public abstract class Bot {
 		this.letzteRichtung = letzteRichtung;
 	}
 
+	/*
+	 * Angestrebte Teilung: letzteAktionPruefen letzteAktionAufOKpruefen - prueft
+	 * erst auf ok/nok - wenn nok dann weitere Prüfung wenn nicht dann fertig
+	 * letzteAktionNachNOKPruefen
+	 */
 	/**
 	 * 
 	 * @return
 	 * 
-	 *         das lastActionResult wird auf den Status überprüft. Mögliche Werte
-	 *         sind OK * und NOK * mit Informationen der entsprechenden Level
+	 *         prüft die letze Aktion auf OK/NOK und wenn NOK dann auf die
+	 *         nachfolgenden Informationen und leitet uU gewisse Korrekturen ein.
 	 */
+	public void letzteAktionPruefen() { // TODO: Boolean vs. void
+		if (!this.letzeAktionAufOKpruefen()) { // wenn nicht ok, dann weitere Prüfung
+			this.letzteAktionNachNOKpruefen();
+
+		} else { // wenn ok dann mache nichts
+
+		}
+	}
+
 	public boolean letzeAktionAufOKpruefen() {
 		/*
 		 * Ziel ist nur einen Boolean zurückzugeben... wenn false uU andere Methode à
@@ -374,21 +388,49 @@ public abstract class Bot {
 
 	}
 
-	/* hier soll die weitere Prüfung nach einem NOK rein...
-	 * 
+	/*
+	 * hier soll die weitere Prüfung nach einem NOK rein... Ziel ist dass je nach
+	 * Aktion die Koordinaten wieder zurück geändert werden.
 	 */
-	public String letzteAktionNachOKpruefen() {
+	// TODO prüft noch nicht auf leere Strings...
+	public void letzteAktionNachNOKpruefen() {
 		String[] statusNachNOK;
 		statusNachNOK = (Init.lastActionsResult).split(" ");
-		
-		
+		// Annahme: status*[0] = OK/NOK; status*[1] = WRONGORDER
+
 //		//Fehlerausgabe
 //		for (int i = 0; i < statusNachNOK.length; i++) {
 //			System.err.println("Stelle " + i + " " + statusNachNOK[i]);
 //		}
-		return " ";
+
+		/*
+		 * in der Switch-Anweisung die entsprechenden Änderungen à Koordinanten
+		 * zurückändern vornehmen
+		 */
+		switch (statusNachNOK[1]) {
+		case "BLOCKED":
+			// wenn Bot gegen eine Wand gefahren ist: TODO: Koordinaten zurückändern
+			break;
+
+		case "NOTSUPPORTED":
+			// unbekannter Befehl abgesetzt: tue nichts
+			break;
+		case "WRONGORDER":
+			// falsche Reihenfolge der Formulare: tue nichts
+			break;
+
+		case "NOTYOURS":
+			// falsches Formular: tue nichts
+			break;
+		case "EMPTY":
+			// kein Formular: tue nichts
+			break;
+
+			//TODO: Level 3 und 4 Status' einfügen
+		default:
+			break;
+		}
 
 	}
-	
 
 }
