@@ -408,8 +408,14 @@ public abstract class Bot {
 		 * zurückändern vornehmen
 		 */
 		switch (statusNachNOK[1]) {
+		case "TALKING":
+			// mit anderem Bot verquatscht
+			// TODO: Koordinaten zurückändern
+			break;
+
 		case "BLOCKED":
-			// wenn Bot gegen eine Wand gefahren ist: TODO: Koordinaten zurückändern
+			// wenn Bot gegen eine Wand gefahren ist oder Formular gegen Wand gekickt wurde
+			// TODO: Koordinaten zurückändern??? 
 			break;
 
 		case "NOTSUPPORTED":
@@ -426,7 +432,6 @@ public abstract class Bot {
 			// kein Formular: tue nichts
 			break;
 
-			//TODO: Level 3 und 4 Status' einfügen
 		default:
 			break;
 		}
