@@ -47,7 +47,7 @@ public class ErkundenderBotLvl2 extends Bot {
 		String richtung = null;
 		Feld ziel = null;
 
-		this.rundeInitialisiern();
+//		this.rundeInitialisiern();  //befindet sich in der Init
 		this.aktualisiereMeineFormulare();
 
 //		  INIT: rundeInitialisieren und dann aktualisiereMeineFormulare ausführen
