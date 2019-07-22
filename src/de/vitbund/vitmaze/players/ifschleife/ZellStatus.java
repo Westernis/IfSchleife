@@ -44,7 +44,7 @@ public class ZellStatus {
 			if (zerlegt.length > i) {
 				String entfernung = zerlegt[i].substring(1);
 //				ACHTUNG wenn man auf dem selben Feld steht kommt nicht "!0" zurück sondern "!"
-//				deshalb erst länmge prüfen um NumberFormatException zu vermeiden
+//				deshalb erst länge prüfen um NumberFormatException zu vermeiden
 				if (entfernung.length() > 0)
 					this.botentfernung = Integer.valueOf(entfernung);
 				else {

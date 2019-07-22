@@ -357,7 +357,7 @@ public abstract class Bot {
 		 * Ziel ist nur einen Boolean zurückzugeben... wenn false uU andere Methode à
 		 * was ist nicht ok aufrufen
 		 */
-		
+
 		// erstmal den String auswerten
 		String status;
 
@@ -371,8 +371,24 @@ public abstract class Bot {
 			System.err.println("Springt in Verzweigung: !NOK");
 			return true;
 		}
-		
-		
+
 	}
+
+	/* hier soll die weitere Prüfung nach einem NOK rein...
+	 * 
+	 */
+	public String letzteAktionNachOKpruefen() {
+		String[] statusNachNOK;
+		statusNachNOK = (Init.lastActionsResult).split(" ");
+		
+		
+//		//Fehlerausgabe
+//		for (int i = 0; i < statusNachNOK.length; i++) {
+//			System.err.println("Stelle " + i + " " + statusNachNOK[i]);
+//		}
+		return " ";
+
+	}
+	
 
 }
