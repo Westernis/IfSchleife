@@ -82,7 +82,7 @@ public class Karte {
 		// angelegt und gespeichert
 		if (ort == null || ((Feld.formular.equals(feldtyp.getTyp()) || Feld.flur.equals(feldtyp.getTyp()))
 				&& !ort.getTyp().equals(feldtyp.getTyp()))) {
-
+			//TODO altes Formular entfernen
 			// Feldkonstruktionsmethode aufrufen und im Array speichern
 			felder[punkt.getX()][punkt.getY()] = Feld.konstruiereFeld(punkt, this, feldtyp.getTyp(),
 					feldtyp.getPlayerID(), feldtyp.getFormNumber());

@@ -43,7 +43,7 @@ public class ErkundenderBotLvl2 extends Bot {
 		Feld ziel = null;
 
 		this.rundeInitialisiern();
-		this.aktualisiereMeineFormulare();
+		this.aktualisiereMeineFormulare();//TODO umstellen auf Karte
 
 //		  INIT: rundeInitialisieren und dann aktualisiereMeineFormulare ausführen
 //		1. Aktuelles Feld anschauen und abarbeiten falls gegeben. -> beendet diese
@@ -92,7 +92,8 @@ public class ErkundenderBotLvl2 extends Bot {
 		// WegeKarte holen
 		LinkedHashMap<Feld, VorhergehenderSchritt> wege = this.getAktuelleKarte().findeWege(getOrt());
 		// unerkundetes Feld holen
-		ziel = naechstesUnerkundetesFeld(wege);
+		//ziel = naechstesUnerkundetesFeld(wege);
+		ziel = naechstesFeldGewichtet(wege);
 
 
 		// 3. Formular/Ziel bekannt
@@ -125,6 +126,48 @@ public class ErkundenderBotLvl2 extends Bot {
 		fahren(richtung);
 
 	}
+	
+	private Feld naechstesFeldGewichtet(LinkedHashMap<Feld, VorhergehenderSchritt> wege) {
+		ArrayList<Feld> potFeld = new ArrayList<Feld>();
+		Feld ziel = null;
+		int weglaenge = 10000000; //so lang sollte der Weg nie sein können
+
+		for (Entry<Feld, VorhergehenderSchritt> element : wege.entrySet()) {
+			if (!element.getKey().pruefenErkundet() && element.getValue().getWeglaenge() <= weglaenge) {
+				weglaenge = element.getValue().getWeglaenge();
+				potFeld.add(element.getKey());//enthält dann alle unerkundeten Felder mit geringster Weglänge
+				//ziel = element.getKey();
+			}
+			if(element.getValue().getWeglaenge() > weglaenge) {//ab hier können wir abbrechen, weil keine relevanten Felder mehr auftauchen können
+				break;
+			}
+		}
+		
+		int note = 0;
+		int zielNote = 0;
+		for (Feld feld : potFeld) {
+			note = 0;
+			if (feld.getNord() == null)
+				note++;
+			if (feld.getWest() == null)
+				note++;
+			if (feld.getOst() == null)
+				note++;
+			if (feld.getSued() == null)
+				note++;
+			if (note > zielNote) {
+				ziel = feld;
+				zielNote=note;
+			}
+		}
+		
+		if (ziel == null) {
+			System.err.println("Alles erkundet");
+			return null;
+		}
+		return ziel;
+	}
+	
 
 	private Feld naechstesUnerkundetesFeld(LinkedHashMap<Feld, VorhergehenderSchritt> wege) {
 		Feld ziel = null;
