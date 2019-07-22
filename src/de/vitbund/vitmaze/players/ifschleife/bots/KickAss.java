@@ -13,9 +13,9 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
  *         Die Klasse stellt einen Bot dar (soll darstellen), der ausschlieﬂlich
  *         nach dem Zufall seine Wegfindung ableitet.
  */
-public class SuperBot extends Bot {
+public class KickAss extends Bot {
 
-	public SuperBot(Karte karte, int playerId, int x, int y) {
+	public KickAss(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
 	}
 

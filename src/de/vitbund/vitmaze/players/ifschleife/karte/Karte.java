@@ -59,6 +59,8 @@ public class Karte {
 		return ziele.get(playerID);
 	}
 
+	// TODO Startfelder anlegen
+
 	// Methode in "istFeld..." statt "isFeld..." umbenennen? - Nein, weil Getter von
 	// Boolean
 	public boolean isFeldBekannt(Koordinaten ort) {
@@ -82,15 +84,40 @@ public class Karte {
 		// angelegt und gespeichert
 		if (ort == null || ((Feld.formular.equals(feldtyp.getTyp()) || Feld.flur.equals(feldtyp.getTyp()))
 				&& !ort.getTyp().equals(feldtyp.getTyp()))) {
-			//TODO altes Formular entfernen
 			// Feldkonstruktionsmethode aufrufen und im Array speichern
 			felder[punkt.getX()][punkt.getY()] = Feld.konstruiereFeld(punkt, this, feldtyp.getTyp(),
-					feldtyp.getPlayerID(), feldtyp.getFormNumber());
+					feldtyp.getPlayerID(), feldtyp.getFormID());
 
+			// altes Formular entfernen
+			if (Feld.formular.equals(feldtyp.getTyp())) {
+				Ziele f;
+				// Array nach dem Formular durchsuchen
+				for (Feld[] felds : felder) {
+					for (Feld feld : felds) {
+						if (feld != null) {
+							f = getFormulare(feld.getPunkt());
+							if (f != null && feldtyp.getPlayerID() == f.getPlayerID()
+									&& feldtyp.getFormID() == f.getFormID()) {
+								int x = f.getPunkt().getX();
+								int y = f.getPunkt().getY();
+								// damit das neu eingefügte Formular nicht entfernt wird
+								if (x != punkt.getX() && y != punkt.getY()) {
+									// Formular raus nehmen und Feld auf Floor setzen
+
+									felder[x][y] = Feld.konstruiereFeld(f.getPunkt(), this, Feld.flur, 0, 0);
+									// TODO Wege setzen
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 		// abfangen falls zwei Formular durch verschieben die Plätze getauscht haben
 		if (Feld.formular.equals(feldtyp.getTyp())) {
 			// TODO abfangen fertig machen
+
 		}
 
 		/*
@@ -334,7 +361,7 @@ public class Karte {
 		}
 
 	}
-	
+
 	/**
 	 * 
 	 * @param ort
@@ -343,11 +370,11 @@ public class Karte {
 	public Ziele getFormulare(Koordinaten ort) {
 		Feld feld = this.getFeld(ort);
 		Ziele formular = null;
-		
+
 		if (Feld.formular.equals(feld.getTyp())) {
 			formular = (Ziele) feld;
 		}
-		
+
 		return formular;
 	}
 
