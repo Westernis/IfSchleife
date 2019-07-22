@@ -85,7 +85,7 @@ public class Karte {
 
 			// Feldkonstruktionsmethode aufrufen und im Array speichern
 			felder[punkt.getX()][punkt.getY()] = Feld.konstruiereFeld(punkt, this, feldtyp.getTyp(),
-					feldtyp.getPlayerID(), feldtyp.getFormNumber());
+					feldtyp.getPlayerID(), feldtyp.getformularNr());
 
 		}
 		// abfangen falls zwei Formular durch verschieben die Plätze getauscht haben

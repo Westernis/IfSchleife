@@ -19,7 +19,12 @@ public class ErkundenderBotLvl2 extends Bot {
 
 	public ErkundenderBotLvl2(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
+		/*
+		 * es macht einen Unterschied ob man hier den gen. Typ weglässt - dann HashMap
+		 * mit Object, Object...
+		 */
 		meineformulare = new HashMap<Integer, Ziele>();
+
 		// TODO Automatisch generierter Konstruktorstub
 	}
 
@@ -28,7 +33,7 @@ public class ErkundenderBotLvl2 extends Bot {
 		Ziele feld;
 		for (Koordinaten xy : new Koordinaten[] { ort, ort.norden(), ort.osten(), ort.westen(), ort.sueden() }) {
 			feld = (Ziele) getAktuelleKarte().getFormulare(xy);
-			
+
 			if (feld != null && feld.getPlayerID() == this.id) {
 				meineformulare.put(feld.getFormID(), feld);
 
@@ -64,7 +69,7 @@ public class ErkundenderBotLvl2 extends Bot {
 			switch (Init.currentCell.getTyp()) {
 			case Feld.ziel:
 				// Ziel schon erlaubt? -> einsammeln
-				if (Init.currentCell.getFormNumber() == erledigteFormulare) {
+				if (Init.currentCell.getformularNr() == erledigteFormulare) {
 					System.err.println("1.1");
 					this.beenden();
 					return;
@@ -75,7 +80,7 @@ public class ErkundenderBotLvl2 extends Bot {
 				// aktuelles Formularfeld? -> aufheben
 				// (gefundeneFormulare+1), da das letzte Formular und das Ziel die selbe Nummer
 				// haben
-				if (Init.currentCell.getFormNumber() == (erledigteFormulare + 1)) {
+				if (Init.currentCell.getformularNr() == (erledigteFormulare + 1)) {
 					erledigteFormulare++;
 					System.err.println("1.3");
 					this.aufsammeln();
@@ -94,7 +99,6 @@ public class ErkundenderBotLvl2 extends Bot {
 		// unerkundetes Feld holen
 		ziel = naechstesUnerkundetesFeld(wege);
 
-
 		// 3. Formular/Ziel bekannt
 		// Ziel
 		// TODO alles, prüfen ob max. ziel überhaupt bekannt usw
@@ -102,7 +106,7 @@ public class ErkundenderBotLvl2 extends Bot {
 		if (getAktuelleKarte().getAnzahlFormulare() > 0
 				&& erledigteFormulare == getAktuelleKarte().getAnzahlFormulare()) {
 			if (getAktuelleKarte().getZiel(this.id) != null) {
-				ziel = getAktuelleKarte().getZiel(this.id);//WICHTIG nur setzten wenn auch das eigene Ziel bekannt ist
+				ziel = getAktuelleKarte().getZiel(this.id);// WICHTIG nur setzten wenn auch das eigene Ziel bekannt ist
 			}
 			System.err.println("3.1 |" + erledigteFormulare);
 		}
@@ -116,8 +120,7 @@ public class ErkundenderBotLvl2 extends Bot {
 			System.err.println("3.3 |" + (erledigteFormulare + 1 + "|" + ziel.getPunkt()));
 		}
 
-		
-		//4. Weg zu ausgewählten Ziel bestimmen und hinfahren
+		// 4. Weg zu ausgewählten Ziel bestimmen und hinfahren
 		if (ziel != null) {
 			richtung = bestimmeRichtung(ziel, wege);
 		}
@@ -157,14 +160,14 @@ public class ErkundenderBotLvl2 extends Bot {
 //	 	dazu kann man die Methode werteListeAus nutzen, dann hat man den kompletten Weg in der Hand
 	private String bestimmeRichtung(Feld ziel, LinkedHashMap<Feld, VorhergehenderSchritt> wege) {
 		ArrayList<Feld> meinWeg = this.getAktuelleKarte().werteListeAus(wege, ziel);
-		//sicherstellen das ein Weg zurückkam, wenn nicht null zurückgeben
+		// sicherstellen das ein Weg zurückkam, wenn nicht null zurückgeben
 		if (meinWeg == null) {
 			return null;
 		}
 
 		// der 1. Eintrag ist unser aktuelles feld, der zweite Eintrag enthält das
 		// nächste das man ansteuern muss
-		
+
 		String richtung = Koordinaten.getRichtung(meinWeg.get(0).getPunkt(), meinWeg.get(1).getPunkt());
 		// jetzt hab ich in richtung eine der Werte "Norden", "Sueden", "Westen" oder
 		// "Osten" drin

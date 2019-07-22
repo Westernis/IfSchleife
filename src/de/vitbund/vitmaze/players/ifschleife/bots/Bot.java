@@ -155,6 +155,8 @@ public abstract class Bot {
 
 	public void rundeInitialisiern() {
 
+		// TODO hier soll die Auswertung von NOK Talking rein... und anderer NOKs
+
 		aktuelleKarte.aktualisiereFeld(getOrt(), Init.currentCell);
 		aktuelleKarte.aktualisiereFeld(getOrt().norden(), Init.northCell);
 		aktuelleKarte.aktualisiereFeld(getOrt().sueden(), Init.southCell);
@@ -341,6 +343,36 @@ public abstract class Bot {
 	 */
 	public void setLetzteRichtung(String letzteRichtung) {
 		this.letzteRichtung = letzteRichtung;
+	}
+
+	/**
+	 * 
+	 * @return
+	 * 
+	 *         das lastActionResult wird auf den Status überprüft. Mögliche Werte
+	 *         sind OK * und NOK * mit Informationen der entsprechenden Level
+	 */
+	public boolean letzeAktionAufOKpruefen() {
+		/*
+		 * Ziel ist nur einen Boolean zurückzugeben... wenn false uU andere Methode à
+		 * was ist nicht ok aufrufen
+		 */
+		
+		// erstmal den String auswerten
+		String status;
+
+		// nun status mit pot. NOK füllen
+		status = (Init.lastActionsResult).substring(0, 2);
+		System.err.println(status + "nach dem Aufruf von .substring...");
+		if ("NOK".equals(status)) {
+			System.err.println("Springt in Verzweigung: NOK");
+			return false;
+		} else {
+			System.err.println("Springt in Verzweigung: !NOK");
+			return true;
+		}
+		
+		
 	}
 
 }

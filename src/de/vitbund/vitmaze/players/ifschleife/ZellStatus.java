@@ -6,7 +6,7 @@ public class ZellStatus {
 	private String orginalText;
 	private String typ;
 	private int playerID;
-	private int formNumber;
+	private int formularNr; //TODO umbennen #Amtssprache ist deutsch gem. 111 GG
 	private int botentfernung;
 
 	public boolean rueckgabeAuswerten(String rueckgabe) {
@@ -36,7 +36,7 @@ public class ZellStatus {
 			if (Feld.formular.equals(typ) || Feld.ziel.equals(typ)) {
 				this.playerID = Integer.valueOf(zerlegt[i]);
 				i++;
-				this.formNumber = Integer.valueOf(zerlegt[i]);
+				this.formularNr = Integer.valueOf(zerlegt[i]);
 				i++;
 			}
 			// i ist hier 1 oder 3 je nach dem ob Ziel/Form oder wand/freies Feld, dann
@@ -70,8 +70,8 @@ public class ZellStatus {
 		return playerID;
 	}
 
-	public int getFormNumber() {
-		return formNumber;
+	public int getformularNr() {
+		return formularNr;
 	}
 
 	public int getBotentfernung() {
@@ -82,7 +82,7 @@ public class ZellStatus {
 	public static void main(String[] args) {
 		ZellStatus a = new ZellStatus();
 		a.rueckgabeAuswerten("FORM 1 2 !2");
-		System.err.println(a.typ + "-" + a.playerID + "-" + a.formNumber + "-" + a.botentfernung);
+		System.err.println(a.typ + "-" + a.playerID + "-" + a.formularNr + "-" + a.botentfernung);
 	}
 }
 
