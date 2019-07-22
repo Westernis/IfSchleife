@@ -100,7 +100,7 @@ public class ErkundenderBotLvl2 extends Bot {
 		// Ziel
 		// TODO alles, prüfen ob max. ziel überhaupt bekannt usw
 		getAktuelleKarte().getAnzahlFormulare();
-		if (getAktuelleKarte().getAnzahlFormulare() > 0
+		if (getAktuelleKarte().getAnzahlFormulare() >= 0
 				&& erledigteFormulare == getAktuelleKarte().getAnzahlFormulare()) {
 			if (getAktuelleKarte().getZiel(this.id) != null) {
 				ziel = getAktuelleKarte().getZiel(this.id);//WICHTIG nur setzten wenn auch das eigene Ziel bekannt ist
