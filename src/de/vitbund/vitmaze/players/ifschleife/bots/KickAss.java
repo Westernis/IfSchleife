@@ -21,7 +21,7 @@ public class KickAss extends Bot {
 
 	public void machAktion() {
 		
-		this.rundeInitialisiern();
+//		this.rundeInitialisiern(); //befindet sich nun in der Init
 		
 		// Vergleich ob aktuelles Feld ein Ziel ist, wenn ja dann Ende
 

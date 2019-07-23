@@ -20,16 +20,13 @@ public class ZufallsBot2Lvl1 extends Bot {
 		super(karte, playerId, x, y);
 	}
 
-
 	public void machAktion() {
 
 		if (("FINISH " + super.id + " 0").equals(Init.currentCellStatus)) {
 			System.out.println("finish");
 		}
 
-		this.rundeInitialisiern(); // TODO überlegen muss das für jeden Bot gemacht werden, wenn ja in die Init
-									// verschieben?
-
+//		this.rundeInitialisiern(); //befindet sich nun in der Init									
 		// test Wegfindung
 //		LinkedHashMap<Feld, VorhergehenderSchritt> wege = getAktuelleKarte().findeWege(getPunkt());
 //		getAktuelleKarte().ausgabeWegliste(wege);
@@ -43,9 +40,6 @@ public class ZufallsBot2Lvl1 extends Bot {
 
 		schlauereZufallsrichtung();
 	}
-
-	
-	
 
 //	public void letztesFeld() {
 //		aktuelleKarte.isFeldBekannt(x, y);

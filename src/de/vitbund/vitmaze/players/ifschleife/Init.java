@@ -116,6 +116,8 @@ public class Init {
 //			System.err.println("Ergebnis Vorrunde Westen / Osten: " + "   " + westCellStatus + " / " + eastCellStatus);
 //			System.err.println("Ergebnis Vorrunde Sueden: " + "                " + southCellStatus);
 
+			//TODO: initialisieren und Prüfung reinschreiben
+			unserBot.rundeInitialisiern();
 			unserBot.machAktion();
 		}
 

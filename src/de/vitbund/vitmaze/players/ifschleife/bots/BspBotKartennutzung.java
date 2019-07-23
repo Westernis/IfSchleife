@@ -28,7 +28,7 @@ public class BspBotKartennutzung extends Bot {
 		String richtung = null;
 
 		// input verarbeiten //TODO in die init verschieben weil in allen Bots drin?
-		this.rundeInitialisiern();
+//		this.rundeInitialisiern(); //befindet sich in der Init
 
 		// Wegeliste generieren
 		LinkedHashMap<Feld, VorhergehenderSchritt> wege = this.getAktuelleKarte().findeWege(this.getOrt());
