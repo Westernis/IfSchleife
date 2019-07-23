@@ -118,9 +118,6 @@ public class Init {
 
 			//TODO: initialisieren und Prüfung reinschreiben
 			unserBot.rundeInitialisiern();
-			System.err.println("Ort |"+unserBot.getOrt()+" lastAction |"+lastActionsResult);
-			unserBot.letzteAktionPruefen();
-			System.err.println("nOrt|"+unserBot.getOrt());
 			unserBot.machAktion();
 		}
 

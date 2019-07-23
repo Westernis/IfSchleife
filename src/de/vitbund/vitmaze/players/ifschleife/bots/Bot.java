@@ -153,21 +153,14 @@ public abstract class Bot {
 		return ort;
 	}
 
+	/**
+	 * Diese Methode verarbeitet zu erst die Rückgabe bzgl. der letzten Aktion und
+	 * führt gegebenenfalls Korrekturen durch. Danach werden die umliegenden
+	 * Kartenfelder aktualisiert.
+	 */
 	public void rundeInitialisiern() {
 
-		/*
-		 * TODO hier soll die Auswertung von NOK Talking rein... und anderer NOKs
-		 *
-		 * 1. Möglichkeit: rundeInitialisieren ohne AktionsPrüfung, dann in der Init
-		 * Prüfung expliz. aufrufen und Änderungen zurückkorrigieren.
-		 * 
-		 * 2. Möglichkeit: Methoden in die rundeInitialisieren() einbauen, dann uU
-		 * garkeine Änderungen, die rückgängig gemacht werden müssen. ABER Prüfung
-		 * erstmal wieder auf Boolean-RWert stellen...
-		 * 
-		 * Sinng. if (letzteAktionPruefen){BLABLA} else {Block von unten
-		 * (aktuelleKarte.aktual*}
-		 */
+		this.letzteAktionPruefen();
 
 		aktuelleKarte.aktualisiereFeld(getOrt(), Init.currentCell);
 		aktuelleKarte.aktualisiereFeld(getOrt().norden(), Init.northCell);
