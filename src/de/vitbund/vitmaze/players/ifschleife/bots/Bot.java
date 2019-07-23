@@ -390,7 +390,10 @@ public abstract class Bot {
 		String status;
 
 		// nun status mit pot. NOK füllen
-		status = (Init.lastActionsResult).substring(0, 2);
+		// status = (Init.lastActionsResult).substring(0, 2); 
+		// .substring problematische weil OK und NOK unterschiedliche Länge haben
+		status = (Init.lastActionsResult).split(" ", 2)[0]; 
+		//split teilt hier am Leerzeichen in max 2 Strings,  
 		System.err.println(status + " nach dem Aufruf von .substring...");
 		if ("NOK".equals(status)) {
 			System.err.println("Springt in Verzweigung: NOK");
@@ -491,7 +494,7 @@ public abstract class Bot {
 			this.ort = (aktuelleKarte.getFeld(getOrt().osten())).getPunkt();
 			System.err.println("Ort nach Ost-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
 			break;
-			
+
 		case "Sueden":
 			this.ort = (aktuelleKarte.getFeld(getOrt().sueden())).getPunkt();
 			System.err.println("Ort nach Sued-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());

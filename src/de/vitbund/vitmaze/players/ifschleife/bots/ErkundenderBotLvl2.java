@@ -44,7 +44,7 @@ public class ErkundenderBotLvl2 extends Bot {
 
 	@Override
 	public void machAktion() {
-		String richtung = null;
+		//String letzteRichtung = null; // muss raus da man das im Bot nutzen soll
 		Feld ziel = null;
 
 //		this.rundeInitialisiern();  //befindet sich in der Init
@@ -122,10 +122,10 @@ public class ErkundenderBotLvl2 extends Bot {
 
 		// 4. Weg zu ausgewählten Ziel bestimmen und hinfahren
 		if (ziel != null) {
-			richtung = bestimmeRichtung(ziel, wege);
+			letzteRichtung = bestimmeRichtung(ziel, wege); //Richtung für die NOK Korrektur speichern
 		}
-		System.err.println("4 |" + richtung + "|");
-		fahren(richtung);
+		System.err.println("4 |" + letzteRichtung + "|");
+		fahren(letzteRichtung);
 
 	}
 
