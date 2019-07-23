@@ -118,7 +118,6 @@ public class Init {
 
 			//TODO: initialisieren und Prüfung reinschreiben
 			unserBot.rundeInitialisiern();
-			unserBot.letzteAktionPruefen();
 			unserBot.machAktion();
 		}
 
