@@ -387,7 +387,7 @@ public abstract class Bot {
 		// .substring problematische weil OK und NOK unterschiedliche Länge haben
 		status = (Init.lastActionsResult).split(" ", 2)[0]; 
 		//split teilt hier am Leerzeichen in max 2 Strings,  
-		System.err.println(status + " nach dem Aufruf von .substring...");
+//		System.err.println(status + " nach dem Aufruf von .substring...");
 		if ("NOK".equals(status)) {
 			System.err.println("Springt in Verzweigung: NOK");
 			return false;
@@ -403,7 +403,7 @@ public abstract class Bot {
 	 * Aktion die Koordinaten wieder zurück geändert werden.
 	 */
 	public void letzteAktionNachNOKpruefen() {
-		System.err.println("Nun befindet er sich in der weitere Pruefung nach NOK...");
+//		System.err.println("Nun befindet er sich in der weitere Pruefung nach NOK...");
 		String[] statusNachNOK;
 		statusNachNOK = (Init.lastActionsResult).split(" ");
 		// Annahme: status*[0] = OK/NOK; status*[1] = WRONGORDER
@@ -445,11 +445,11 @@ public abstract class Bot {
 				break;
 
 			default:
-				System.err.println("unbekannter / noch nicht abgedeckter Status in der Switch-Case...");
+//				System.err.println("unbekannter / noch nicht abgedeckter Status in der Switch-Case...");
 				break;
 			}
 		} else {
-			System.err.println("keineStatusNachNOK!!! In Bot letzteAktionNachNOKPruefen");
+//			System.err.println("keineStatusNachNOK!!! In Bot letzteAktionNachNOKPruefen");
 		}
 	}
 
@@ -459,7 +459,7 @@ public abstract class Bot {
 	 * #VIT
 	 */
 	public void bewegungRueckgaengigMachen() {
-		System.err.println("Ort vor Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
+//		System.err.println("Ort vor Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
 		switch (richtungUmkehren(this.letzteRichtung)) {
 		/*
 		 * Wenn versucht hat in Norden zu bewegen x-Koordinate belassen und y-Koordinate
@@ -480,25 +480,25 @@ public abstract class Bot {
 			// wohin speichern?
 			// aktueller ort wird mit dem einer fiktiven nördlichen Bewegung überschrieben.
 			this.ort = (aktuelleKarte.getFeld(getOrt().norden())).getPunkt();
-			System.err.println("Ort nach Nord-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
+//			System.err.println("Ort nach Nord-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
 			break;
 
 		case "Osten":
 			this.ort = (aktuelleKarte.getFeld(getOrt().osten())).getPunkt();
-			System.err.println("Ort nach Ost-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
+//			System.err.println("Ort nach Ost-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
 			break;
 
 		case "Sueden":
 			this.ort = (aktuelleKarte.getFeld(getOrt().sueden())).getPunkt();
-			System.err.println("Ort nach Sued-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
+//			System.err.println("Ort nach Sued-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
 			break;
 		case "Westen":
 			this.ort = (aktuelleKarte.getFeld(getOrt().westen())).getPunkt();
-			System.err.println("Ort nach West-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
+//			System.err.println("Ort nach West-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
 			break;
 		default:
-			System.err.println("bewegungRueckgaengigMachen hat nicht funktioniert....");
-			System.err.println("Ort ohne Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
+//			System.err.println("bewegungRueckgaengigMachen hat nicht funktioniert....");
+//			System.err.println("Ort ohne Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
 			break;
 		}
 

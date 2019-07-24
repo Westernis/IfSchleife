@@ -29,12 +29,14 @@ public class ErkundenderBotLvl2 extends Bot {
 	@Override
 	public void rundeInitialisiern() {
 		super.rundeInitialisiern(); // ich will alles aus der Elternklasse machen
-
+		System.err.println("|"+Init.lastActionsResult+"|");
 		// neue hinzugekommener Teil
 		if (this.letzeAktionAufOKpruefen()) {
 			// prüfen ob formular aufgehoben
 			String s = "OK FORM";
+			System.err.println("OK Form prüfen");
 			if (Init.lastActionsResult.contains(s)) {
+				System.err.println("OK Form aufgehoben");
 				erledigteFormulare++;
 			}
 		}
@@ -116,7 +118,7 @@ public class ErkundenderBotLvl2 extends Bot {
 		// Ziel
 		getAktuelleKarte().getAnzahlFormulare();
 		if (getAktuelleKarte().getAnzahlFormulare() >= 0
-				&& erledigteFormulare == getAktuelleKarte().getAnzahlFormulare()) {
+				&& erledigteFormulare >= getAktuelleKarte().getAnzahlFormulare()) {
 			if (getAktuelleKarte().getZiel(this.id) != null) {
 				ziel = getAktuelleKarte().getZiel(this.id);// WICHTIG nur setzten wenn auch das eigene Ziel bekannt ist
 			}
