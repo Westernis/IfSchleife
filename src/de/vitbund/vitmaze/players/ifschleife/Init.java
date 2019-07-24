@@ -28,7 +28,6 @@ public class Init {
 	public static String southCellStatus = "";
 	public static String westCellStatus = "";
 	public static String eastCellStatus = "";
-	public static int playerId = 0;
 
 	public static ZellStatus currentCell = new ZellStatus();
 	public static ZellStatus northCell = new ZellStatus();
@@ -82,11 +81,11 @@ public class Init {
 			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
 			break;
 		case 5:
-			unserBot = new KickAss(karte, playerId, startX, startY);
+			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
 			break;
 
 		default:
-			unserBot = new ZufallsBot2Lvl1(karte, playerId, startX, startY);
+			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
 			break;
 		}
 
