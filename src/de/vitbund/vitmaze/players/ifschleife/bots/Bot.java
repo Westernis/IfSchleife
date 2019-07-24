@@ -153,7 +153,14 @@ public abstract class Bot {
 		return ort;
 	}
 
+	/**
+	 * Diese Methode verarbeitet zu erst die Rückgabe bzgl. der letzten Aktion und
+	 * führt gegebenenfalls Korrekturen durch. Danach werden die umliegenden
+	 * Kartenfelder aktualisiert.
+	 */
 	public void rundeInitialisiern() {
+
+		this.letzteAktionPruefen();
 
 		aktuelleKarte.aktualisiereFeld(getOrt(), Init.currentCell);
 		aktuelleKarte.aktualisiereFeld(getOrt().norden(), Init.northCell);
@@ -274,6 +281,7 @@ public abstract class Bot {
 		return "hallooooo";
 	}
 
+	// TODO warum wird hier mit == geprüft statt .equals()?
 	public void weiterGehen() {
 		if (letzteRichtung == "Norden") {
 			nachNorden();
@@ -341,6 +349,159 @@ public abstract class Bot {
 	 */
 	public void setLetzteRichtung(String letzteRichtung) {
 		this.letzteRichtung = letzteRichtung;
+	}
+
+	/*
+	 * Angestrebte Teilung: letzteAktionPruefen letzteAktionAufOKpruefen - prueft
+	 * erst auf ok/nok - wenn nok dann weitere Prüfung wenn nicht dann fertig
+	 * letzteAktionNachNOKPruefen
+	 */
+	/**
+	 * 
+	 * @return
+	 * 
+	 *         prüft die letze Aktion auf OK/NOK und wenn NOK dann auf die
+	 *         nachfolgenden Informationen und leitet uU gewisse Korrekturen ein.
+	 */
+	public void letzteAktionPruefen() { // TODO: Boolean vs. void
+		if (!this.letzeAktionAufOKpruefen()) { // wenn nicht ok, dann weitere Prüfung
+			System.err.println("letzteAktion: in Verzweigung zur weiteren Pruefung. gesprungen");
+			this.letzteAktionNachNOKpruefen();
+
+		} else { // wenn ok dann mache nichts
+			System.err.println("letzteAktion: in Verzweigung ohne Pruefung. gesprungen");
+		}
+	}
+
+	public boolean letzeAktionAufOKpruefen() {
+		/*
+		 * Ziel ist nur einen Boolean zurückzugeben... wenn false uU andere Methode à
+		 * was ist nicht ok aufrufen
+		 */
+
+		// erstmal den String auswerten
+		String status;
+
+		// nun status mit pot. NOK füllen
+		// status = (Init.lastActionsResult).substring(0, 2); 
+		// .substring problematische weil OK und NOK unterschiedliche Länge haben
+		status = (Init.lastActionsResult).split(" ", 2)[0]; 
+		//split teilt hier am Leerzeichen in max 2 Strings,  
+		System.err.println(status + " nach dem Aufruf von .substring...");
+		if ("NOK".equals(status)) {
+			System.err.println("Springt in Verzweigung: NOK");
+			return false;
+		} else {
+			System.err.println("Springt in Verzweigung: !NOK - also OK");
+			return true;
+		}
+
+	}
+
+	/*
+	 * hier soll die weitere Prüfung nach einem NOK rein... Ziel ist dass je nach
+	 * Aktion die Koordinaten wieder zurück geändert werden.
+	 */
+	public void letzteAktionNachNOKpruefen() {
+		System.err.println("Nun befindet er sich in der weitere Pruefung nach NOK...");
+		String[] statusNachNOK;
+		statusNachNOK = (Init.lastActionsResult).split(" ");
+		// Annahme: status*[0] = OK/NOK; status*[1] = WRONGORDER
+
+//		//Fehlerausgabe
+//		for (int i = 0; i < statusNachNOK.length; i++) {
+//			System.err.println("Stelle " + i + " " + statusNachNOK[i]);
+//		}
+
+		/*
+		 * in der Switch-Anweisung die entsprechenden Änderungen à Koordinanten
+		 * zurückändern vornehmen
+		 */
+		// wenn statusNachNOK leer -> abbrechen
+		if (!(statusNachNOK == null)) {
+			switch (statusNachNOK[1]) {
+			case "TALKING":
+				// mit anderem Bot verquatscht
+				this.bewegungRueckgaengigMachen();
+				break;
+
+			case "BLOCKED":
+				// wenn Bot gegen eine Wand gefahren ist oder Formular gegen Wand gekickt wurde
+				// TODO: Koordinaten zurückändern???
+				break;
+
+			case "NOTSUPPORTED":
+				// unbekannter Befehl abgesetzt: tue nichts
+				break;
+			case "WRONGORDER":
+				// falsche Reihenfolge der Formulare: tue nichts
+				break;
+
+			case "NOTYOURS":
+				// falsches Formular: tue nichts
+				break;
+			case "EMPTY":
+				// kein Formular: tue nichts
+				break;
+
+			default:
+				System.err.println("unbekannter / noch nicht abgedeckter Status in der Switch-Case...");
+				break;
+			}
+		} else {
+			System.err.println("keineStatusNachNOK!!! In Bot letzteAktionNachNOKPruefen");
+		}
+	}
+
+	/**
+	 * Korrigiert evtl. Koordinaten-Änderungen die bspw. durch das Quatschen mit
+	 * einem Bot nicht wirksam wurden. #innere und aeußere Wirksamkeit eines VAs
+	 * #VIT
+	 */
+	public void bewegungRueckgaengigMachen() {
+		System.err.println("Ort vor Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
+		switch (richtungUmkehren(this.letzteRichtung)) {
+		/*
+		 * Wenn versucht hat in Norden zu bewegen x-Koordinate belassen und y-Koordinate
+		 * um 1 erhöhen. Süden: x belassen und y - 1 Westen: x + 1 und y belassen Osten:
+		 * x - 1 und y belassen.
+		 * 
+		 * Dafür gibts bereits die Methoden der Klasse Koordinaten à .norden() die den
+		 * KoordSatz einer nördlichen Bewegung zurückgibt.
+		 * 
+		 * TODO 1.0 - Erstmal Richtung umkehren von letzter Richtung damit switch case
+		 * übersichtlich ist 1.1 - dann in entsprechende Cases springen 2.0 -
+		 * Koordinaten korrigieren 2.1 - Wegelisten anpassen? 2.2 - Karte aktualisieren?
+		 * Oder beinhaltet sie nur Feldtypen?
+		 */
+		case "Norden":
+//			TODO aktuelleKarte.aktualisiereFeld(WennNördlicheBewegung);? Benötigt man's oder reichts ort anzupassen?
+			// das wären schonmal die südlichen Koordinaten TODO aber wie und
+			// wohin speichern?
+			// aktueller ort wird mit dem einer fiktiven nördlichen Bewegung überschrieben.
+			this.ort = (aktuelleKarte.getFeld(getOrt().norden())).getPunkt();
+			System.err.println("Ort nach Nord-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
+			break;
+
+		case "Osten":
+			this.ort = (aktuelleKarte.getFeld(getOrt().osten())).getPunkt();
+			System.err.println("Ort nach Ost-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
+			break;
+
+		case "Sueden":
+			this.ort = (aktuelleKarte.getFeld(getOrt().sueden())).getPunkt();
+			System.err.println("Ort nach Sued-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
+			break;
+		case "Westen":
+			this.ort = (aktuelleKarte.getFeld(getOrt().westen())).getPunkt();
+			System.err.println("Ort nach West-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
+			break;
+		default:
+			System.err.println("bewegungRueckgaengigMachen hat nicht funktioniert....");
+			System.err.println("Ort ohne Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
+			break;
+		}
+
 	}
 
 }

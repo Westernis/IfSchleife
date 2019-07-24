@@ -19,6 +19,10 @@ public class ErkundenderBotLvl2 extends Bot {
 
 	public ErkundenderBotLvl2(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
+		/*
+		 * es macht einen Unterschied ob man hier den gen. Typ weglässt - dann HashMap
+		 * mit Object, Object...
+		 */
 		meineformulare = new HashMap<Integer, Ziele>();
 	}
 
@@ -28,7 +32,6 @@ public class ErkundenderBotLvl2 extends Bot {
 		Ziele feld;
 		for (Koordinaten xy : new Koordinaten[] { ort, ort.norden(), ort.osten(), ort.westen(), ort.sueden() }) {
 			feld = (Ziele) getAktuelleKarte().getFormulare(xy);
-			System.err.println("Test 2" + feld);
 			if (feld != null && feld.getPlayerID() == this.id) {
 				meineformulare.put(feld.getFormID(), feld);
 
@@ -39,10 +42,10 @@ public class ErkundenderBotLvl2 extends Bot {
 
 	@Override
 	public void machAktion() {
-		String richtung = null;
+		//String letzteRichtung = null; // muss raus da man das im Bot nutzen soll
 		Feld ziel = null;
 
-		this.rundeInitialisiern();
+//		this.rundeInitialisiern();  //befindet sich in der Init
 		this.aktualisiereMeineFormulare();
 
 //		  INIT: rundeInitialisieren und dann aktualisiereMeineFormulare ausführen
@@ -118,10 +121,10 @@ public class ErkundenderBotLvl2 extends Bot {
 
 		// 4. Weg zu dem ausgewählten Ziel bestimmen und hinfahren
 		if (ziel != null) {
-			richtung = bestimmeRichtung(ziel, wege);
+			letzteRichtung = bestimmeRichtung(ziel, wege); //Richtung für die NOK Korrektur speichern
 		}
-		System.err.println("4 |" + richtung + "|");
-		fahren(richtung);
+		System.err.println("4 |" + letzteRichtung + "|");
+		fahren(letzteRichtung);
 
 	}
 

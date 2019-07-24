@@ -21,7 +21,7 @@ public class ZufallsBotLvl1 extends Bot {
 
 	public void machAktion() {
 
-		this.rundeInitialisiern();
+//		this.rundeInitialisiern(); //befindet sich nun in der Init
 		nochSchlauereZufallsrichtung();
 	}
 
