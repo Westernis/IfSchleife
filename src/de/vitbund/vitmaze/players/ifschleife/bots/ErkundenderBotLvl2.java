@@ -16,6 +16,8 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Ziele;
 public class ErkundenderBotLvl2 extends Bot {
 	private int erledigteFormulare = 0; // speichert das höchste abgearbeitete Formular, Formulare sollten bei 1 starten
 	private HashMap<Integer, Ziele> meineformulare;
+	private boolean formularVermisst;
+	private int fortschrittFSuche;
 
 	public ErkundenderBotLvl2(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
@@ -114,6 +116,33 @@ public class ErkundenderBotLvl2 extends Bot {
 		// ziel = naechstesUnerkundetesFeld(wege);
 		ziel = naechstesFeldGewichtet(wege);
 
+		
+		// 3.2 Formular
+		//		for (Entry<Integer, Ziele> x : meineformulare.entrySet()) {
+		//			System.err.println("3.3 " + x.getKey() + "|" + x.getValue().getPunkt());
+		//		}
+		 		if (meineformulare.get(erledigteFormulare + 1) != null) {
+		 			ziel = meineformulare.get(erledigteFormulare + 1);
+					// prüfen ob in der Karte noch das selbe Formular an der Stelle liegt
+					Ziele zielFeldAusKarte = getAktuelleKarte().getFormulare(ziel.getPunkt());
+					if (zielFeldAusKarte == null || zielFeldAusKarte.getFormID() != ((Ziele) ziel).getFormID()
+							|| zielFeldAusKarte.getPlayerID() != ((Ziele) ziel).getPlayerID()) {
+						formularVermisst = true;
+					} else {
+						formularVermisst = false;
+					}
+				 			System.err.println("3.3 |" + (erledigteFormulare + 1 + "|" + ziel.getPunkt()));
+		 		}
+		 
+				// prüfen ob Formularsuche läuft
+		
+				if (formularVermisst) {
+					ziel = formularSuche(wege);
+					// 1. aufs ursprüngliche Ziel fahren
+				}
+		
+		
+		
 		// 3. Formular/Ziel bekannt -> Ziel überschreiben
 		// Ziel
 		getAktuelleKarte().getAnzahlFormulare();
@@ -144,6 +173,49 @@ public class ErkundenderBotLvl2 extends Bot {
 
 	}
 
+	/**
+	 * Methode händelt die Suche nach einem bereits gesehenen Formular.
+	 * 
+	 * @return
+	 */
+	private Feld formularSuche(LinkedHashMap<Feld, VorhergehenderSchritt> wege) {
+		// TODO Automatisch generierter Methodenstub
+		System.err.println("Formularsuche ausgelöst");
+		int suchweite = 4;
+		ArrayList<Feld> suchListe = new ArrayList<Feld>();
+		Feld ergebnis;
+
+		switch (fortschrittFSuche) {
+		case 0:
+			// wir wollen ja weiterhin zum alten Standort
+			ergebnis = meineformulare.get(erledigteFormulare + 1);
+			if (ergebnis.getPunkt().getX() != this.getOrt().getX()// TODO equals für koordinaten -.-
+					|| ergebnis.getPunkt().getY() != this.getOrt().getY()) {
+				return ergebnis; // zum Punkt an dem das Formular zuletzt gesehen wurde
+			} else {
+				fortschrittFSuche++;
+				// Felder raussuchen und speichern
+				for (Entry<Feld, VorhergehenderSchritt> element : wege.entrySet()) {
+					// wenn das Feld außer Sichtweite ist und innerhalb unserer suchweite
+					if (1 < element.getValue().getWeglaenge() && element.getValue().getWeglaenge() <= suchweite) {
+						suchListe.add(element.getKey());
+						// TODO was machen wir mit komplett unerkundeten Feldern in Reichweite, die
+						// tauchen nicht in wege auf.
+						// Ignorieren? Wird dann halt über die reguläre Suche später gefunden ?
+					}
+				}
+			}
+
+		case 1:
+			// Felder abarbeiten
+			break;
+		case 2:
+		default:
+			break;
+		}
+		return null;
+	}
+	
 	private Feld naechstesFeldGewichtet(LinkedHashMap<Feld, VorhergehenderSchritt> wege) {
 		ArrayList<Feld> potFeld = new ArrayList<Feld>();
 		Feld ziel = null;
