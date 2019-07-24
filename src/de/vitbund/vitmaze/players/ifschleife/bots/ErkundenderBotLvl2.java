@@ -26,6 +26,20 @@ public class ErkundenderBotLvl2 extends Bot {
 		meineformulare = new HashMap<Integer, Ziele>();
 	}
 
+	@Override
+	public void rundeInitialisiern() {
+		super.rundeInitialisiern(); // ich will alles aus der Elternklasse machen
+
+		// neue hinzugekommener Teil
+		if (this.letzeAktionAufOKpruefen()) {
+			// prüfen ob formular aufgehoben
+			String s = "OK FORM";
+			if (Init.lastActionsResult.contains(s)) {
+				erledigteFormulare++;
+			}
+		}
+	}
+
 	private void aktualisiereMeineFormulare() {
 		System.err.println("Test 1|" + this.getOrt() + "|" + getAktuelleKarte().getFeld(this.getOrt()));
 		Koordinaten ort = this.getOrt();
@@ -42,7 +56,7 @@ public class ErkundenderBotLvl2 extends Bot {
 
 	@Override
 	public void machAktion() {
-		//String letzteRichtung = null; // muss raus da man das im Bot nutzen soll
+		// String letzteRichtung = null; // muss raus da man das im Bot nutzen soll
 		Feld ziel = null;
 
 //		this.rundeInitialisiern();  //befindet sich in der Init
@@ -79,7 +93,7 @@ public class ErkundenderBotLvl2 extends Bot {
 				// (gefundeneFormulare+1), da das letzte Formular und das Ziel die selbe Nummer
 				// haben
 				if (Init.currentCell.getFormID() == (erledigteFormulare + 1)) {
-					erledigteFormulare++;
+					// Formular hochzählen wird in dem Wrapper der rundeInitialisieren gemacht
 					System.err.println("1.3");
 					this.aufsammeln();
 					return;
@@ -121,7 +135,7 @@ public class ErkundenderBotLvl2 extends Bot {
 
 		// 4. Weg zu dem ausgewählten Ziel bestimmen und hinfahren
 		if (ziel != null) {
-			letzteRichtung = bestimmeRichtung(ziel, wege); //Richtung für die NOK Korrektur speichern
+			letzteRichtung = bestimmeRichtung(ziel, wege); // Richtung für die NOK Korrektur speichern
 		}
 		System.err.println("4 |" + letzteRichtung + "|");
 		fahren(letzteRichtung);

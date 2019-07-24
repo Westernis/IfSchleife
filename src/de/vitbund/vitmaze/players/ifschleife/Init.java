@@ -70,16 +70,16 @@ public class Init {
 
 		switch (level) {
 		case 1:
-			unserBot = new KickAss(karte, playerId, startX, startY);
+			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
 			break;
 		case 2:
-			unserBot = new KickAss(karte, playerId, startX, startY);
+			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
 			break;
 		case 3:
-			unserBot = new KickAss(karte, playerId, startX, startY);
+			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
 			break;
 		case 4:
-			unserBot = new KickAss(karte, playerId, startX, startY);
+			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
 			break;
 		case 5:
 			unserBot = new KickAss(karte, playerId, startX, startY);
