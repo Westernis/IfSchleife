@@ -218,7 +218,7 @@ public abstract class Bot {
 			letzteRichtung = "Osten";
 		} else if ("OK WEST".equals(Init.lastActionsResult)) {
 			letzteRichtung = "Westen";
-		}
+		} else letzteRichtung ="Westen";
 
 		// hier wird kontrolliert wie viele freie Felder in der Nähe sind
 		switch (richtungsliste.size()) {
