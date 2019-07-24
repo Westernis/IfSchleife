@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.vitbund.vitmaze.players.ifschleife.Init;
+import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 
 /**
@@ -27,39 +28,25 @@ public class KickAss extends Bot {
 
 //		Wenn Helmuts Feld wieder funktioniert, dann damit Ziel prüfen: this.aktuelleKarte.getFeld(getOrt()).toString()
 
-		int kickcounter = 0;
+		if (Feld.formular.equals(Init.currentCell.getTyp()) && this.id!=Init.currentCell.getPlayerID()) {
 
-		if (kickcounter < 10) {
-			for (int x = 0; x < 5; x++) {
-				for (int y = 0; y < 5; y++) {
-
-					if (Init.currentCellStatus.equals("FORM " + x + " " + y)) {
-
-						if (!"WALL".equals(Init.northCellStatus)) {
-							System.out.println("kick north");
-							kickcounter++;
-							break;
-						}
-						if (!"WALL".equals(Init.southCellStatus)) {
-							System.out.println("kick south");
-							kickcounter++;
-							break;
-						}
-						if (!"WALL".equals(Init.eastCellStatus)) {
-							System.out.println("kick east");
-							kickcounter++;
-							break;
-						}
-						if (!"WALL".equals(Init.westCellStatus)) {
-							System.out.println("kick west");
-							kickcounter++;
-							break;
-						}
-
-						return;
-					}
-				}
+			if (Feld.flur.equals(Init.northCellStatus)) {
+				System.out.println("kick north");
+				return;
 			}
+			if (Feld.flur.equals(Init.southCellStatus)) {
+				System.out.println("kick south");
+				return;
+			}
+			if (Feld.flur.equals(Init.eastCellStatus)) {
+				System.out.println("kick east");
+				return;
+			}
+			if (Feld.flur.equals(Init.westCellStatus)) {
+				System.out.println("kick west");
+				return;
+			}
+
 		}
 
 		schlauereZufallsrichtung(); // das ist nun unser erkunden;
