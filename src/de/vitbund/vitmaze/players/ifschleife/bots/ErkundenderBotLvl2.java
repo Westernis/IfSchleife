@@ -20,6 +20,7 @@ public class ErkundenderBotLvl2 extends Bot {
 	// Variablen für die Formularsuche
 	private boolean formularVermisst;
 	private boolean sucheGestartet;
+	private boolean flurFelderWiederEntnullen = false;
 	private ArrayList<Feld> suchListe;
 
 	public ErkundenderBotLvl2(Karte karte, int playerId, int x, int y) {
@@ -87,7 +88,7 @@ public class ErkundenderBotLvl2 extends Bot {
 
 		this.aktualisiereMeineFormulare();
 
-		System.err.println("1");
+//		System.err.println("1");
 		// 1. aktuelle Felder überprüfen, ist feld überhaupt eins vom bot
 
 		if (Init.currentCell.getPlayerID() == id) {
@@ -95,18 +96,18 @@ public class ErkundenderBotLvl2 extends Bot {
 			case Feld.ziel:
 				// Ziel schon erlaubt? -> einsammeln
 				if (Init.currentCell.getFormID() == erledigteFormulare) {
-					System.err.println("1.1");
+//					System.err.println("1.1");
 					this.beenden();
 					return;
 				}
 				break;
 			case Feld.formular:
-				System.err.println("1.2");
+//				System.err.println("1.2");
 				// aktuelles Formularfeld? -> aufheben
 				if (Init.currentCell.getFormID() == (erledigteFormulare + 1)) {
 					// Formular hochzählen wird in dem Wrapper der rundeInitialisieren gemacht um
 					// quatschen abzufangen
-					System.err.println("1.3");
+//					System.err.println("1.3");
 					this.aufsammeln();
 					return;
 				}
@@ -122,7 +123,10 @@ public class ErkundenderBotLvl2 extends Bot {
 		// WegeKarte holen
 		LinkedHashMap<Feld, VorhergehenderSchritt> wege = this.getAktuelleKarte().findeWege(getOrt());
 		// unerkundetes Feld holen
+//		this.aktuelleKarte.ausgabe();
+//		this.aktuelleKarte.ausgabeWegliste(wege);
 		ziel = naechstesFeldGewichtet(wege);
+//		System.err.println("2.");
 
 		// 3. Formular/Ziel bekannt -> Ziel überschreiben
 
@@ -131,22 +135,24 @@ public class ErkundenderBotLvl2 extends Bot {
 		// zweite Bedingung ob wir genug haben
 		if (getAktuelleKarte().getAnzahlFormulare() >= 0
 				&& erledigteFormulare >= getAktuelleKarte().getAnzahlFormulare()) {
-
+			
+//			System.err.println("3.");
+			
 			// WICHTIG nur setzten wenn auch das eigene Ziel bekannt ist
 			if (getAktuelleKarte().getZiel(this.id) != null) {
 				ziel = getAktuelleKarte().getZiel(this.id);
 			}
-			System.err.println("3.1 |" + erledigteFormulare);
+//			System.err.println("3.1 |" + erledigteFormulare);
 
 		}
 		// 3.2 Formulare
 		else if (meineformulare.get(erledigteFormulare + 1) != null) {
 			ziel = meineformulare.get(erledigteFormulare + 1);
-
+//			System.err.println("3.2");
 			// prüfen ob in der Karte noch das selbe Formular an der Stelle liegt
 			Ziele zielFeldAusKarte = getAktuelleKarte().getFormulare(ziel.getPunkt());
 			if (!((Ziele) ziel).selbesFormular(zielFeldAusKarte)) {
-
+//				System.err.println("3.2.3");
 				formularVermisst = true;// TODO noch nötig?
 				
 				//wenn kein Formular mehr da -> liefert getFormular null, daher muss das Feld nochmal geholt werden
@@ -159,18 +165,24 @@ public class ErkundenderBotLvl2 extends Bot {
 			} else {
 
 				formularSucheZuruecksetzen();
-				System.err.println("3.3 |" + (erledigteFormulare + 1 + "|" + ziel.getPunkt()));
+//				System.err.println("3.3 |" + (erledigteFormulare + 1 + "|" + ziel.getPunkt()));
 			}
 		}
 
 		// 4. Weg zu dem ausgewählten Ziel bestimmen und hinfahren
 		if (ziel != null)
-
 		{
 			letzteRichtung = bestimmeRichtung(ziel, wege); // Richtung für die NOK Korrektur speichern
+//			System.err.println(4.1);
+		}
+		else{
+//			System.err.println(4.2);
+			this.aktuelleKarte.flurFelderNullen();
+			flurFelderWiederEntnullen = true;
+			
 		}
 
-		System.err.println("4 |" + letzteRichtung + "|");
+//		System.err.println("5 |" + letzteRichtung + "|");
 
 		fahren(letzteRichtung);
 
@@ -240,6 +252,8 @@ public class ErkundenderBotLvl2 extends Bot {
 			// mehr kennen
 			meineformulare.remove(erledigteFormulare + 1);
 			formularSucheZuruecksetzen();
+			
+			ergebnis = null;
 		}
 
 		return ergebnis;
@@ -337,4 +351,15 @@ public class ErkundenderBotLvl2 extends Bot {
 		return richtung;
 
 	}
+	
+	@Override
+	protected void aufsammeln() {
+		super.aufsammeln();
+		if(flurFelderWiederEntnullen) {
+			System.err.println("ACHTUNG Karte ENTnullt");
+			this.getAktuelleKarte().formularsucheEnde();
+			flurFelderWiederEntnullen = false;
+		}
+	}
+	
 }

@@ -132,33 +132,47 @@ public class Karte {
 			if (Feld.ziel.equals(ort.getTyp())) {
 				addZiel(ort);
 			}
-//			Wege setzen
-			// Osten
-			nachbar = getFeld(punkt.osten()); // das zu betrachtende Nachbarfeld holen
-			if (this.isFeldBekannt(punkt.osten()) && nachbar.istBegehbar()) { // Ost
-				ort.setOst(nachbar);
-				nachbar.setWest(ort);
-			}
-			// Westen
-			nachbar = getFeld(punkt.westen()); // das zu betrachtende Nachbarfeld holen
-			if (this.isFeldBekannt(punkt.westen()) && nachbar.istBegehbar()) { // Ost
-				ort.setWest(nachbar);
-				nachbar.setOst(ort);
-			}
+			this.wegeSetzen(punkt);
+		}
+	}
 
-			// Norden
-			nachbar = getFeld(punkt.norden()); // das zu betrachtende Nachbarfeld holen
-			if (this.isFeldBekannt(punkt.norden()) && nachbar.istBegehbar()) { // Ost
-				ort.setNord(nachbar);
-				nachbar.setSued(ort);
-			}
+	private void wegeSetzen(Koordinaten punkt) {
+		Feld ort = this.getFeld(punkt);
+		Feld nachbar;
+		// Wege setzen
+		// Osten
+		nachbar = getFeld(punkt.osten()); // das zu betrachtende Nachbarfeld holen
+		if (this.isFeldBekannt(punkt.osten()) && nachbar.istBegehbar()) { // Ost
+			ort.setOst(nachbar);
+			nachbar.setWest(ort);
+		} else {
+			ort.setOst(null);
+		}
+		// Westen
+		nachbar = getFeld(punkt.westen()); // das zu betrachtende Nachbarfeld holen
+		if (this.isFeldBekannt(punkt.westen()) && nachbar.istBegehbar()) { // Ost
+			ort.setWest(nachbar);
+			nachbar.setOst(ort);
+		} else {
+			ort.setWest(null);
+		}
 
-			// Süden
-			nachbar = getFeld(punkt.sueden()); // das zu betrachtende Nachbarfeld holen
-			if (this.isFeldBekannt(punkt.sueden()) && nachbar.istBegehbar()) { // Ost
-				ort.setSued(nachbar);
-				nachbar.setNord(ort);
-			}
+		// Norden
+		nachbar = getFeld(punkt.norden()); // das zu betrachtende Nachbarfeld holen
+		if (this.isFeldBekannt(punkt.norden()) && nachbar.istBegehbar()) { // Ost
+			ort.setNord(nachbar);
+			nachbar.setSued(ort);
+		} else {
+			ort.setNord(null);
+		}
+
+		// Süden
+		nachbar = getFeld(punkt.sueden()); // das zu betrachtende Nachbarfeld holen
+		if (this.isFeldBekannt(punkt.sueden()) && nachbar.istBegehbar()) { // Ost
+			ort.setSued(nachbar);
+			nachbar.setNord(ort);
+		} else {
+			ort.setSued(null);
 		}
 	}
 
@@ -183,8 +197,8 @@ public class Karte {
 	}
 
 	public void ausgabe() {
-		int x = felder.length;
-		int y = felder[0].length;
+		int x = felder.length - 1;
+		int y = felder[0].length - 1;
 		for (int i = 0; i < x; i++) {
 			for (int j = 0; j < y; j++) {
 				if (felder[j][i] == null) {
@@ -394,6 +408,53 @@ public class Karte {
 		}
 
 		return rueckgabe;
+
+	}
+
+	/**
+	 * Diese Methode tauscht alle Flurfelder gegen null aus. Außerdem werden die
+	 * Wege passend geändert.
+	 */
+	public void flurFelderNullen() {
+		// Karte durchschauen
+		Feld feld;
+		Koordinaten ort;
+		for (int x = 0; x < Koordinaten.getxMax(); x++) {
+			for (int y = 0; y < Koordinaten.getyMax(); y++) {
+				ort = new Koordinaten(x, y);
+				feld = this.getFeld(ort);
+				if (feld != null) {
+					System.err.println("Feld entfernen? " + ort);
+					if (feld.getTyp().equals(Feld.flur)) {
+						felder[ort.getX()][ort.getY()] = null;
+
+					} else if (!feld.getTyp().equals(Feld.wand)) {
+						wegeSetzen(feld.getPunkt());
+					}
+				}
+
+			}
+		}
+	}
+
+	/**
+	 * Füllt alle nicht gesetzten Felder mit Flurfeldern;
+	 */
+	public void formularsucheEnde() {
+		Feld arbeitsfeld;
+		Koordinaten ort;
+		ZellStatus zelle = new ZellStatus();
+		zelle.rueckgabeAuswerten(Feld.flur);
+
+		for (int x = 0; x < Koordinaten.getxMax(); x++) {
+			for (int y = 0; y < Koordinaten.getyMax(); y++) {
+				ort = new Koordinaten(x, y);
+				arbeitsfeld = this.getFeld(ort);
+				if (arbeitsfeld == null) {
+					aktualisiereFeld(ort, zelle);
+				}
+			}
+		}
 
 	}
 }
