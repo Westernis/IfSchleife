@@ -89,7 +89,7 @@ public class Init {
 			break;
 		}
 
-		while (input.hasNext()) {
+		while (true/*input.hasNext()*/) {
 
 			// Rundeninformationen auslesen
 
@@ -122,6 +122,6 @@ public class Init {
 		}
 
 		// Alles fertig -> aufräumen
-		input.close();
+		/*input.close();*/
 	}
 }
