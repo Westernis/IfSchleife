@@ -2,11 +2,7 @@ package de.vitbund.vitmaze.players.ifschleife;
 
 import java.util.Scanner;
 
-import de.vitbund.vitmaze.players.ifschleife.bots.Bot;
-import de.vitbund.vitmaze.players.ifschleife.bots.BspBotKartennutzung;
-import de.vitbund.vitmaze.players.ifschleife.bots.ErkundenderBotLvl2;
-import de.vitbund.vitmaze.players.ifschleife.bots.KickAss;
-import de.vitbund.vitmaze.players.ifschleife.bots.ZufallsBot2Lvl1;
+import de.vitbund.vitmaze.players.ifschleife.bots.*;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 
