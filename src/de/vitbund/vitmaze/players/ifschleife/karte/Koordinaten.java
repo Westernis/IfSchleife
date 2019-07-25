@@ -164,29 +164,30 @@ public class Koordinaten {
 	/**
 	 * Gibt für direkt benachbarte Koordinaten die Richtung zurück.
 	 * 
-	 * @param start 
+	 * @param start
 	 * @param ziel
-	 * @return Gibt {@code null} wenn es keine benachbarten Knoten sind. 
+	 * @return Gibt {@code null} wenn es keine benachbarten Knoten sind.
 	 */
 	public static String getRichtung(Koordinaten start, Koordinaten ziel) {
-		//TODO die Strings durch konstanten ersetzen
-		if(start.getXPlus(1) == ziel.getX()) {
-			return "Osten"; 
+		// TODO die Strings durch konstanten ersetzen
+		if (start.getXPlus(1) == ziel.getX()) {
+			return "Osten";
 		}
-		if(start.getXPlus(-1) == ziel.getX()) {
-			return "Westen"; 
+		if (start.getXPlus(-1) == ziel.getX()) {
+			return "Westen";
 		}
-		if(start.getYPlus(1) == ziel.getY()) {
-			return "Sueden"; 
+		if (start.getYPlus(1) == ziel.getY()) {
+			return "Sueden";
 		}
-		if(start.getYPlus(-1) == ziel.getY()) {
-			return "Norden"; 
+		if (start.getYPlus(-1) == ziel.getY()) {
+			return "Norden";
 		}
 		return null;
 	}
 
 	/**
 	 * Dient dem Testen der Koordinatenklasse
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -201,6 +202,13 @@ public class Koordinaten {
 		System.err.println(p3);
 		System.err.println(p4);
 		System.err.println(getRichtung(p1, p4));
+	}
+
+	public boolean xyGleich(Koordinaten ort) {
+		if (this.x == ort.getX() && this.y == ort.getY()) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
