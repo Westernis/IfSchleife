@@ -10,20 +10,37 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 import de.vitbund.vitmaze.players.ifschleife.karte.VorhergehenderSchritt;
+//TODO TK-JavaDocs: fertig, machAktion() noch ausführlicher bauen...
 
 /**
- * Ein Bot an dem die Verwendung der navigation deutlich werden sollte
+ * Ein Bot an dem die Verwendung der navigation deutlich werden soll. Erbt von
+ * der Klasse Bot.
  * 
- * @author helmut.rietz
- *
+ * @deprecated
+ * 
+ * 
+ * 
+ * @author IFSchleife
+ * @see ErkundenderBotLvl2
  */
 public class BspBotKartennutzung extends Bot {
 
+	/**
+	 * Erstellt einen neuen BspBotKartennutzung mit Karte, PlayerID und Start-Koordinaten.
+	 * 
+	 * @param karte
+	 * @param playerId - Werte zwischen 1 und 4
+	 * @param x - Die X-Koordinate
+	 * @param y - Die Y-Koordinate
+	 */
 	public BspBotKartennutzung(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
 	}
 
 	@Override
+	/**
+	 * Überschreibt die Methode des Bots. Nutzt zur Wegfindung bereits den Dijkstra.
+	 */
 	public void machAktion() {
 		String richtung = null;
 
@@ -38,7 +55,7 @@ public class BspBotKartennutzung extends Bot {
 		// this.getAktuelleKarte().toSysErrErkundeteFelder();
 		System.err.println(Init.currentCellStatus);
 
-		richtung = fahreZumUnerkundetenFeld(wege);//null => alles erkundet 
+		richtung = fahreZumUnerkundetenFeld(wege);// null => alles erkundet
 		if (richtung != null) {
 			fahren(richtung);
 		}

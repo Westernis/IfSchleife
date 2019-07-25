@@ -11,10 +11,10 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 
 /**
- * Diese Klasse soll die Initialisierung durchführen. Das heißt es wird ein Bot
- * angelegt, der die benötigten Karten und ein zum Level passendes Hirn
- * zugewiesen bekommt. Außerdem handelt die Klasse die initiale
- * Datenverarbeitung am Anfang jeder Runde.
+ * Diese Klasse soll die Initialisierung durchführen. Das heißt es wird ein
+ * passender Bot angelegt und die entsprechende Aktion des Bots aufgerufen.
+ * Außerdem handelt die Klasse die initiale Datenverarbeitung am Anfang jeder
+ * Runde.
  * 
  * @author IFSchleife
  *
@@ -36,7 +36,10 @@ public class Init {
 	public static ZellStatus eastCell = new ZellStatus();
 
 	/**
-	 * TODO JAVADOC
+	 * 
+	 * 1. Auswerten der Level-Informationen, die wir über die Game-Engine bekommen.
+	 * 2. Passenden Bot mithilfe der LevelID deklarieren und instanziieren. 3.
+	 * Methoden für weitere Aktionen aufrufen (u.a. Bewegung des Bots).
 	 * 
 	 * @param args
 	 */
@@ -89,6 +92,7 @@ public class Init {
 			break;
 		}
 
+		// TODO prüfen ob while(true)... sinnvoller wäre
 		while (input.hasNext()) {
 
 			// Rundeninformationen auslesen
@@ -116,7 +120,7 @@ public class Init {
 //			System.err.println("Ergebnis Vorrunde Westen / Osten: " + "   " + westCellStatus + " / " + eastCellStatus);
 //			System.err.println("Ergebnis Vorrunde Sueden: " + "                " + southCellStatus);
 
-			//TODO: initialisieren und Prüfung reinschreiben
+			// TODO: initialisieren und Prüfung reinschreiben
 			unserBot.rundeInitialisiern();
 			unserBot.machAktion();
 		}
