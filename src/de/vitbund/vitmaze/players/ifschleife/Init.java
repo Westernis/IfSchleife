@@ -11,9 +11,9 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 
 /**
- * Diese Klasse soll die Initialisierung durchführen. Das heißt es wird ein
+ * Diese Klasse führt die Initialisierung durch. Das heißt es wird ein
  * passender Bot angelegt und die entsprechende Aktion des Bots aufgerufen.
- * Außerdem handelt die Klasse die initiale Datenverarbeitung am Anfang jeder
+ * Außerdem behandelt die Klasse die initiale Datenverarbeitung am Anfang jeder
  * Runde.
  * 
  * @author IFSchleife

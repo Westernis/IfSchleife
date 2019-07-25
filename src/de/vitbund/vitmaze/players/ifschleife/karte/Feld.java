@@ -16,19 +16,19 @@ public abstract class Feld {
 	 * nachzulesen TODO schöner machen?
 	 */
 	/**
-	 * Text für die Flurfelder.
+	 * Text für die Flurfelder: "FLOOR".
 	 */
 	public static final String flur = "FLOOR";
 	/**
-	 * Text für die Wandfelder.
+	 * Text für die Wandfelder : "WALL".
 	 */
 	public static final String wand = "WALL";
 	/**
-	 * Text für die Zielfelder (Sachbearbeiter).
+	 * Text für die Zielfelder (Sachbearbeiter): "FINISH".
 	 */
 	public static final String ziel = "FINISH";
 	/**
-	 * Text für die Formularfelder.
+	 * Text für die Formularfelder: "FORM".
 	 */
 	public static final String formular = "FORM";
 
