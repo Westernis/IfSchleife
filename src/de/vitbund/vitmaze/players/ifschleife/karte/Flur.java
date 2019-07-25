@@ -7,7 +7,13 @@ package de.vitbund.vitmaze.players.ifschleife.karte;
  * @see Feld
  */
 public class Flur extends Feld {
-
+	/**
+	 * Erstellt einen neuen Flur mit konkreter Position auf dem Spielfeld und
+	 * konkreter Karte auf der er sich befindet.
+	 * 
+	 * @param punkt - die Position auf dem Spielfeld
+	 * @param karte - die Karte auf der er sich befindet
+	 */
 	public Flur(Koordinaten punkt, Karte karte) {
 		super(punkt, karte, Feld.flur);
 	}
@@ -20,11 +26,10 @@ public class Flur extends Feld {
 	public boolean istBegehbar() {
 		return true;
 	}
-	
+
 	/**
 	 * 
-	 * @return gibt den Typ des Flurs zuück.
-	 * @Override
+	 * @return gibt den Typ des Flurs zurück.
 	 */
 	public String toString() {
 		return this.getTyp();

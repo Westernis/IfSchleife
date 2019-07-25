@@ -23,7 +23,7 @@ public class Wand extends Feld {
 	}
 
 	/**
-	 * Prüft die Begehbarkeit eines Wand-Feldes
+	 * Gibt die Begehbarkeit eines Wand-Feldes zurück.
 	 *
 	 * @return false - da eine Wand nicht begehbar ist...
 	 */
@@ -46,7 +46,6 @@ public class Wand extends Feld {
 		return null;
 	}
 
-	@Override
 	/**
 	 * return null - da von der aktuellen Position kein einsehbares Feld ist.
 	 */
@@ -54,7 +53,6 @@ public class Wand extends Feld {
 		return null;
 	}
 
-	@Override
 	/**
 	 * return null - da von der aktuellen Position kein einsehbares Feld ist.
 	 */
@@ -62,7 +60,6 @@ public class Wand extends Feld {
 		return null;
 	}
 
-	@Override
 	/**
 	 * return null - da von der aktuellen Position kein einsehbares Feld ist.
 	 */

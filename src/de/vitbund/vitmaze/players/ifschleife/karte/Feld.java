@@ -2,8 +2,10 @@ package de.vitbund.vitmaze.players.ifschleife.karte;
 
 /**
  * Ein Feld stellt ein Quadrat auf einer Karte dar. Mit einer bestimmten
- * Position auf dem Spielfeld, einer "Füllung" - in VITMaze kann auf einem Feld
- * bspw. ein Formular oder ein Ziel o.ä. liegen.
+ * Position auf dem Spielfeld und einer "Füllung" - in VITMaze kann auf einem
+ * Feld bspw. ein Formular oder ein Ziel o.ä. liegen. Außerdem enthält das Feld
+ * eine Eigenschaft für die Darstellung ob es bereits erkundet oder noch
+ * unbekannt ist.
  * 
  * @author IFSchleife
  */
@@ -59,9 +61,9 @@ public abstract class Feld {
 	 * Erstellt ein Feld mit einem Typ und konkreten Koordinaten auf einer Karte.
 	 * 
 	 * @param punkt - die Position des Felds auf der Karte (horizontale und
-	 *              vertikale Achse).
+	 *              vertikale Achse). {@link #punkt}
 	 * @param karte - die Karte auf der sich das Feld befindet.
-	 * @param typ   - die Art des Felds, bspw. flur.
+	 * @param typ   - die Art des Felds, bspw. flur. {@link #typ}
 	 */
 	public Feld(Koordinaten punkt, Karte karte, String typ) {
 		this.punkt = punkt;
@@ -112,7 +114,7 @@ public abstract class Feld {
 	 * prüft anhand der benachbarten Felder (sind alle angelegt?) ob das Feld auf
 	 * erkundet gesetzt werden kann. Wenn ja setze Variable auf erkundet.
 	 * 
-	 * @return erkundet
+	 * @return erkundet. Bei Fehlern false
 	 */
 	public boolean pruefenErkundet() {
 		if (erkundet) {
@@ -128,6 +130,10 @@ public abstract class Feld {
 		return false;
 	}
 
+	/**
+	 * Eine Methode die von Unterklassen überschrieben wird. Sie wird darstellen ob
+	 * ein Feld begehbar ist.
+	 */
 	public abstract boolean istBegehbar();
 
 	/**
@@ -148,6 +154,10 @@ public abstract class Feld {
 		this.nord = nord;
 	}
 
+	/**
+	 * 
+	 * @return das südliche Feld
+	 */
 	public Feld getSued() {
 		return sued;
 	}
@@ -162,6 +172,10 @@ public abstract class Feld {
 		this.sued = sued;
 	}
 
+	/**
+	 * 
+	 * @return östliche Feld
+	 */
 	public Feld getOst() {
 		return ost;
 	}
@@ -176,6 +190,10 @@ public abstract class Feld {
 		this.ost = ost;
 	}
 
+	/**
+	 * 
+	 * @return das westliche Feld
+	 */
 	public Feld getWest() {
 		return west;
 	}
@@ -191,8 +209,6 @@ public abstract class Feld {
 	}
 
 	/**
-	 *
-	 * 
 	 * Sollte nur zur Ausgabe in Texten genutzt werden
 	 * 
 	 * @return Gibt die Position auf der horizontalen Achse zurück.
@@ -210,7 +226,9 @@ public abstract class Feld {
 		return "" + punkt.getY();
 	}
 
-	@Override
+	/**
+	 * @return gibt den String "ABSTRACT FIELD" zurück.
+	 */
 	public String toString() {
 		return "ABSTRACT FIELD";
 	}

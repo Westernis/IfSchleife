@@ -1,8 +1,8 @@
 package de.vitbund.vitmaze.players.ifschleife.karte;
 
 /**
- * Das Ziel erweitert den Flur und kann entweder ein Sachbearbeiter oder ein
- * Formular sein.
+ * TODO: Jenachdem hier als Art noch den Zettel einfügen. Das Ziel erweitert den
+ * Flur und kann bisher entweder ein Sachbearbeiter oder ein Formular sein.
  * 
  * @author IFSchleife
  * @see Flur
@@ -28,11 +28,19 @@ public class Ziele extends Flur {
 		this.setTyp(typ);
 	}
 
-//TODO hier auch JavaDocs erstellen? 
+	/**
+	 * 
+	 * @return die SpielerID; u.a. für Formulare relevant, da sie für jeden Spieler
+	 *         individuell sind.
+	 */
 	public int getPlayerID() {
 		return playerID;
 	}
 
+	/**
+	 * 
+	 * @param playerID - Die SpielerID in dem aktuellen Spiel
+	 */
 	public void setPlayerID(int playerID) {
 		this.playerID = playerID;
 	}
@@ -40,7 +48,7 @@ public class Ziele extends Flur {
 	/**
 	 * 
 	 * @return die FormularNr. In VITMaze besteht die Möglichkeit, dass verschiedene
-	 *         Formulare auf einem Spielfeld liegen.
+	 *         Formulare auf einer Spielkarte liegen.
 	 */
 	public int getFormID() {
 		return formID;
@@ -49,7 +57,7 @@ public class Ziele extends Flur {
 	/**
 	 * @return der Typ des Ziels + ID des Spielers + Nummer des Formulars
 	 */
-	public String toString() {// TODO form und player id mit rausgeben oder nur ziel??
+	public String toString() {
 		// TODO Ziel vom Dokument unterscheiden bei der Rückgabe
 		return this.getTyp() + " " + playerID + " " + formID;
 	}
@@ -57,8 +65,8 @@ public class Ziele extends Flur {
 	/**
 	 * 
 	 * @param value
-	 * @return false wenn das Ziel nicht die gleichen Inhalte hat. True wenn die
-	 *         Inhalte des Formulars identisch sind.
+	 * @return {@code false} wenn das Ziel nicht die gleichen Inhalte hat.
+	 *         {@code true} wenn die Inhalte des Formulars identisch sind.
 	 */
 	public boolean selbesFormular(Ziele value) {
 		if (value == null) {
