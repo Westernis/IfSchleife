@@ -6,20 +6,34 @@ import java.util.List;
 import de.vitbund.vitmaze.players.ifschleife.Init;
 import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
+//TODO TK-JavaDocs: fertig
 
 /**
+ * Die Klasse erweitert den Bot und hat als Ziel Formulare zu kicken.
+ * 
  * 
  * @author IFSchleife
- *
- *         Die Klasse stellt einen Bot dar (soll darstellen), der ausschließlich
- *         nach dem Zufall seine Wegfindung ableitet.
  */
 public class KickAss extends Bot {
 
+	/**
+	 * Erstellt einen KickAss-Bot mit Karte, PlayerID und Startkoordinaten.
+	 * 
+	 * 
+	 * @param karte
+	 * @param playerId (Werte von 1-4)
+	 * @param x        die X-Koordinate
+	 * @param y        die Y-Koordinate
+	 */
 	public KickAss(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
 	}
 
+	/**
+	 * Überschreibt die Methode des Bots. Die Methode prüft ob auf dem aktuellen
+	 * Feld ein Formular ist was nicht unserem Bot gehört und kickt es in eine freie
+	 * Richtung, bspw. mit {@code System.out.println("kick east");}.
+	 */
 	public void machAktion() {
 
 //		this.rundeInitialisiern(); //befindet sich nun in der Init
@@ -28,7 +42,7 @@ public class KickAss extends Bot {
 
 //		Wenn Helmuts Feld wieder funktioniert, dann damit Ziel prüfen: this.aktuelleKarte.getFeld(getOrt()).toString()
 
-		if (Feld.formular.equals(Init.currentCell.getTyp()) && this.id!=Init.currentCell.getPlayerID()) {
+		if (Feld.formular.equals(Init.currentCell.getTyp()) && this.id != Init.currentCell.getPlayerID()) {
 
 			if (Feld.flur.equals(Init.northCellStatus)) {
 				System.out.println("kick north");

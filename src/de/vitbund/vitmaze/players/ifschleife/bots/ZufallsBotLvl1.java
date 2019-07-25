@@ -2,23 +2,38 @@ package de.vitbund.vitmaze.players.ifschleife.bots;
 
 import de.vitbund.vitmaze.players.ifschleife.Init;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
+//TODO TK-JavaDocs: fertig
 
 /**
+ * Die Klasse stellt einen Bot dar, der ausschließlich nach
+ * dem Zufall seine Wegfindung ableitet.
  * 
+ * Aus Lernzwecken ist er noch enthalten.
+ * 
+ * @deprecated
+ * @see ZufallsBot2Lvl1
  * @author IFSchleife
- *
- *         Die Klasse stellt einen Bot dar (soll darstellen), der ausschließlich
- *         nach dem Zufall seine Wegfindung ableitet.
+ * 
+ * 
  */
 public class ZufallsBotLvl1 extends Bot {
 
+	/**
+	 * Erstellt einen neuen ZufallsBotLvl1 mit Karte, PlayerID und Koordinaten.
+	 * 
+	 * @param karte    
+	 * @param playerId Werte von 1-4
+	 * @param x - die X-Koordinate
+	 * @param y - die Y-Koordinate        
+	 */
 	public ZufallsBotLvl1(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
 	}
 
-	//TODO kann man den entfernen? Ist doch schließlich im Bot enthalten... - erledigt + auf protected statt private geändert...
-//	private String letzteRichtung = "";
-
+	/**
+	 * Überschreibt die Methode der Klasse Bot. Nutzt die Methode
+	 * "nochSchlauereZufallsrichtung".
+	 */
 	public void machAktion() {
 
 //		this.rundeInitialisiern(); //befindet sich nun in der Init
@@ -26,10 +41,9 @@ public class ZufallsBotLvl1 extends Bot {
 	}
 
 	/**
-	 * Eine Art eine Zufallsrichtung zu implementieren. TODO Prüfungen à "ist da
-	 * eine Wand" oder "ist da ein SB" einbauen.
+	 * Wegfindung ausschließlich mit Zufallswerten. Prüft noch nicht mal auf Wände.
 	 * 
-	 * @return
+	 * @return "go west", "go north", "go east" oder "go south" als String.
 	 */
 	private String zufallsRichtung() {
 		double zufallsZahl = Math.random();
@@ -48,8 +62,10 @@ public class ZufallsBotLvl1 extends Bot {
 	}
 
 	/**
-	 * eine noch bessere Version des ZufallsWegFindungs-Algorithmus, nun mit Prüfung
-	 * ob Wände im Weg sind...
+	 * Eine bessere Version der Zufallsrichtung. Nutzt die Methode
+	 * {@code zufallsRichtung()} mit einer Schleife die auf Wände prüft
+	 * ({@code wegGleichWand()}). Gibt nichts zurück sondern fährt direkt den Bot im
+	 * Gegensatz zu {@link #zufallsRichtung()}.
 	 */
 	public void nochSchlauereZufallsrichtung() {
 		/*
@@ -69,9 +85,10 @@ public class ZufallsBotLvl1 extends Bot {
 	}
 
 	/**
-	 * Die Methode überprüft ob ein Weg eine Wand ist.
+	 * Die Methode überprüft ob eine übergebene Richtung eine Wand ist.
 	 * 
-	 * @return
+	 * @param zufaelligeRichtung als String
+	 * @return true wenn Richtung eine Wand ist; false wenn Richtung keine Wand ist.
 	 */
 	public boolean wegGleichWand(String zufaelligeRichtung) {
 		switch (zufaelligeRichtung) {
@@ -113,6 +130,11 @@ public class ZufallsBotLvl1 extends Bot {
 //		return true;
 	}
 
+	/**
+	 * Lässt Bot in die Richtung weitergehen in die er im letzten Zug gegangen ist,
+	 * damit ein ZufallsBot nicht im Kreis läuft wenn die Karte komplett leer wäre.
+	 * Sondern gerade Wege läuft. Wertet die letzteRichtung des Bots aus.
+	 */
 	public void weiterGehen() {
 		if (letzteRichtung == "Norden") {
 			nachNorden();
@@ -125,6 +147,7 @@ public class ZufallsBotLvl1 extends Bot {
 		}
 	}
 
+	//TODO entfernen da leer?
 	public void letztesFeld() {
 
 	}
