@@ -6,7 +6,7 @@ import java.util.List;
 import de.vitbund.vitmaze.players.ifschleife.Init;
 import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
-//TODO TK-JavaDocs: fertig
+//TODO TK-JavaDocs: HR-Anpassung
 
 /**
  * Die Klasse erweitert den Bot und hat als Ziel Formulare zu kicken.
@@ -20,10 +20,10 @@ public class KickAss extends Bot {
 	 * Erstellt einen KickAss-Bot mit Karte, PlayerID und Startkoordinaten.
 	 * 
 	 * 
-	 * @param karte
-	 * @param playerId (Werte von 1-4)
-	 * @param x        die X-Koordinate
-	 * @param y        die Y-Koordinate
+	 * @param karte    - die Spielfeldkarte
+	 * @param playerId - Die ID des Spielers - üblicherweise Werte von 1 bis 4
+	 * @param x        die X-Koordinate - die Position auf der horizontalen Achse
+	 * @param y        die Y-Koordinate - die Position auf der vertikalen Achse
 	 */
 	public KickAss(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
@@ -32,7 +32,8 @@ public class KickAss extends Bot {
 	/**
 	 * Überschreibt die Methode des Bots. Die Methode prüft ob auf dem aktuellen
 	 * Feld ein Formular ist was nicht unserem Bot gehört und kickt es in eine freie
-	 * Richtung, bspw. mit {@code System.out.println("kick east");}.
+	 * Richtung, bspw. mit {@code System.out.println("kick east");}. Die Navigation
+	 * läuft über die Methode {@link #schlauereZufallsrichtung()}
 	 */
 	public void machAktion() {
 

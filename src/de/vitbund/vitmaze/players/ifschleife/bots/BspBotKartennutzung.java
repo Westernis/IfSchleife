@@ -10,7 +10,7 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 import de.vitbund.vitmaze.players.ifschleife.karte.VorhergehenderSchritt;
-//TODO TK-JavaDocs: fertig, machAktion() noch ausführlicher bauen...
+//TODO TK-JavaDocs: HR-Anpassung, machAktion() noch ausführlicher bauen...
 
 /**
  * Ein Bot an dem die Verwendung der navigation deutlich werden soll. Erbt von
@@ -26,12 +26,13 @@ import de.vitbund.vitmaze.players.ifschleife.karte.VorhergehenderSchritt;
 public class BspBotKartennutzung extends Bot {
 
 	/**
-	 * Erstellt einen neuen BspBotKartennutzung mit Karte, PlayerID und Start-Koordinaten.
+	 * Erstellt einen neuen BspBotKartennutzung mit Karte, PlayerID und
+	 * Start-Koordinaten.
 	 * 
-	 * @param karte
-	 * @param playerId - Werte zwischen 1 und 4
-	 * @param x - Die X-Koordinate
-	 * @param y - Die Y-Koordinate
+	 * @param karte    - die Spielfeldkarte
+	 * @param playerId - Die ID des Spielers - üblicherweise Werte von 1 bis 4
+	 * @param x        - Die X-Koordinate - die Position auf der horizontalen Achse
+	 * @param y        - Die Y-Koordinate - die Position auf der vertikalen Achse
 	 */
 	public BspBotKartennutzung(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
@@ -39,7 +40,8 @@ public class BspBotKartennutzung extends Bot {
 
 	@Override
 	/**
-	 * Überschreibt die Methode des Bots. Nutzt zur Wegfindung bereits den Dijkstra.
+	 * Überschreibt die Methode des Bots. Nutzt zur Wegfindung bereits den
+	 * Wegfindungsalgorithmus.
 	 */
 	public void machAktion() {
 		String richtung = null;
@@ -68,6 +70,13 @@ public class BspBotKartennutzung extends Bot {
 	}
 
 	// TODO sollte wahrscheinlich in die Botklasse rein, da es alle brauchen
+	/**
+	 * Die Methode lässt den Bot zu bisher unerkundeten Feldern fahren.
+	 * 
+	 * @param wege
+	 * @return richtung - die Richtung in die der Bot fahren soll. Null wenn kein
+	 *         unerkundetes Feld mehr übrig ist.
+	 */
 	private String fahreZumUnerkundetenFeld(LinkedHashMap<Feld, VorhergehenderSchritt> wege) {
 		Feld ziel = null;
 

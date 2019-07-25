@@ -6,11 +6,11 @@ import java.util.List;
 import de.vitbund.vitmaze.players.ifschleife.Init;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
-//TODO TK-JavaDocs: fertig
+//TODO TK-JavaDocs: HR-Anpassung
 
 /**
  *
- * Die Grundklasse für alle anderen Bots. Die Klasse ist abstract
+ * Die Grundklasse für alle anderen Bots.
  * 
  * @author IFSchleife
  */
@@ -42,20 +42,22 @@ public abstract class Bot {
 	}
 
 	/**
-	 * Die PlayerID unterstützt Zahlenwerte von 1-4
+	 * Die PlayerID unterstützt beliebige Zahlenwerte. Sie stellt die SpielerID dar.
+	 * In Vitmaze wurden zu dem Datum Spieler-IDs zwischen 1 und 4 vergeben.
 	 */
 	protected final int id;
 
 	private Koordinaten ort;
 
+	//TODO schöne Beschreibung für Karte suchen -> in JavaDocs aufführen
 	/**
 	 * Erstellt einen Bot mit einer Karte, einer PlayerID und den aktuellen
 	 * Koordinaten (Startkoordinaten)
 	 * 
-	 * @param karte
-	 * @param playerId
-	 * @param x
-	 * @param y
+	 * @param karte    - die Spielfeldkarte
+	 * @param playerId - die ID des Spielers
+	 * @param x        - die X-Koordinate also der Punkt auf der horizontalen Achse
+	 * @param y        - die Y-Koordinate also der Punkt auf der vertikalen Achse
 	 */
 	public Bot(Karte karte, int playerId, int x, int y) {
 		this.aktuelleKarte = karte;
@@ -162,7 +164,7 @@ public abstract class Bot {
 
 	/**
 	 * 
-	 * @return id - die PlayerID des Spielers (Werte zwischen 1 und 4)
+	 * @return id - die PlayerID des Spielers.
 	 */
 	public int getId() {
 		return id;
@@ -410,8 +412,7 @@ public abstract class Bot {
 
 	/**
 	 * Prueft die letze Aktion auf OK/NOK. Wenn NOK: prueft dann auf die
-	 * nachfolgenden Informationen und leitet Korrekturen bzgl. der
-	 * Koordinaten ein.
+	 * nachfolgenden Informationen und leitet Korrekturen bzgl. der Koordinaten ein.
 	 */
 	public void letzteAktionPruefen() { // TODO: Boolean vs. void
 		if (!this.letzeAktionAufOKpruefen()) { // wenn nicht ok, dann weitere Prüfung
@@ -443,8 +444,8 @@ public abstract class Bot {
 		// status = (Init.lastActionsResult).substring(0, 2);
 		// .substring problematische weil OK und NOK unterschiedliche Länge haben
 
-		status = (Init.lastActionsResult).split(" ", 2)[0]; 
-		//split teilt hier am Leerzeichen in max 2 Strings,  
+		status = (Init.lastActionsResult).split(" ", 2)[0];
+		// split teilt hier am Leerzeichen in max 2 Strings,
 //		System.err.println(status + " nach dem Aufruf von .substring...");
 
 		if ("NOK".equals(status)) {
