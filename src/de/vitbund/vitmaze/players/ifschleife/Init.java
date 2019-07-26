@@ -51,6 +51,10 @@ public class Init {
 		int playerId = input.nextInt(); // id dieses Players / Bots
 		int startX = input.nextInt(); // X-Koordinate der Startposition dieses Player
 		int startY = input.nextInt(); // Y-Koordinate der Startposition dieses Players
+		int sheetCount = 0;
+		if(level == 5) {
+			sheetCount = input.nextInt();
+		}
 		input.nextLine(); // Beenden der zweiten Zeile
 
 		Karte karte = new Karte(sizeX, sizeY);
@@ -67,19 +71,19 @@ public class Init {
 
 		switch (level) {
 		case 1:
-			unserBot = new CharlySheet(karte, playerId, startX, startY);
+			unserBot = new CharlySheet(karte, playerId, startX, startY, sheetCount);
 			break;
 		case 2:
 			unserBot = new Level2(karte, playerId, startX, startY);
 			break;
 		case 3:
-			unserBot = new CharlySheet(karte, playerId, startX, startY);
+			unserBot = new CharlySheet(karte, playerId, startX, startY, sheetCount);
 			break;
 		case 4:
-			unserBot = new CharlySheet(karte, playerId, startX, startY);
+			unserBot = new CharlySheet(karte, playerId, startX, startY, sheetCount);
 			break;
 		case 5:
-			unserBot = new CharlySheet(karte, playerId, startX, startY);
+			unserBot = new CharlySheet(karte, playerId, startX, startY, sheetCount);
 			break;
 
 		default:
