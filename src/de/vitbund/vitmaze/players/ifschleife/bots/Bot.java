@@ -6,35 +6,51 @@ import java.util.List;
 import de.vitbund.vitmaze.players.ifschleife.Init;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
+//TODO TK-JavaDocs: fertig
 
 /**
+ *
+ * Die Grundklasse für alle anderen Bots. Die Klasse ist abstract
  * 
  * @author IFSchleife
- *
- *         Die Grundklasse für alle anderen Bots.
  */
 public abstract class Bot {
 
-	// die Karte, die er gerade erkundet
 	protected Karte aktuelleKarte;
+
+	/**
+	 * letzteRichtung unterstützt Strings à "Norden", "Osten", "Sueden" und
+	 * "Westen".
+	 */
 	protected String letzteRichtung = "";
 
+	/**
+	 * 
+	 * @return aktuelleKarte
+	 */
 	public Karte getAktuelleKarte() {
 		return aktuelleKarte;
 	}
 
+	/**
+	 * Setzt die aktuelleKarte
+	 * 
+	 * @param aktuelleKarte
+	 */
 	public void setAktuelleKarte(Karte aktuelleKarte) {
 		this.aktuelleKarte = aktuelleKarte;
 	}
 
+	/**
+	 * Die PlayerID unterstützt Zahlenwerte von 1-4
+	 */
 	protected final int id;
 
-	// Die aktuellen Koordinaten des Bots
-	// protected int x;
-	// protected int y;
 	private Koordinaten ort;
 
 	/**
+	 * Erstellt einen Bot mit einer Karte, einer PlayerID und den aktuellen
+	 * Koordinaten (Startkoordinaten)
 	 * 
 	 * @param karte
 	 * @param playerId
@@ -52,7 +68,8 @@ public abstract class Bot {
 
 	/**
 	 * Die Methode wird von jeder Unterklasse individuell implementiert und dient
-	 * dem aufruf der Entscheidungsfindung und Ausführung durch den jeweiligen Bot
+	 * dem Aufruf der Entscheidungsfindung und Ausführung durch den jeweiligen Bot
+	 * 
 	 */
 	public abstract void machAktion();
 	// LEARN Was ist der Unterschied zwischen einer abstrakten Methode und einer
@@ -67,9 +84,11 @@ public abstract class Bot {
 	// Methode als boolean lassen??
 
 	/**
-	 * mögliche Inputs Norden Sueden Osten Westen
+	 * Die Methode wandelt eine Richtung in die gegenteilige Richtung um. Mögliche
+	 * Inputs sind "Norden", "Sueden", "Osten", oder "Westen"
 	 * 
-	 * @return gegenteil, bei falscher eingabe -> null
+	 * @return Gegenteil von eingegeber Richtung, bei falscher eingabe -> null
+	 * @param Richtung, das was von der Methode umgekehrt werden soll.
 	 */
 	public String richtungUmkehren(String richtung) {
 		switch (richtung) {
@@ -86,75 +105,80 @@ public abstract class Bot {
 		}
 	}
 
-	// Bewegungsfunktionen
+	/**
+	 * Bewegt den Bot nach Westen und ändert die Koordinaten.
+	 */
 	protected void nachWesten() {
-		// this.x--;
-		// System.err.println("\nBotstandort " + ort);
 		this.ort = this.ort.westen();
 		System.out.println("go west");
 	}
 
+	/**
+	 * Bewegt den Bot nach Sueden und ändert die Koordinaten.
+	 */
 	protected void nachSueden() {
-		// this.y++;
-		// System.err.println("\nBotstandort " + ort);
 		this.ort = this.ort.sueden();
 		System.out.println("go south");
 	}
 
+	/**
+	 * Bewegt den Bot nach Osten und ändert die Koordinaten.
+	 */
 	protected void nachOsten() {
-		// this.x++;
-		// System.err.println("\nBotstandort " + ort);
 		this.ort = this.ort.osten();
 		System.out.println("go east");
 	}
 
+	/**
+	 * Bewegt den Bot nach Norden und ändert die Koordinaten.
+	 */
 	protected void nachNorden() {
-		// this.y--;
-		// System.err.println("\nBotstandort " + ort);
 		this.ort = this.ort.norden();
 		System.out.println("go north");
 	}
 
-	// bequemlichkeit übersetzung der strings in unsere Methoden
+	/**
+	 * Uebersetzt je nach uebergebener Richtung in Bewegungs-Methoden.
+	 * 
+	 * @param richtung in die der Bot fahren soll. Mögliche Richtungen sind
+	 *                 "Westen", "Norden", "Osten" und "Sueden".
+	 */
 	public void fahren(String richtung) {
 		if ("Westen".equals(richtung)) {
 			this.nachWesten();
-//			System.err.println("AB HIER VORHERIGE KARTE");
-//			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
-//			System.err.println(" nach Western");
 		}
 		if ("Norden".equals(richtung)) {
 			this.nachNorden();
-//			System.err.println("AB HIER VORHERIGE KARTE");
-//			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
-//			System.err.println(" nach Norden");
 		}
 		if ("Osten".equals(richtung)) {
 			this.nachOsten();
-//			System.err.println("AB HIER VORHERIGE KARTE");
-//			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
-//			System.err.println(" nach osten");
 		}
 		if ("Sueden".equals(richtung)) {
 			this.nachSueden();
-//			System.err.println("AB HIER VORHERIGE KARTE");
-//			System.err.println("Bot Standort: " + this.ort.getX() + " " + this.ort.getY());
-//			System.err.println(" nach süden");
 		}
 		// this.aktuelleKarte.ausgabe();
 		// System.err.flush();
 	}
 
+	/**
+	 * 
+	 * @return id - die PlayerID des Spielers (Werte zwischen 1 und 4)
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * 
+	 * @return ort an dem sich der Bot aktuell befindet in Form von X- und
+	 *         Y-Koordinaten
+	 */
 	public Koordinaten getOrt() {
 		return ort;
 	}
 
 	/**
-	 * Diese Methode verarbeitet zu erst die Rückgabe bzgl. der letzten Aktion und
+	 * Diese Methode verarbeitet zuerst die Rückgabe bzgl. der letzten Aktion und
 	 * führt gegebenenfalls Korrekturen durch. Danach werden die umliegenden
 	 * Kartenfelder aktualisiert.
 	 */
@@ -173,10 +197,16 @@ public abstract class Bot {
 		}
 	}
 
+	/**
+	 * Animiert den Bot etwas aufzuheben mit der Ausgabe "take".
+	 */
 	protected void aufsammeln() {
 		System.out.println("take");
 	}
 
+	/**
+	 * Animiert den Bot einen Zug zu beenden mit der Ausgabe "finish".
+	 */
 	protected void beenden() {
 		System.out.println("finish");
 	}
@@ -191,13 +221,15 @@ public abstract class Bot {
 
 	/**
 	 * 
-	 * @return
+	 * Die Methode basiert auf einer zufälligen Wegfindung. Zusätzlich implementiert
+	 * wurde eine Erkennung ob eine Wand in der Nähe ist und eine Entscheidung auf
+	 * Basis der freien Richtungen. Diese Entscheidung berücksichtig wie viele freie
+	 * Felder in der Nähe sind. Wenn eins: gehe in die Richtung. Wenn mehr als 1:
+	 * gehe nicht zurück sondern in neue Richtung. Die neue Richtung wird zufällig
+	 * ausgewählt. Bewegt den Bot nach der Entscheidung.
 	 * 
-	 *         Die Methode basiert auf einer zufälligen Weg"findung". Zusätzlich
-	 *         implementiert wurde: - eine Erkennung ob eine Wand in der Nähe ist -
-	 *         eine Entscheidung auf Basis der freien Richtungen.
 	 */
-	public String schlauereZufallsrichtung() {
+	public void schlauereZufallsrichtung() {
 
 //		letzteRichtung = "";
 		List<String> richtungsliste = new ArrayList<String>();
@@ -225,7 +257,7 @@ public abstract class Bot {
 			letzteRichtung = "Osten";
 		} else if ("OK WEST".equals(Init.lastActionsResult)) {
 			letzteRichtung = "Westen";
-		}// else letzteRichtung ="Westen";
+		} // else letzteRichtung ="Westen";
 
 		// hier wird kontrolliert wie viele freie Felder in der Nähe sind
 		switch (richtungsliste.size()) {
@@ -278,18 +310,33 @@ public abstract class Bot {
 		default:
 		}
 
-		return "hallooooo";
 	}
 
-	// TODO warum wird hier mit == geprüft statt .equals()?
+	// TODO rausschmeißen wenn getestet
+//	public void weiterGehen() {
+//		if (letzteRichtung == "Norden") {
+//			nachNorden();
+//		} else if (letzteRichtung == "Sueden") {
+//			nachSueden();
+//		} else if (letzteRichtung == "Westen") {
+//			nachWesten();
+//		} else if (letzteRichtung == "Osten") {
+//			nachOsten();
+//		}
+//	}
+
+	/**
+	 * Bewegt den Bot weiter in die Richtung in die er im letzten Zug gegangen ist.
+	 * Berücksichtigt dabei das Attribut {@code letzteRichtung}.
+	 */
 	public void weiterGehen() {
-		if (letzteRichtung == "Norden") {
+		if ("Norden".equals(letzteRichtung)) {
 			nachNorden();
-		} else if (letzteRichtung == "Sueden") {
+		} else if ("Sueden".equals(letzteRichtung)) {
 			nachSueden();
-		} else if (letzteRichtung == "Westen") {
+		} else if ("Westen".equals(letzteRichtung)) {
 			nachWesten();
-		} else if (letzteRichtung == "Osten") {
+		} else if ("Osten".equals(letzteRichtung)) {
 			nachOsten();
 		}
 	}
@@ -297,7 +344,8 @@ public abstract class Bot {
 	/**
 	 * Die Methode überprüft ob ein Weg eine Wand ist.
 	 * 
-	 * @return
+	 * @return true, wenn uebergebene Richtung eine Wand ist. False wenn uebergebene
+	 *         Richtung eine Wand ist.
 	 */
 	public boolean wegGleichWand(String zufaelligeRichtung) {
 		switch (zufaelligeRichtung) {
@@ -338,14 +386,17 @@ public abstract class Bot {
 	}
 
 	/**
-	 * @return letzteRichtung
+	 * @return letzteRichtung in die der Bot gefahren ist. String à "Norden",
+	 *         "Osten", "Sueden" oder "Westen".
 	 */
 	public String getLetzteRichtung() {
 		return letzteRichtung;
 	}
 
 	/**
-	 * @param letzteRichtung das zu setzende Objekt letzteRichtung
+	 * Setzt die letzte Richtung des Bots
+	 * 
+	 * @param letzteRichtung à "Norden", "Osten", "Sueden" oder "Westen".
 	 */
 	public void setLetzteRichtung(String letzteRichtung) {
 		this.letzteRichtung = letzteRichtung;
@@ -356,12 +407,11 @@ public abstract class Bot {
 	 * erst auf ok/nok - wenn nok dann weitere Prüfung wenn nicht dann fertig
 	 * letzteAktionNachNOKPruefen
 	 */
+
 	/**
-	 * 
-	 * @return
-	 * 
-	 *         prüft die letze Aktion auf OK/NOK und wenn NOK dann auf die
-	 *         nachfolgenden Informationen und leitet uU gewisse Korrekturen ein.
+	 * Prueft die letze Aktion auf OK/NOK. Wenn NOK: prueft dann auf die
+	 * nachfolgenden Informationen und leitet Korrekturen bzgl. der
+	 * Koordinaten ein.
 	 */
 	public void letzteAktionPruefen() { // TODO: Boolean vs. void
 		if (!this.letzeAktionAufOKpruefen()) { // wenn nicht ok, dann weitere Prüfung
@@ -373,6 +423,13 @@ public abstract class Bot {
 		}
 	}
 
+	/**
+	 * Prueft den ersten Teil der Rueckgabe der letzten Aktion. Mögliche Werte des
+	 * Status sind OK und NOK.
+	 * 
+	 * @return true wenn der Status der letzen Aktion ok ist; false wenn der Status
+	 *         NOK ist.
+	 */
 	public boolean letzeAktionAufOKpruefen() {
 		/*
 		 * Ziel ist nur einen Boolean zurückzugeben... wenn false uU andere Methode à
@@ -383,11 +440,13 @@ public abstract class Bot {
 		String status;
 
 		// nun status mit pot. NOK füllen
-		// status = (Init.lastActionsResult).substring(0, 2); 
+		// status = (Init.lastActionsResult).substring(0, 2);
 		// .substring problematische weil OK und NOK unterschiedliche Länge haben
+
 		status = (Init.lastActionsResult).split(" ", 2)[0]; 
 		//split teilt hier am Leerzeichen in max 2 Strings,  
-		System.err.println(status + " nach dem Aufruf von .substring...");
+//		System.err.println(status + " nach dem Aufruf von .substring...");
+
 		if ("NOK".equals(status)) {
 			System.err.println("Springt in Verzweigung: NOK");
 			return false;
@@ -402,8 +461,13 @@ public abstract class Bot {
 	 * hier soll die weitere Prüfung nach einem NOK rein... Ziel ist dass je nach
 	 * Aktion die Koordinaten wieder zurück geändert werden.
 	 */
+	/**
+	 * Prueft den Teil des Status der letzten Aktion nach dem NOK. Mögliche Werte
+	 * sind TALKING, BLOCKED, NOTSUPPORTED, WRONGORDER, NOTYOURS, EMPTY. Es ist auch
+	 * eine Prüfung auf null eingebaut.
+	 */
 	public void letzteAktionNachNOKpruefen() {
-		System.err.println("Nun befindet er sich in der weitere Pruefung nach NOK...");
+//		System.err.println("Nun befindet er sich in der weitere Pruefung nach NOK...");
 		String[] statusNachNOK;
 		statusNachNOK = (Init.lastActionsResult).split(" ");
 		// Annahme: status*[0] = OK/NOK; status*[1] = WRONGORDER
@@ -445,21 +509,23 @@ public abstract class Bot {
 				break;
 
 			default:
-				System.err.println("unbekannter / noch nicht abgedeckter Status in der Switch-Case...");
+//				System.err.println("unbekannter / noch nicht abgedeckter Status in der Switch-Case...");
 				break;
 			}
 		} else {
-			System.err.println("keineStatusNachNOK!!! In Bot letzteAktionNachNOKPruefen");
+//			System.err.println("keineStatusNachNOK!!! In Bot letzteAktionNachNOKPruefen");
 		}
 	}
 
 	/**
-	 * Korrigiert evtl. Koordinaten-Änderungen die bspw. durch das Quatschen mit
-	 * einem Bot nicht wirksam wurden. #innere und aeußere Wirksamkeit eines VAs
-	 * #VIT
+	 * Korrigiert Koordinaten-Änderungen die bspw. durch das Quatschen mit einem Bot
+	 * nicht wirksam wurden. Nicht verwechseln mit der inneren und aeußeren
+	 * Wirksamkeit eines VAs #VIT. Berücksichtigt die letzteRichtung und wandelt sie
+	 * in die entgegengesetze um, damit sich der Bot nicht in die falsche Richtung
+	 * zerkorrigiert.
 	 */
 	public void bewegungRueckgaengigMachen() {
-		System.err.println("Ort vor Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
+//		System.err.println("Ort vor Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
 		switch (richtungUmkehren(this.letzteRichtung)) {
 		/*
 		 * Wenn versucht hat in Norden zu bewegen x-Koordinate belassen und y-Koordinate
@@ -480,25 +546,25 @@ public abstract class Bot {
 			// wohin speichern?
 			// aktueller ort wird mit dem einer fiktiven nördlichen Bewegung überschrieben.
 			this.ort = (aktuelleKarte.getFeld(getOrt().norden())).getPunkt();
-			System.err.println("Ort nach Nord-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
+//			System.err.println("Ort nach Nord-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
 			break;
 
 		case "Osten":
 			this.ort = (aktuelleKarte.getFeld(getOrt().osten())).getPunkt();
-			System.err.println("Ort nach Ost-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
+//			System.err.println("Ort nach Ost-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
 			break;
 
 		case "Sueden":
 			this.ort = (aktuelleKarte.getFeld(getOrt().sueden())).getPunkt();
-			System.err.println("Ort nach Sued-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
+//			System.err.println("Ort nach Sued-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
 			break;
 		case "Westen":
 			this.ort = (aktuelleKarte.getFeld(getOrt().westen())).getPunkt();
-			System.err.println("Ort nach West-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
+//			System.err.println("Ort nach West-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
 			break;
 		default:
-			System.err.println("bewegungRueckgaengigMachen hat nicht funktioniert....");
-			System.err.println("Ort ohne Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
+//			System.err.println("bewegungRueckgaengigMachen hat nicht funktioniert....");
+//			System.err.println("Ort ohne Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
 			break;
 		}
 

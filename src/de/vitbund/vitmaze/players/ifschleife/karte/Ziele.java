@@ -38,4 +38,15 @@ public class Ziele extends Flur {
 		return this.getTyp() + " " + playerID + " " + formID;
 	}
 
+	public boolean selbesFormular(Ziele value) {
+		if (value == null) {
+			return false;
+		}
+		if (value.getFormID() == this.getFormID() && value.getPlayerID() == this.getPlayerID()) {
+			return true;
+		}
+		return false;
+
+	}
+
 }
