@@ -71,7 +71,7 @@ public class Init {
 			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
 			break;
 		case 2:
-			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
+			unserBot = new Level2(karte, playerId, startX, startY);
 			break;
 		case 3:
 			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
