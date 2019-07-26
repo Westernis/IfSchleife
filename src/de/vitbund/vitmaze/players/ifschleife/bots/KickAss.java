@@ -10,7 +10,7 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 
 /**
  * Die Klasse erweitert den Bot und hat als Ziel Formulare zu kicken.
- * 
+ * @see Bot
  * 
  * @author IFSchleife
  */
