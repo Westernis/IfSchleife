@@ -10,8 +10,11 @@ import java.util.Map.Entry;
 
 import de.vitbund.vitmaze.players.ifschleife.ZellStatus;
 
+//TODO: hier könnte man die JavaDocs uU noch verbessern.
 /**
- * TODO javadoc
+ * Die Karte ist eine Sammlung von Informationen bzgl. des Spielfelds.
+ * Bestandteile sind u.A. die Felder und die Anzahl der Formulare. In der Karte
+ * befinden sich außerdem Methoden zur Wegfindung.
  * 
  * @author IFSchleife
  *
@@ -26,13 +29,16 @@ public class Karte {
 	// letztere hier nicht mitgespeichert.
 	private HashMap<Integer, Ziele> ziele; // HashMap akzeptiert keine primitiven Typen daher Integer hier
 
+	/**
+	 * Erstellt eine Karte mit einer übergebenen Größe. Diese Karte hat Felder und
+	 * eine Zielliste.
+	 * 
+	 * @param sizeX - die Größe die die Karte in der Horizontalen ausweißt.
+	 * @param sizeY - die Größe die die Karte in der Vertikalen ausweißt.
+	 */
 	public Karte(int sizeX, int sizeY) {
 		this.felder = new Feld[sizeX][sizeY];
 		this.ziele = new HashMap<Integer, Ziele>();
-	}
-
-	public void getFeldtyp(int x, int y) {
-		// TODO soll Eigenschaften zum Feld zurück geben, eventuell das Feld selbst?
 	}
 
 	/**
@@ -44,6 +50,12 @@ public class Karte {
 		return felder;
 	}
 
+	/**
+	 * Gibt ein Feld in übergebenen Koordinaten zurück.
+	 * 
+	 * @param punkt - die Koordinaten die das erwünschte Feld aufweist.
+	 * @return die felder.
+	 */
 	public Feld getFeld(Koordinaten punkt) {
 		// Arraygrenzen abfangen sollte nicht nötig sein, dafür ist die
 		// koordinatenklassse zuständig7
@@ -51,9 +63,11 @@ public class Karte {
 	}
 
 	/**
+	 * Gibt die Ziele mit der übergebenen Spieler-ID zurück.
 	 * 
-	 * @param playerID
-	 * @return {@code null} wenn es kein passendes Ziel gibt, ansonsten das Ziel
+	 * @param playerID - Die ID des Spielers. In VITMaze gibts auch Ziele für andere
+	 *                 Spieler.
+	 * @return {@code null} wenn es kein passendes Ziel gibt, ansonsten die Ziele
 	 */
 	public Ziele getZiel(int playerID) {
 		return ziele.get(playerID);
@@ -61,8 +75,13 @@ public class Karte {
 
 	// TODO Startfelder anlegen
 
-	// Methode in "istFeld..." statt "isFeld..." umbenennen? - Nein, weil Getter von
-	// Boolean
+	/**
+	 * Prüft ob ein Feld (wird mit den Koordinaten übergeben) bekannt ist.
+	 * 
+	 * @param ort - den es zu überprüfen gilt
+	 * @return {@code false} wenn Feld nicht bekannt. {@code True} wenn Feld
+	 *         bekannt.
+	 */
 	public boolean isFeldBekannt(Koordinaten ort) {
 		// return isFeldBekannt(ort.getX(), ort.getY());
 		if (felder[ort.getX()][ort.getY()] == null) {
@@ -71,10 +90,21 @@ public class Karte {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @return die Anzahl der Formulare die sich in der Karte befinden, bzw. die
+	 *         bisher entdeckt wurden.
+	 */
 	public int getAnzahlFormulare() {
 		return anzahlFormulare;
 	}
 
+	/**
+	 * Aktualisiert ein gewünschtes Feld auf einen angegebenen feldTyp.
+	 * 
+	 * @param punkt   - Die Koordinaten den zu aktualisierenden Felds.
+	 * @param feldtyp - Der Typ den das erwähnte Feld aufweisen soll.
+	 */
 	public void aktualisiereFeld(Koordinaten punkt, ZellStatus feldtyp) {
 		Feld ort = this.getFeld(punkt);
 		Feld nachbar;
@@ -176,11 +206,13 @@ public class Karte {
 		}
 	}
 
+	// TODO Java-Doc: Return ausführen
 	/**
-	 * Fügt ein Ziel zur Zieleliste hinzu und setzt die Anzahl der nötigen Formulare
+	 * Fügt ein Ziel zur Zieleliste hinzu und setzt die Anzahl der nötigen
+	 * Formulare.
 	 * 
-	 * @param f
-	 * @return
+	 * @param f - das Feld das es anzupassen gilt.
+	 * @return {@code true} wenn TODO und {@code false} wenn TODO
 	 */
 	public boolean addZiel(Feld f) {
 		if (f.getTyp().equals(Feld.ziel))// Prüfen ob ich umwandeln darf
@@ -196,6 +228,9 @@ public class Karte {
 		return false;
 	}
 
+	/**
+	 * Gibt die Karte in der Standard-Ausgabe aus. Nützlich für Debug-Zwecke.
+	 */
 	public void ausgabe() {
 		int x = felder.length - 1;
 		int y = felder[0].length - 1;
@@ -222,10 +257,13 @@ public class Karte {
 //	}
 
 	/**
+	 * Gibt Wege zu einem bestimmten Punkt zurück. Verwendet dafür:
+	 * {@link #arbeitslisteAktualisieren(Feld, List, List)},
+	 * {@link #wegelisteAktualisieren(Feld, Feld, Map)}
 	 * 
-	 * @param startX
-	 * @param startY
-	 * @return
+	 * @param startX - Die Startposition auf der X-Achse.
+	 * @param startY - Die Startposition auf der Y-Achse
+	 * @return Gibt eine LinkedHashMap mit vorhergehenden Schritten zurück.
 	 */
 	/*
 	 * LinkedHashMap für wege wurde gewählt, weil die Reihenfolge, in der die Felder
@@ -286,6 +324,15 @@ public class Karte {
 		return wege;
 	}
 
+	// TODO reicht das JavaDoc?
+	/**
+	 * Aktualisiert die Arbeitsliste - für die Wegfindung benötigt.
+	 * {@link #findeWege(Koordinaten)}
+	 * 
+	 * @param arbeitnachbar
+	 * @param fertigFelder
+	 * @param arbeitsliste
+	 */
 	public void arbeitslisteAktualisieren(Feld arbeitnachbar, List<Feld> fertigFelder, List<Feld> arbeitsliste) {
 		if (arbeitnachbar != null) {
 			if (!fertigFelder.contains(arbeitnachbar) && !arbeitsliste.contains(arbeitnachbar)) {
@@ -294,6 +341,14 @@ public class Karte {
 		}
 	}
 
+	/**
+	 * TODO reicht das JavaDoc? Aktualisiert die Wegeliste - für die Wegfindung
+	 * benötigt. {@link #findeWege(Koordinaten)}
+	 * 
+	 * @param arbeit
+	 * @param nachbar
+	 * @param wege
+	 */
 	public void wegelisteAktualisieren(Feld arbeit, Feld nachbar, Map<Feld, VorhergehenderSchritt> wege) {
 		if (nachbar != null) {
 			int weglaenge = wege.get(arbeit).getWeglaenge();
@@ -310,6 +365,13 @@ public class Karte {
 		}
 	}
 
+	// TODO JavaDoc uU ausführlicher gestalten
+	/**
+	 * Gibt die Wegeliste zurück, die mit {@link #findeWege(Koordinaten)} erstellt
+	 * wurde.
+	 * 
+	 * @param wege
+	 */
 	public void ausgabeWegliste(Map<Feld, VorhergehenderSchritt> wege) {
 
 		for (Entry<Feld, VorhergehenderSchritt> feld : wege.entrySet()) {
@@ -333,7 +395,7 @@ public class Karte {
 	}
 
 	/**
-	 * Diese main dient dem Testen der Karte und Wegfindung.
+	 * Diese main dient dem Testen der Karte und der Wegfindung.
 	 * 
 	 * @param args
 	 */
@@ -359,6 +421,10 @@ public class Karte {
 	}
 
 	// Testfunktion Koordinatennutzung nicht nötig
+	/**
+	 * Dient lediglich zur Ausgabe der ErkundetenFelder auf der
+	 * StandardFehlerausgabe.
+	 */
 	public void toSysErrErkundeteFelder() {
 		for (int y = 0; y < felder[0].length; y++) {
 			for (int x = 0; x < felder.length; x++) {
@@ -377,9 +443,10 @@ public class Karte {
 	}
 
 	/**
+	 * Kontrolliert ob sich an dem übergebenen Ort ein Formular befindet.
 	 * 
 	 * @param ort
-	 * @return Formular, falls an den Koordinaten ein Formular ist, ansonsten null
+	 * @return formular, falls an den Koordinaten ein Formular ist, ansonsten null
 	 */
 	public Ziele getFormulare(Koordinaten ort) {
 		Feld feld = this.getFeld(ort);
@@ -392,6 +459,14 @@ public class Karte {
 		return formular;
 	}
 
+	/**
+	 * TODO das kann man bestimmt ausführlicher JavaDoc-umentieren Wertet die Liste
+	 * aus. Siehe auch: {@link #findeWege(Koordinaten)}
+	 * 
+	 * @param wege
+	 * @param wunschZiel
+	 * @return null wenn keine Wege oder keine Ziele. Sonst wunschZiel.
+	 */
 	public ArrayList<Feld> werteListeAus(Map<Feld, VorhergehenderSchritt> wege, Feld wunschZiel) {
 		if (wege == null || wunschZiel == null || wege.isEmpty()) {
 			return null;
@@ -424,7 +499,7 @@ public class Karte {
 				ort = new Koordinaten(x, y);
 				feld = this.getFeld(ort);
 				if (feld != null) {
-				//	System.err.println("Feld entfernen? " + ort);
+					// System.err.println("Feld entfernen? " + ort);
 					if (feld.getTyp().equals(Feld.flur)) {
 						felder[ort.getX()][ort.getY()] = null;
 

@@ -2,6 +2,17 @@ package de.vitbund.vitmaze.players.ifschleife;
 
 import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 
+/**
+ * Mit Zellstatus kann man den Status-String (die Rückgabe) zerlegen und gezielt
+ * auswerten.
+ * 
+ * Die Auswertung des LastActionResults auf OK / NOK und folgende Teile befindet
+ * sich in der Bot-Klasse als {@code letzteAktionPruefen()}
+ * 
+ * @see Bot
+ * @author IFSchleife
+ *
+ */
 public class ZellStatus {
 	private String orginalText;
 	private String typ;
@@ -9,6 +20,14 @@ public class ZellStatus {
 	private int formID;
 	private int botentfernung;
 
+	/**
+	 * Wertet die übergebene Rückgabe aus indem sie zerlegt wird.
+	 * 
+	 * @param rueckgabe
+	 * @return {@code true} wenn keine Fehler aufgetreten sind. {@code false} wenn
+	 *         bei der Zerlegung Fehler aufgetreten sind. Wenn der übergebene String
+	 *         bspw. leer war.
+	 */
 	public boolean rueckgabeAuswerten(String rueckgabe) {
 		this.orginalText = rueckgabe;// für testzwecke und Kontrollen beibehalten
 		System.err.println(orginalText);
@@ -58,27 +77,62 @@ public class ZellStatus {
 		return true;
 	}
 
+	/**
+	 * Gibt den originalen Text, den die Game-Engine geliefert hat, zurück.
+	 * 
+	 * @return originalText
+	 */
 	public String getOrginalText() {
 		return orginalText;
 	}
 
+	/**
+	 * Gibt den Typ zurück, bspw. WALL. Zerlegung der Informationen:
+	 * {@link #rueckgabeAuswerten(String)}
+	 * 
+	 * @return der Typ des Felds vom Status
+	 */
 	public String getTyp() {
 		return typ;
 	}
 
+	/**
+	 * Gibt die PlayerID raus. Zerlegung der Informationen:
+	 * {@link #rueckgabeAuswerten(String)}
+	 * 
+	 * @return die ID des Spielers.
+	 */
 	public int getPlayerID() {
 		return playerID;
 	}
 
+	/**
+	 * Gibt die FormularNr. zurück. Zerlegung der Informationen:
+	 * {@link #rueckgabeAuswerten(String)}
+	 * 
+	 * @return die ID des Formulars.
+	 */
 	public int getFormID() {
 		return formID;
 	}
 
+	/**
+	 * TODO: JavaDoc
+	 * 
+	 * @return die Entfernung des Bots
+	 */
 	public int getBotentfernung() {
 		return botentfernung;
 	}
 
 	// zum testen der zerlegung
+	/**
+	 * Dient lediglich dem Test, ob die Zerlegung einwandfrei funktioniert. Zerlegt
+	 * einen fiktiven Status und gibt die Einzelwerte à Typ, SpielerID, FormularNr
+	 * und Botentfernung zurück.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		ZellStatus a = new ZellStatus();
 		a.rueckgabeAuswerten("FORM 1 2 !2");

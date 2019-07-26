@@ -135,9 +135,9 @@ public class ErkundenderBotLvl2 extends Bot {
 		// zweite Bedingung ob wir genug haben
 		if (getAktuelleKarte().getAnzahlFormulare() >= 0
 				&& erledigteFormulare >= getAktuelleKarte().getAnzahlFormulare()) {
-			
+
 //			System.err.println("3.");
-			
+
 			// WICHTIG nur setzten wenn auch das eigene Ziel bekannt ist
 			if (getAktuelleKarte().getZiel(this.id) != null) {
 				ziel = getAktuelleKarte().getZiel(this.id);
@@ -154,11 +154,12 @@ public class ErkundenderBotLvl2 extends Bot {
 			if (!((Ziele) ziel).selbesFormular(zielFeldAusKarte)) {
 //				System.err.println("3.2.3");
 				formularVermisst = true;// TODO noch nötig?
-				
-				//wenn kein Formular mehr da -> liefert getFormular null, daher muss das Feld nochmal geholt werden
+
+				// wenn kein Formular mehr da -> liefert getFormular null, daher muss das Feld
+				// nochmal geholt werden
 				if (zielFeldAusKarte == null) {
 					ziel = formularSuche(getAktuelleKarte().getFeld(ziel.getPunkt()), wege);
-				}else {
+				} else {
 					ziel = formularSuche(zielFeldAusKarte, wege);
 				}
 
@@ -170,16 +171,14 @@ public class ErkundenderBotLvl2 extends Bot {
 		}
 
 		// 4. Weg zu dem ausgewählten Ziel bestimmen und hinfahren
-		if (ziel != null)
-		{
+		if (ziel != null) {
 			letzteRichtung = bestimmeRichtung(ziel, wege); // Richtung für die NOK Korrektur speichern
 //			System.err.println(4.1);
-		}
-		else{
+		} else {
 //			System.err.println(4.2);
 			this.aktuelleKarte.flurFelderNullen();
 			flurFelderWiederEntnullen = true;
-			
+
 		}
 
 //		System.err.println("5 |" + letzteRichtung + "|");
@@ -238,7 +237,7 @@ public class ErkundenderBotLvl2 extends Bot {
 					ergebnis = set.getKey();
 					suchListe.remove(ergebnis);// TODO METHODE für alle sichtbaren Felder
 					System.err.println("nächstes Feld aus der Suchliste ist " + ergebnis.getPunkt());
-					break;//wichtig wir wollen nur das erste gefundene Feld rausschmeißen
+					break;// wichtig wir wollen nur das erste gefundene Feld rausschmeißen
 				}
 			}
 			// Feld aus ArrayList entfernen
@@ -252,7 +251,7 @@ public class ErkundenderBotLvl2 extends Bot {
 			// mehr kennen
 			meineformulare.remove(erledigteFormulare + 1);
 			formularSucheZuruecksetzen();
-			
+
 			ergebnis = null;
 		}
 
@@ -351,15 +350,15 @@ public class ErkundenderBotLvl2 extends Bot {
 		return richtung;
 
 	}
-	
+
 	@Override
 	protected void aufsammeln() {
 		super.aufsammeln();
-		if(flurFelderWiederEntnullen) {
+		if (flurFelderWiederEntnullen) {
+
 			System.err.println("ACHTUNG Karte ENTnullt");
 			this.getAktuelleKarte().formularsucheEnde();
 			flurFelderWiederEntnullen = false;
 		}
 	}
-	
 }

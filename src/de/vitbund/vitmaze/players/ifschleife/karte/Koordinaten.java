@@ -5,7 +5,7 @@ package de.vitbund.vitmaze.players.ifschleife.karte;
  * Position des Bots benötigt werden. Eine wichtige Annahme ist, dass für die
  * gesamte Nutzungsdauer die max. Koordniaten gleich bleiben.
  * 
- * @author helmut.rietz
+ * @author IFSchleife
  *
  */
 public class Koordinaten {
@@ -19,7 +19,7 @@ public class Koordinaten {
 	private final int y;
 
 	/**
-	 * Konstruktor für ein Satz Koordinaten.
+	 * Konstruktor für einen Satz Koordinaten.
 	 * 
 	 * @param x Gespeichert wird der korrigierte X Wert
 	 * @param y Gespeichert wird der korrigierte Y Wert
@@ -32,11 +32,14 @@ public class Koordinaten {
 	/**
 	 * Setzt einmalig für den Programmablauf die Grenzen an denen die Kartengrenzen
 	 * verlaufen und "umkippen". Die Koordinaten bilden zwei Restklassenringe ->
-	 * modulo x bzw. y.
+	 * modulo x bzw. y. Das wird für das Überschreiten der Kartengrenzen benötigt.
+	 * Ein Bot kann sich damit auf einer Seite rausbewegen und kommt auf der anderen
+	 * Seite wieder rein.
 	 * 
 	 * @param x Anzahl der Felder entlang der X-Achse. Die Zählung beginnt bei 1.
 	 * @param y Anzahl der Felder entlang der Y-Achse. Die Zählung beginnt bei 1.
-	 * @return
+	 * @return true wenn Koordinaten gesetzt. false wenn nicht; bspw. wenn die
+	 *         Koordinaten schon gesetzt wurden.
 	 */
 	// Setzt die max. Koordinaten und verhindert gleich zeitig das sie danach
 	// verändert werden können
@@ -52,23 +55,50 @@ public class Koordinaten {
 		return false;
 	}
 
+	/**
+	 * 
+	 * @return - gibt die X-Koordinate zurück
+	 */
 	public int getX() {
 		return x;
 	}
 
+	/**
+	 * 
+	 * @return - gibt die Y-Koordinate zurück
+	 */
 	public int getY() {
 		return y;
 	}
 
+	/**
+	 * 
+	 * @return - gibt den maximalen X-Wert zurück. Das was das Spielfeld maximal
+	 *         hergibt.
+	 */
 	public static int getxMax() {
 		return xMax;
 	}
 
+	/**
+	 * 
+	 * @return - gibt den maximalen Y-Wert zurück. Das was das Spielfeld maximal
+	 *         hergibt.
+	 */
 	public static int getyMax() {
 		return yMax;
 	}
 
 	// Annahme maximum - 1 ist der höchste Wert, der tatsächlich auftreten kann.
+	/**
+	 * Korrigiert Koordinaten - sinnvoll für den Fall das ein Bot über Grenzen von
+	 * Spielfeldern fährt.
+	 * 
+	 * @param zahl    - die es zu korrigieren gilt
+	 *                {@code zahl = (zahl % (maximum));...}
+	 * @param maximum - ein Maximalwert idR der Wert den die Karte maximal hergibt.
+	 * @return korrigierte Zahl - Also bspw. der neue Positionswert auf den Koordinaten
+	 */
 	public static int korrigiere(int zahl, int maximum) {
 		zahl = (zahl % (maximum));
 		if (zahl < 0) {// Zahl ins positive Korrigieren
@@ -78,10 +108,24 @@ public class Koordinaten {
 		return zahl;
 	}
 
+	/**
+	 * Korrigiert eine Übergebene Zahl mit dem maximalen X-Wert. Korrigiert mit:
+	 * {@link #korrigiere(int, int)}
+	 * 
+	 * @param x - die zu korrigierende Zahl
+	 * @return den korrigierten X-Wert
+	 */
 	private int korrigiereX(int x) {
 		return korrigiere(x, xMax);
 	}
 
+	/**
+	 * Korrigiert eine Übergebene Zahl mit dem maximalen Y-Wert. Korrigiert mit:
+	 * {@link #korrigiere(int, int)}
+	 * 
+	 * @param y - die zu korrigierende Zahl
+	 * @return den korrigierten X-Wert
+	 */
 	private int korrigiereY(int y) {
 		return korrigiere(y, yMax);
 	}
@@ -186,6 +230,7 @@ public class Koordinaten {
 	}
 
 	/**
+	 * 
 	 * Dient dem Testen der Koordinatenklasse
 	 * 
 	 * @param args
@@ -204,6 +249,14 @@ public class Koordinaten {
 		System.err.println(getRichtung(p1, p4));
 	}
 
+	/**
+	 * Prüft ob ein übergebener Ort die gleichen X- und Y-Koordinaten wie die
+	 * aktuelle Instanz hat.
+	 * 
+	 * @param ort - den es zu überprüfen gilt.
+	 * @return true - wenn die Koordinaten gleich sind. false wenn die Koordinaten
+	 *         nicht gleich sind.
+	 */
 	public boolean xyGleich(Koordinaten ort) {
 		if (this.x == ort.getX() && this.y == ort.getY()) {
 			return true;
@@ -211,7 +264,11 @@ public class Koordinaten {
 		return false;
 	}
 
-	@Override
+	/**
+	 * Gibt die konkreten Koordinaten aus.
+	 * 
+	 * @return die X- und Y-Koordinaten.
+	 */
 	public String toString() {
 		return ("" + this.x + " " + this.y);
 	}

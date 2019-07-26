@@ -7,10 +7,9 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 
 /**
- * Diese Klasse soll die Initialisierung durchführen. Das heißt es wird ein
- * passender Bot angelegt und die entsprechende Aktion des Bots aufgerufen.
- * Außerdem handelt die Klasse die initiale Datenverarbeitung am Anfang jeder
- * Runde.
+ * Diese Klasse führt die Initialisierung durch. Das heißt es wird ein passender
+ * Bot angelegt und die entsprechende Aktion des Bots aufgerufen. Außerdem
+ * behandelt die Klasse die initiale Datenverarbeitung am Anfang jeder Runde.
  * 
  * @author IFSchleife
  *
@@ -68,19 +67,19 @@ public class Init {
 
 		switch (level) {
 		case 1:
-			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
+			unserBot = new CharlySheet(karte, playerId, startX, startY);
 			break;
 		case 2:
 			unserBot = new Level2(karte, playerId, startX, startY);
 			break;
 		case 3:
-			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
+			unserBot = new CharlySheet(karte, playerId, startX, startY);
 			break;
 		case 4:
-			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
+			unserBot = new CharlySheet(karte, playerId, startX, startY);
 			break;
 		case 5:
-			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
+			unserBot = new CharlySheet(karte, playerId, startX, startY);
 			break;
 
 		default:
@@ -88,7 +87,7 @@ public class Init {
 			break;
 		}
 
-		while (true/*input.hasNext()*/) {
+		while (true/* input.hasNext() */) {
 
 			// Rundeninformationen auslesen
 
@@ -121,6 +120,6 @@ public class Init {
 		}
 
 		// Alles fertig -> aufräumen
-		/*input.close();*/
+		/* input.close(); */
 	}
 }
