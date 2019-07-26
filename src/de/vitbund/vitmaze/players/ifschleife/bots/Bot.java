@@ -6,11 +6,10 @@ import java.util.List;
 import de.vitbund.vitmaze.players.ifschleife.Init;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
-//TODO TK-JavaDocs: fertig
 
 /**
  *
- * Die Grundklasse für alle anderen Bots. Die Klasse ist abstract
+ * Die Grundklasse für alle anderen Bots.
  * 
  * @author IFSchleife
  */
@@ -42,20 +41,22 @@ public abstract class Bot {
 	}
 
 	/**
-	 * Die PlayerID unterstützt Zahlenwerte von 1-4
+	 * Die PlayerID unterstützt beliebige Zahlenwerte. Sie stellt die SpielerID dar.
+	 * In Vitmaze wurden zu dem Datum Spieler-IDs zwischen 1 und 4 vergeben.
 	 */
 	protected final int id;
 
 	private Koordinaten ort;
 
+	// TODO schöne Beschreibung für Karte suchen -> in JavaDocs aufführen
 	/**
 	 * Erstellt einen Bot mit einer Karte, einer PlayerID und den aktuellen
 	 * Koordinaten (Startkoordinaten)
 	 * 
-	 * @param karte
-	 * @param playerId
-	 * @param x
-	 * @param y
+	 * @param karte    - die Spielfeldkarte
+	 * @param playerId - die ID des Spielers
+	 * @param x        - die X-Koordinate also der Punkt auf der horizontalen Achse
+	 * @param y        - die Y-Koordinate also der Punkt auf der vertikalen Achse
 	 */
 	public Bot(Karte karte, int playerId, int x, int y) {
 		this.aktuelleKarte = karte;
@@ -162,7 +163,7 @@ public abstract class Bot {
 
 	/**
 	 * 
-	 * @return id - die PlayerID des Spielers (Werte zwischen 1 und 4)
+	 * @return id - die PlayerID des Spielers.
 	 */
 	public int getId() {
 		return id;
@@ -284,7 +285,7 @@ public abstract class Bot {
 			// neue zu gehen
 
 //				richtungsliste.removeIf(n -> (letzteRichtung.equals(n)));
-//				kann man nich benutzen geht nicht -> TODO noch mal testen
+//				kann man nich benutzen geht nicht -> TODO noch mal testen da wir dafür erst einen anderen Fehler fixen mussten. 
 
 			int index = -1;
 			// System.err.println(richtungUmkehren(letzteRichtung));
@@ -311,19 +312,6 @@ public abstract class Bot {
 		}
 
 	}
-
-	// TODO rausschmeißen wenn getestet
-//	public void weiterGehen() {
-//		if (letzteRichtung == "Norden") {
-//			nachNorden();
-//		} else if (letzteRichtung == "Sueden") {
-//			nachSueden();
-//		} else if (letzteRichtung == "Westen") {
-//			nachWesten();
-//		} else if (letzteRichtung == "Osten") {
-//			nachOsten();
-//		}
-//	}
 
 	/**
 	 * Bewegt den Bot weiter in die Richtung in die er im letzten Zug gegangen ist.
@@ -410,10 +398,9 @@ public abstract class Bot {
 
 	/**
 	 * Prueft die letze Aktion auf OK/NOK. Wenn NOK: prueft dann auf die
-	 * nachfolgenden Informationen und leitet Korrekturen bzgl. der
-	 * Koordinaten ein.
+	 * nachfolgenden Informationen und leitet Korrekturen bzgl. der Koordinaten ein.
 	 */
-	public void letzteAktionPruefen() { // TODO: Boolean vs. void
+	public void letzteAktionPruefen() { //Boolean vs. void
 		if (!this.letzeAktionAufOKpruefen()) { // wenn nicht ok, dann weitere Prüfung
 			System.err.println("letzteAktion: in Verzweigung zur weiteren Pruefung. gesprungen");
 			this.letzteAktionNachNOKpruefen();
@@ -443,8 +430,8 @@ public abstract class Bot {
 		// status = (Init.lastActionsResult).substring(0, 2);
 		// .substring problematische weil OK und NOK unterschiedliche Länge haben
 
-		status = (Init.lastActionsResult).split(" ", 2)[0]; 
-		//split teilt hier am Leerzeichen in max 2 Strings,  
+		status = (Init.lastActionsResult).split(" ", 2)[0];
+		// split teilt hier am Leerzeichen in max 2 Strings,
 //		System.err.println(status + " nach dem Aufruf von .substring...");
 
 		if ("NOK".equals(status)) {
@@ -541,10 +528,6 @@ public abstract class Bot {
 		 * Oder beinhaltet sie nur Feldtypen?
 		 */
 		case "Norden":
-//			TODO aktuelleKarte.aktualisiereFeld(WennNördlicheBewegung);? Benötigt man's oder reichts ort anzupassen?
-			// das wären schonmal die südlichen Koordinaten TODO aber wie und
-			// wohin speichern?
-			// aktueller ort wird mit dem einer fiktiven nördlichen Bewegung überschrieben.
 			this.ort = (aktuelleKarte.getFeld(getOrt().norden())).getPunkt();
 //			System.err.println("Ort nach Nord-Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
 			break;

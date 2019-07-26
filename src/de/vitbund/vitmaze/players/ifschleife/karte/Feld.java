@@ -1,5 +1,14 @@
 package de.vitbund.vitmaze.players.ifschleife.karte;
 
+/**
+ * Ein Feld stellt ein Quadrat auf einer Karte dar. Mit einer bestimmten
+ * Position auf dem Spielfeld und einer "Füllung" - in VITMaze kann auf einem
+ * Feld bspw. ein Formular oder ein Ziel o.ä. liegen. Außerdem enthält das Feld
+ * eine Eigenschaft für die Darstellung ob es bereits erkundet oder noch
+ * unbekannt ist.
+ * 
+ * @author IFSchleife
+ */
 public abstract class Feld {
 
 	/*
@@ -7,28 +16,38 @@ public abstract class Feld {
 	 * nachzulesen TODO schöner machen?
 	 */
 	/**
-	 * Text für die Flurfelder.
+	 * Text für die Flurfelder: "FLOOR".
 	 */
 	public static final String flur = "FLOOR";
 	/**
-	 * Text für die Wandfelder.
+	 * Text für die Wandfelder : "WALL".
 	 */
 	public static final String wand = "WALL";
 	/**
-	 * Text für die Zielfelder (Sachbearbeiter).
+	 * Text für die Zielfelder (Sachbearbeiter): "FINISH".
 	 */
 	public static final String ziel = "FINISH";
 	/**
-	 * Text für die Formularfelder.
+	 * Text für die Formularfelder: "FORM".
 	 */
 	public static final String formular = "FORM";
 
 //	private final int x;
 //	private final int y;
+	/**
+	 * Jedes Feld hat eine bestimmte Position auf der horizontalen und der
+	 * vertikalen Achse.
+	 */
 	private final Koordinaten punkt;
 
+	/**
+	 * Der Typ des Felds; wird bspw. mit flur oder wand gefüllt.
+	 */
 	private String typ = "";
 
+	/**
+	 * ist das Feld bereits erkundet?
+	 */
 	protected boolean erkundet;
 
 	// Wege, keine echten Felder
@@ -38,6 +57,14 @@ public abstract class Feld {
 	private Feld west = null;
 	private Karte karte; // Karte, zu der das Feld gehört
 
+	/**
+	 * Erstellt ein Feld mit einem Typ und konkreten Koordinaten auf einer Karte.
+	 * 
+	 * @param punkt - die Position des Felds auf der Karte (horizontale und
+	 *              vertikale Achse). {@link #punkt}
+	 * @param karte - die Karte auf der sich das Feld befindet.
+	 * @param typ   - die Art des Felds, bspw. flur. {@link #typ}
+	 */
 	public Feld(Koordinaten punkt, Karte karte, String typ) {
 		this.punkt = punkt;
 //		this.x = punkt.getX();
@@ -85,7 +112,9 @@ public abstract class Feld {
 
 	/**
 	 * prüft anhand der benachbarten Felder (sind alle angelegt?) ob das Feld auf
-	 * erkundet gesetzt werden kann Variable -> erkundet
+	 * erkundet gesetzt werden kann. Wenn ja setze Variable auf erkundet.
+	 * 
+	 * @return erkundet. Bei Fehlern false
 	 */
 	public boolean pruefenErkundet() {
 		if (erkundet) {
@@ -101,36 +130,80 @@ public abstract class Feld {
 		return false;
 	}
 
+	/**
+	 * Eine Methode die von Unterklassen überschrieben wird. Sie wird darstellen ob
+	 * ein Feld begehbar ist.
+	 */
 	public abstract boolean istBegehbar();
 
+	/**
+	 * 
+	 * @return das nördliche Feld.
+	 */
 	public Feld getNord() {
 		return nord;
 	}
 
+	/**
+	 * setzt das nördliche Feld auf das übergebene Feld
+	 * 
+	 * @param nord
+	 * 
+	 */
 	public void setNord(Feld nord) {
 		this.nord = nord;
 	}
 
+	/**
+	 * 
+	 * @return das südliche Feld
+	 */
 	public Feld getSued() {
 		return sued;
 	}
 
+	/**
+	 * setzt das südliche Feld auf das übergebene Feld
+	 * 
+	 * @param sued
+	 * 
+	 */
 	public void setSued(Feld sued) {
 		this.sued = sued;
 	}
 
+	/**
+	 * 
+	 * @return östliche Feld
+	 */
 	public Feld getOst() {
 		return ost;
 	}
 
+	/**
+	 * setzt das östliche Feld auf das übergebene Feld
+	 * 
+	 * @param feld
+	 * 
+	 */
 	public void setOst(Feld ost) {
 		this.ost = ost;
 	}
 
+	/**
+	 * 
+	 * @return das westliche Feld
+	 */
 	public Feld getWest() {
 		return west;
 	}
 
+	/**
+	 * setzt das westliche Feld auf das übergebene Feld
+	 * 
+	 * @param feld
+	 * 
+	 */
 	public void setWest(Feld west) {
 		this.west = west;
 	}
@@ -138,34 +211,50 @@ public abstract class Feld {
 	/**
 	 * Sollte nur zur Ausgabe in Texten genutzt werden
 	 * 
-	 * @return
+	 * @return Gibt die Position auf der horizontalen Achse zurück.
 	 */
 	public String getX() {
-		return "" + punkt.getY();
+		return "" + punkt.getX();
 	}
 
 	/**
 	 * Sollte nur zur Ausgabe in Texten genutzt werden
 	 * 
-	 * @return
+	 * @return Gibt die Position auf der vertikalen Achse zurück.
 	 */
 	public String getY() {
-		return "" + punkt.getX();
+		return "" + punkt.getY();
 	}
 
-	@Override
+	/**
+	 * @return gibt den String "ABSTRACT FIELD" zurück.
+	 */
 	public String toString() {
 		return "ABSTRACT FIELD";
 	}
 
+	/**
+	 * Überschreibt die Methode getTyp() von Object
+	 * 
+	 * @return den Typ des Felds
+	 */
 	public String getTyp() {
 		return typ;
 	}
 
+	/**
+	 * 
+	 * @return die Position auf der Spielkarte.
+	 */
 	public Koordinaten getPunkt() {
 		return punkt;
 	}
 
+	/**
+	 * Setzt den Typ des Felds. Beispielhafte Felder sind flur oder wand.
+	 * 
+	 * @param typ
+	 */
 	public void setTyp(String typ) {
 		this.typ = typ;
 	}

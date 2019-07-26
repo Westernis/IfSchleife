@@ -2,11 +2,10 @@ package de.vitbund.vitmaze.players.ifschleife.bots;
 
 import de.vitbund.vitmaze.players.ifschleife.Init;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
-//TODO TK-JavaDocs: fertig
 
 /**
- * Die Klasse stellt einen Bot dar, der ausschließlich nach
- * dem Zufall seine Wegfindung ableitet.
+ * Die Klasse stellt einen Bot dar, der ausschließlich nach dem Zufall seine
+ * Wegfindung ableitet.
  * 
  * Aus Lernzwecken ist er noch enthalten.
  * 
@@ -21,10 +20,11 @@ public class ZufallsBotLvl1 extends Bot {
 	/**
 	 * Erstellt einen neuen ZufallsBotLvl1 mit Karte, PlayerID und Koordinaten.
 	 * 
-	 * @param karte    
-	 * @param playerId Werte von 1-4
-	 * @param x - die X-Koordinate
-	 * @param y - die Y-Koordinate        
+	 * @param karte    - die Spielfeldkarte
+	 * @param playerId beliebige Zahlenwerte, in VITMaze allerdings Werte von 1 bis
+	 *                 4 üblich
+	 * @param x        - die X-Koordinate
+	 * @param y        - die Y-Koordinate
 	 */
 	public ZufallsBotLvl1(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
@@ -32,7 +32,7 @@ public class ZufallsBotLvl1 extends Bot {
 
 	/**
 	 * Überschreibt die Methode der Klasse Bot. Nutzt die Methode
-	 * "nochSchlauereZufallsrichtung".
+	 * {@link #nochSchlauereZufallsrichtung}.
 	 */
 	public void machAktion() {
 
@@ -147,7 +147,7 @@ public class ZufallsBotLvl1 extends Bot {
 		}
 	}
 
-	//TODO entfernen da leer?
+	// TODO entfernen da leer?
 	public void letztesFeld() {
 
 	}
