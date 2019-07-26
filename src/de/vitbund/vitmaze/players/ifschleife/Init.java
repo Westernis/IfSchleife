@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import de.vitbund.vitmaze.players.ifschleife.bots.Bot;
 import de.vitbund.vitmaze.players.ifschleife.bots.BspBotKartennutzung;
+import de.vitbund.vitmaze.players.ifschleife.bots.CharlySheet;
 import de.vitbund.vitmaze.players.ifschleife.bots.ErkundenderBotLvl2;
 import de.vitbund.vitmaze.players.ifschleife.bots.KickAss;
 import de.vitbund.vitmaze.players.ifschleife.bots.ZufallsBot2Lvl1;
@@ -69,19 +70,19 @@ public class Init {
 
 		switch (level) {
 		case 1:
-			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
+			unserBot = new CharlySheet(karte, playerId, startX, startY);
 			break;
 		case 2:
-			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
+			unserBot = new CharlySheet(karte, playerId, startX, startY);
 			break;
 		case 3:
-			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
+			unserBot = new CharlySheet(karte, playerId, startX, startY);
 			break;
 		case 4:
-			unserBot = new KickAss(karte, playerId, startX, startY);
+			unserBot = new CharlySheet(karte, playerId, startX, startY);
 			break;
 		case 5:
-			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
+			unserBot = new CharlySheet(karte, playerId, startX, startY);
 			break;
 
 		default:

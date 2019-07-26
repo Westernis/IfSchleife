@@ -396,4 +396,31 @@ public class Karte {
 		return rueckgabe;
 
 	}
+	
+	
+	/**
+	 * Diese Methode entfernt im Falle eines nicht auffindbaren Formulares die erkundeten Felder, damit der Bot eine neue Suche für das Formular durchführt
+	 * 
+	 * @param 
+	 */
+	public void FormularsucheKarte(int sizeX, int sizeY, Karte karte){
+		//Karte durchschauen
+		for (Feld[] felds : felder) {
+			for (Feld feld : felds) {
+				// alle FLOORs auf NULL setzen
+				if (feld.getTyp().equals(Feld.flur)) {
+					feld=null;
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Diese Methode setzt nach der Formularsuche wieder alle begehbaren Felder um die normale Wegfindung fortzusetzen
+	 * 
+	 * @param 
+	 */
+	public void FormularsucheEnde(Karte karte) {
+
+	}
 }
