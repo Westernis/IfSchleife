@@ -1,7 +1,8 @@
 package de.vitbund.vitmaze.players.ifschleife.karte;
 
+//  TODO: Jenachdem hier als Art noch den Zettel einfügen. 
 /**
- * TODO: Jenachdem hier als Art noch den Zettel einfügen. Das Ziel erweitert den
+ * Das Ziel erweitert den
  * Flur und kann bisher entweder ein Sachbearbeiter oder ein Formular sein.
  * 
  * @author IFSchleife

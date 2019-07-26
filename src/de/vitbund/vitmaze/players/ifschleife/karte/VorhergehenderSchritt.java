@@ -42,9 +42,10 @@ public class VorhergehenderSchritt implements Comparable<VorhergehenderSchritt> 
 		this.vorgaenger = vorgaenger;
 	}
 
+	// TODO: JavaDoc: Gibts Besonderheiten die es bei den Getter und Settern zu
+	// beachten gilt? Wenn ja in JavaDocs schreiben.
 	/**
-	 * TODO: JavaDoc: Gibts Besonderheiten die es bei den Getter und Settern zu
-	 * beachten gilt? Wenn ja in JavaDocs schreiben.
+	 * 
 	 * 
 	 * @return weglaenge
 	 */

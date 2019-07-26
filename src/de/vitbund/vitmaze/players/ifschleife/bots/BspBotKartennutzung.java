@@ -10,7 +10,7 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 import de.vitbund.vitmaze.players.ifschleife.karte.VorhergehenderSchritt;
-//TODO TK-JavaDocs: HR-Anpassung, machAktion() noch ausführlicher bauen...
+//TODO TK-JavaDocs: machAktion() noch ausführlicher bauen...
 
 /**
  * Ein Bot an dem die Verwendung der navigation deutlich werden soll. Erbt von
@@ -46,7 +46,6 @@ public class BspBotKartennutzung extends Bot {
 	public void machAktion() {
 		String richtung = null;
 
-		// input verarbeiten //TODO in die init verschieben weil in allen Bots drin?
 //		this.rundeInitialisiern(); //befindet sich in der Init
 
 		// Wegeliste generieren

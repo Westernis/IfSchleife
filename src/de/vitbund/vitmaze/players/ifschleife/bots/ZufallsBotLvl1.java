@@ -2,7 +2,6 @@ package de.vitbund.vitmaze.players.ifschleife.bots;
 
 import de.vitbund.vitmaze.players.ifschleife.Init;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
-//TODO TK-JavaDocs: HR-Anpassung
 
 /**
  * Die Klasse stellt einen Bot dar, der ausschlieﬂlich nach dem Zufall seine

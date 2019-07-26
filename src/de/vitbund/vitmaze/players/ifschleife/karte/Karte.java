@@ -192,7 +192,7 @@ public class Karte {
 		}
 	}
 
-	// TODO JavaDoc vervollständigen?
+	// TODO Java-Doc: Return ausführen
 	/**
 	 * Fügt ein Ziel zur Zieleliste hinzu und setzt die Anzahl der nötigen
 	 * Formulare.
@@ -351,8 +351,9 @@ public class Karte {
 		}
 	}
 
+	//TODO JavaDoc uU ausführlicher gestalten 
 	/**
-	 * TODO JavaDoc uU ausführlicher gestalten Gibt die Wegeliste zurück, die mit
+	 * Gibt die Wegeliste zurück, die mit
 	 * {@link #findeWege(Koordinaten)} erstellt wurde.
 	 * 
 	 * @param wege

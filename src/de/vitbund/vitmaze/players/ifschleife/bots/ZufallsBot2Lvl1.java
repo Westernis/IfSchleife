@@ -6,7 +6,6 @@ import java.util.List;
 import de.vitbund.vitmaze.players.ifschleife.Init;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 
-//TODO TK-JavaDocs: HR-Anpassung
 /**
  * Die Klasse stellt einen Bot dar, der ausschließlich nach dem Zufall seine
  * Wegfindung ableitet. Er dient auch für Testzwecke bei Änderungen an den
@@ -42,8 +41,6 @@ public class ZufallsBot2Lvl1 extends Bot {
 		if (("FINISH " + super.id + " 0").equals(Init.currentCellStatus)) {
 			System.out.println("finish");
 		}
-
-		// TODO löschen, weil nicht benötigt?
 
 //		this.rundeInitialisiern(); //befindet sich nun in der Init									
 		// test Wegfindung
