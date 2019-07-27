@@ -33,13 +33,13 @@ public class ErkundenderBotLvl2 extends Bot {
 	@Override
 	public void rundeInitialisiern() {
 		super.rundeInitialisiern(); // ich will alles aus der Elternklasse machen
-		System.err.println("LAST: |" + Init.lastActionsResult + "| letzteRichtung |"+letzteRichtung);
-		System.err.println("Standort: "+this.getOrt());
+		System.err.println("LAST: |" + Init.lastActionsResult + "| letzteRichtung |" + letzteRichtung);
+		System.err.println("Standort: " + this.getOrt());
 		// neue hinzugekommener Teil
 		if (this.letzeAktionAufOKpruefen()) {
 			// prüfen ob formular aufgehoben
 			String s = "OK FORM";
-		//	System.err.println("OK Form prüfen");
+			// System.err.println("OK Form prüfen");
 			if (Init.lastActionsResult.contains(s)) {
 				System.err.println("OK Form aufgehoben");
 				erledigteFormulare++;
@@ -82,15 +82,17 @@ public class ErkundenderBotLvl2 extends Bot {
 
 	@Override
 	public void machAktion() {
+		this.letzteRichtung = "";
 		// TODO ++ unbekannte Zettel als Ziel setzen !!
 		// String letzteRichtung = null; // muss raus da man das im Bot nutzen soll
 		Feld ziel = null;
 
 		this.aktualisiereMeineFormulare();
-		this.aktuelleKarte.ausgabe();
-		System.err.println("------------------------------");
-		this.aktuelleKarte.toSysErrErkundeteFelder();
-		
+
+//		this.aktuelleKarte.ausgabe();
+//		System.err.println("------------------------------");
+//		this.aktuelleKarte.toSysErrErkundeteFelder();
+
 //		System.err.println("1");
 		// 1. aktuelle Felder überprüfen ob es eins vom Bot ist
 		if (Init.currentCell.getPlayerID() == id) {
@@ -118,8 +120,11 @@ public class ErkundenderBotLvl2 extends Bot {
 				break;
 			}
 		}
-		// 1.1 Ist es ein Zettel? -> ja wir entscheiden ob aufsammeln oder kicken danach fertig
+		// 1.3 Ist es ein Zettel? -> ja wir entscheiden ob aufsammeln oder kicken danach
+		// fertig
+
 		if (Feld.zettel.equals(Init.currentCell.getTyp())) {
+//			System.err.println("1.3");
 			String richtungKick = kickenPruefen();
 			if (richtungKick != null) {
 				this.kick(richtungKick);
@@ -386,7 +391,8 @@ public class ErkundenderBotLvl2 extends Bot {
 			Feld f = this.getAktuelleKarte().getFeld(ort);
 
 			// prüfen ob 1. begehbar, nur auf solchen Feldern können überhaupt Zettel liegen
-			//2. nur auf erkundete Felder kicken, sonst müssen wir den zettel nochmal anfassen
+			// 2. nur auf erkundete Felder kicken, sonst müssen wir den zettel nochmal
+			// anfassen
 			if (f.istBegehbar() && f.pruefenErkundet()) {
 				bewertung = 0;
 				switch (f.getTyp()) {
@@ -431,5 +437,38 @@ public class ErkundenderBotLvl2 extends Bot {
 		if ("Sueden".equals(richtung)) {
 			System.out.println("kick south");
 		}
+	}
+
+	/**
+	 * Ergänzung von {@link Bot#letzteAktionNachNOKpruefen()}, der Fall "TAKING"
+	 * wurde hinzugefügt.
+	 * <p>
+	 * {@inheritDoc}
+	 */
+	public void letzteAktionNachNOKpruefen() {
+
+		String[] statusNachNOK;
+		statusNachNOK = (Init.lastActionsResult).split(" ");
+
+		//neuer Fehlercode?
+		if ("TAKING".equals(statusNachNOK[1])) {
+			// Korrektur muss erfolgen wenn wir wegfahren würden, daher eigentlich immer,
+			// wenn es nicht das aktuelle Formular ist}
+			if (Feld.formular.equals(Init.currentCell.getTyp()) && Init.currentCell.getPlayerID() == this.getId()
+					&& Init.currentCell.getFormID() == (erledigteFormulare + 1)) {
+				System.err.println("Unser Feld Korrekur");
+				// nix machen, weil es unser Formular ist und wir es aufheben und nicht fahren
+			} else  {
+				System.err.println("koord korrigieren");
+				this.bewegungRueckgaengigMachen();
+			}
+			
+		} else {//wenn nein an die Ursprüngliche Methode weitergeben
+			super.bewegungRueckgaengigMachen();
+		}
+
+
+
+
 	}
 }

@@ -10,7 +10,9 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 
 /**
  *
- * Die Grundklasse für alle anderen Bots.
+ * Die Grundklasse für alle anderen Bots. Die Prüfung auf korrekte Ausführung
+ * der Felder muss ab Level 5 im jeweiligen Bot überschrieben bzw ergänzt
+ * werden, da hierführ Informationen rundenübergreifend bereitstehen müssen.
  * 
  * @author IFSchleife
  */
@@ -92,6 +94,7 @@ public abstract class Bot {
 	 * @param Richtung, das was von der Methode umgekehrt werden soll.
 	 */
 	public String richtungUmkehren(String richtung) {
+//		System.err.println("fahre in: "+richtung);
 		switch (richtung) {
 		case "Norden":
 			return "Sueden";
@@ -195,8 +198,8 @@ public abstract class Bot {
 		aktuelleKarte.aktualisiereFeld(getOrt(), Init.currentCell);
 		if (aktuelleKarte.getFeld(getOrt()) != null) {
 			aktuelleKarte.getFeld(getOrt()).pruefenErkundet();
-			//Falls der aktuelle Standort ein Zettel ist auf erkundet setzen
-			if(aktuelleKarte.getFeld(getOrt()).getTyp().equals(Feld.zettel)) {
+			// Falls der aktuelle Standort ein Zettel ist auf erkundet setzen
+			if (aktuelleKarte.getFeld(getOrt()).getTyp().equals(Feld.zettel)) {
 				aktuelleKarte.getFeld(getOrt()).setErkundet(true);
 			}
 		}
@@ -252,7 +255,7 @@ public abstract class Bot {
 			richtungsliste.add("Osten");
 		}
 
-		System.err.println(richtungsliste.size());
+//		System.err.println(richtungsliste.size());
 
 		if ("OK NORTH".equals(Init.lastActionsResult)) {
 			letzteRichtung = "Norden";
@@ -331,8 +334,8 @@ public abstract class Bot {
 	/**
 	 * Die Methode überprüft ob ein Weg eine Wand ist.
 	 * 
-	 * @return {@code true}, wenn uebergebene Richtung eine Wand ist. {@code false} wenn uebergebene
-	 *         Richtung eine Wand ist.
+	 * @return {@code true}, wenn uebergebene Richtung eine Wand ist. {@code false}
+	 *         wenn uebergebene Richtung eine Wand ist.
 	 */
 	public boolean wegGleichWand(String zufaelligeRichtung) {
 		switch (zufaelligeRichtung) {
@@ -364,7 +367,7 @@ public abstract class Bot {
 			return true;
 		}
 
-		//	return false; warum muss hier ein Return stehen? Für den Fall dass Case nicht
+		// return false; warum muss hier ein Return stehen? Für den Fall dass Case nicht
 		// durchlaufen wird??? -> default hatte gefehlt
 
 	}
@@ -390,13 +393,14 @@ public abstract class Bot {
 	 * Prueft die letze Aktion auf OK/NOK. Wenn NOK: prueft dann auf die
 	 * nachfolgenden Informationen und leitet Korrekturen bzgl. der Koordinaten ein.
 	 */
-	public void letzteAktionPruefen() { //Boolean vs. void
+	public void letzteAktionPruefen() { // Boolean vs. void
 		if (!this.letzeAktionAufOKpruefen()) { // wenn nicht ok, dann weitere Prüfung
-			//System.err.println("letzteAktion: in Verzweigung zur weiteren Pruefung. gesprungen");
+			// System.err.println("letzteAktion: in Verzweigung zur weiteren Pruefung.
+			// gesprungen");
 			this.letzteAktionNachNOKpruefen();
 
 		} else { // wenn ok dann mache nichts
-			//System.err.println("letzteAktion: in Verzweigung ohne Pruefung. gesprungen");
+			// System.err.println("letzteAktion: in Verzweigung ohne Pruefung. gesprungen");
 		}
 	}
 
@@ -425,10 +429,10 @@ public abstract class Bot {
 //		System.err.println(status + " nach dem Aufruf von .substring...");
 
 		if ("NOK".equals(status)) {
-			System.err.println("Springt in Verzweigung: NOK");
+//			System.err.println("Springt in Verzweigung: NOK");
 			return false;
 		} else {
-			System.err.println("Springt in Verzweigung: !NOK - also OK");
+//			System.err.println("Springt in Verzweigung: !NOK - also OK");
 			return true;
 		}
 
@@ -440,7 +444,7 @@ public abstract class Bot {
 	 */
 	/**
 	 * Prueft den Teil des Status der letzten Aktion nach dem NOK. Mögliche Werte
-	 * sind TALKING, BLOCKED, NOTSUPPORTED, WRONGORDER, NOTYOURS, EMPTY. 
+	 * sind TALKING, BLOCKED, NOTSUPPORTED, WRONGORDER, NOTYOURS, EMPTY.
 	 */
 	public void letzteAktionNachNOKpruefen() {
 //		System.err.println("Nun befindet er sich in der weitere Pruefung nach NOK...");
@@ -462,13 +466,14 @@ public abstract class Bot {
 			switch (statusNachNOK[1]) {
 			case "TALKING":
 				// mit anderem Bot verquatscht
-				System.err.println("koord korrigieren");
+//				System.err.println("koord korrigieren");
 				this.bewegungRueckgaengigMachen();
 				break;
 
 			case "BLOCKED":
 				// wenn Bot gegen eine Wand gefahren ist oder Formular gegen Wand gekickt wurde
-				// TODO - Koordinaten zurückändern beim gegen die Wand fahren, nicht dringend, rest tue nix
+				// TODO - Koordinaten zurückändern beim gegen die Wand fahren, nicht dringend,
+				// rest tue nix
 				break;
 
 			case "NOTSUPPORTED":
@@ -503,7 +508,11 @@ public abstract class Bot {
 	 */
 	public void bewegungRueckgaengigMachen() {
 //		System.err.println("Ort vor Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
-		switch (richtungUmkehren(this.letzteRichtung)) {
+		String korrekturRichtung = richtungUmkehren(this.letzteRichtung);
+				if(korrekturRichtung == null) {
+					return; //Annahme wenn RichtungUmkehren null liefert sind wir letzte Runde gar nicht gefahren
+				}
+		switch (korrekturRichtung) {
 		/*
 		 * Wenn versucht hat in Norden zu bewegen x-Koordinate belassen und y-Koordinate
 		 * um 1 erhöhen. Süden: x belassen und y - 1 Westen: x + 1 und y belassen Osten:
