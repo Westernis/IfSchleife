@@ -14,9 +14,9 @@ public class Level2 extends ErkundenderBotLvl2 {
 
 	public Level2(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
-		ersatzkarte = new Karte(Koordinaten.getxMax(), Koordinaten.getyMax());// TODO + testen
+		ersatzkarte = new Karte(Koordinaten.getxMax(), Koordinaten.getyMax());// TODO + lvl2 testen
 		// Karte rausfinden
-		// TODO + auf karten begrenzen mit 2. Karte nur für wegfindung
+		// TODO + lvl2 auf karten begrenzen mit 2. Karte nur für wegfindung
 		// 1 zum befüllen 1 zum vergleichen
 		switch (x) {
 
@@ -83,7 +83,7 @@ public class Level2 extends ErkundenderBotLvl2 {
 		if (abweichungFestgestellt) {
 			super.rundeInitialisiern();
 		} else {
-			//TODO + Abweichung feststellen
+			//TODO + lvl2 Abweichung feststellen
 			this.letzteAktionPruefen();
 
 			ersatzkarte.aktualisiereFeld(getOrt(), Init.currentCell);

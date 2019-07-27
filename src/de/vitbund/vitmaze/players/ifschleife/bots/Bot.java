@@ -234,7 +234,7 @@ public abstract class Bot {
 	 * ausgewählt. Bewegt den Bot nach der Entscheidung.
 	 * 
 	 */
-	public void schlauereZufallsrichtung() {
+	public String schlauereZufallsrichtung() {
 
 //		letzteRichtung = "";
 		List<String> richtungsliste = new ArrayList<String>();
@@ -309,7 +309,7 @@ public abstract class Bot {
 
 		default:
 		}
-
+		return letzteRichtung;
 	}
 
 	/**
@@ -392,11 +392,11 @@ public abstract class Bot {
 	 */
 	public void letzteAktionPruefen() { //Boolean vs. void
 		if (!this.letzeAktionAufOKpruefen()) { // wenn nicht ok, dann weitere Prüfung
-			System.err.println("letzteAktion: in Verzweigung zur weiteren Pruefung. gesprungen");
+			//System.err.println("letzteAktion: in Verzweigung zur weiteren Pruefung. gesprungen");
 			this.letzteAktionNachNOKpruefen();
 
 		} else { // wenn ok dann mache nichts
-			System.err.println("letzteAktion: in Verzweigung ohne Pruefung. gesprungen");
+			//System.err.println("letzteAktion: in Verzweigung ohne Pruefung. gesprungen");
 		}
 	}
 
@@ -462,12 +462,13 @@ public abstract class Bot {
 			switch (statusNachNOK[1]) {
 			case "TALKING":
 				// mit anderem Bot verquatscht
+				System.err.println("koord korrigieren");
 				this.bewegungRueckgaengigMachen();
 				break;
 
 			case "BLOCKED":
 				// wenn Bot gegen eine Wand gefahren ist oder Formular gegen Wand gekickt wurde
-				// TODO: - Koordinaten zurückändern beim gegen die Wand fahren, nicht dringend, rest tue nix
+				// TODO - Koordinaten zurückändern beim gegen die Wand fahren, nicht dringend, rest tue nix
 				break;
 
 			case "NOTSUPPORTED":

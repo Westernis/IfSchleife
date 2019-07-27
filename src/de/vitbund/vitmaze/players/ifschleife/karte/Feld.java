@@ -249,7 +249,7 @@ public abstract class Feld {
 	}
 
 	/**
-	 * Überschreibt die Methode getTyp() von Object
+	 * Gibt den Typ des Feldes zurück. Für die möglichen Werte siehe Konstanten dieser Klasse.
 	 * 
 	 * @return den Typ des Felds
 	 */

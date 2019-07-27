@@ -64,7 +64,7 @@ public class KickAss extends Bot {
 
 		}
 
-		schlauereZufallsrichtung(); // das ist nun unser erkunden;
+		this.letzteRichtung = schlauereZufallsrichtung(); // das ist nun unser erkunden;
 
 		/*
 		 * var aktuelles Formular, höchstes Formular(-1 wenn unbekannt?)

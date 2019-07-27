@@ -10,7 +10,7 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 import de.vitbund.vitmaze.players.ifschleife.karte.Ziele;
 
 /**
- * Dieser Bot verteilt zufällig Zettel auf der Karte.
+ * Dieser Bot verteilt zufällig seine Zettel auf der Karte und fährt danach weiter rum.
  * 
  * @see Bot
  * @author IFSchleife
@@ -38,9 +38,11 @@ public class CharlySheet extends Bot {
 	 */
 	public void machAktion() {
 
+		this.getAktuelleKarte().ausgabe();
 		if (Feld.formular.equals(Init.currentCell.getTyp()) && this.id != Init.currentCell.getPlayerID()) {
 
 			legeZettel();
+			return;
 		}
 
 		if (Feld.flur.equals(Init.currentCell.getTyp())) {
@@ -49,10 +51,12 @@ public class CharlySheet extends Bot {
 			if (x > 0.97) {
 
 				legeZettel();
+				return;
 			}
 		}
 		//this.nachWesten();
-		schlauereZufallsrichtung();
+		this.letzteRichtung = schlauereZufallsrichtung();
+		return;
 	}
 
 	/**

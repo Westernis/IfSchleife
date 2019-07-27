@@ -103,20 +103,36 @@ public class Karte {
 	 */
 	public void aktualisiereFeld(Koordinaten punkt, ZellStatus feldtyp) {
 		Feld ort = this.getFeld(punkt);
-		Ziele form = this.getFormulare(punkt);
-		Feld nachbar;
+		boolean warBereitsErkundet = false;
+		boolean feldErneuern = false; // dient rein der lesbarkeit, die bedingungen unten waren sonst fast 10 zeilig
 
-		// Wenn kein Feld vorhanden ist ODER das vorhandene Feld ein Formular und das
-		// neue ein Flur ist (oder andersherum) ODER ein anderes Formular da ist,
-		// wird eine neue passende Feldinstanz angelegt und gespeichert
-		if (ort == null
-				// Feldtyp hat sich geändert?
-				|| ((Feld.formular.equals(feldtyp.getTyp()) || Feld.flur.equals(feldtyp.getTyp()))
-				&& !ort.getTyp().equals(feldtyp.getTyp())) 
-				//liegt eventuell ein anderes Formular dort als erwartet?
-				|| form != null && Feld.formular.equals(feldtyp.getTyp()) &&
-				(form.getFormID() != feldtyp.getFormID() || form.getPlayerID() != feldtyp.getPlayerID()) ){
-			
+		// kein Feld bisher vorhanden?
+		if (ort == null) {
+			feldErneuern = true;
+		} else {
+			// Feldvorhanden aber Typ hat sich geändert? //TODO ZETTEL
+			if (!ort.getTyp().equals(feldtyp.getTyp())) {
+				feldErneuern = true;
+				// Ich muss bei Zetteln den Status bzgl. erkundet manuell mitnehmen
+				if (Feld.zettel.equals(feldtyp.getTyp())) {
+					warBereitsErkundet = ort.pruefenErkundet();
+				}
+
+			} else {
+				// Typ gleich und es ist ein Formular? -> prüfen ob tatsächlich selbes Formular
+				// ->
+				// ID oder spieler !=
+				Ziele form = this.getFormulare(punkt);
+				if (form != null
+						&& (form.getFormID() != feldtyp.getFormID() || form.getPlayerID() != feldtyp.getPlayerID())) {
+
+				}
+			}
+		}
+
+		// Feld ändern
+		if (feldErneuern) {
+
 			// Feldkonstruktionsmethode aufrufen und Ergebnis im Array speichern
 			felder[punkt.getX()][punkt.getY()] = Feld.konstruiereFeld(punkt, this, feldtyp.getTyp(),
 					feldtyp.getPlayerID(), feldtyp.getFormID());
@@ -127,6 +143,7 @@ public class Karte {
 				// Array nach dem Formular durchsuchen
 				for (Feld[] felds : felder) {
 					for (Feld feld : felds) {
+
 						if (feld != null) {
 							f = getFormulare(feld.getPunkt()); // feld noch mal als "Ziele" holen
 							if (f != null && feldtyp.getPlayerID() == f.getPlayerID()
@@ -135,7 +152,7 @@ public class Karte {
 								int y = f.getPunkt().getY();
 								// damit das neu eingefügte Formular nicht entfernt wird
 								if (x != punkt.getX() && y != punkt.getY()) {
-									// Formular raus nehmen und Feld auf Floor setzen
+									// Formular raus nehmen und durch Floor ersetzen
 
 									felder[x][y] = Feld.konstruiereFeld(f.getPunkt(), this, Feld.flur, 0, 0);
 									// Wege für das neue Feld setzen
@@ -144,14 +161,19 @@ public class Karte {
 								}
 							}
 						}
+
 					}
 				}
+			}
+			// neues Feld ist ein Zettel -> ich muss den erkundet Status setzen
+			if (Feld.zettel.equals(feldtyp.getTyp())) {
+				felder[punkt.getX()][punkt.getY()].setErkundet(warBereitsErkundet);
 			}
 		}
 
 		/*
-		 * ort muss noch mal geholt werden, es kann ja sein das oben gerade ein neues Feld
-		 * angelegt wurde,
+		 * ort muss noch mal geholt werden, es kann ja sein das oben gerade ein neues
+		 * Feld angelegt wurde,
 		 */
 		ort = this.getFeld(punkt);
 
@@ -232,17 +254,17 @@ public class Karte {
 	 */
 	public void ausgabe() {
 		// TODO - Umbau auf StringBuilder wäre schön
-		int x = felder.length - 1;
-		int y = felder[0].length - 1;
-		for (int i = 0; i < x; i++) {
-			for (int j = 0; j < y; j++) {
-				if (felder[j][i] == null) {
+		int x = Koordinaten.getxMax();
+		int y = Koordinaten.getyMax();
+		for (int j = 0; j < y; j++) {
+			for (int i = 0; i < x; i++){
+				if (felder[i][j] == null) {
 					System.err.print("0");
-				} else if (felder[j][i].istBegehbar() == true) {
-					if (felder[j][i].getTyp().equals(Feld.flur)) {
+				} else if (felder[i][j].istBegehbar() == true) {
+					if (felder[i][j].getTyp().equals(Feld.flur)) {
 						System.err.print("_");
-					} else if (Feld.zettel.equals(felder[j][i].getTyp())) {
-						System.err.println("Z");
+					} else if (Feld.zettel.equals(felder[i][j].getTyp())) {
+						System.err.print("Z");
 					} else
 						System.err.print("|");
 				} else {
