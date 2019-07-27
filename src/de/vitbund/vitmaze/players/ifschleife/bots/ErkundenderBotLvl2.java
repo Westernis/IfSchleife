@@ -82,7 +82,6 @@ public class ErkundenderBotLvl2 extends Bot {
 
 	@Override
 	public void machAktion() {
-		this.letzteRichtung = "";
 		// TODO ++ unbekannte Zettel als Ziel setzen !!
 		// String letzteRichtung = null; // muss raus da man das im Bot nutzen soll
 		Feld ziel = null;
@@ -101,6 +100,7 @@ public class ErkundenderBotLvl2 extends Bot {
 				// Ziel schon erlaubt? -> einsammeln
 				if (Init.currentCell.getFormID() == erledigteFormulare) {
 //					System.err.println("1.1");
+					this.letzteRichtung = "";
 					this.beenden();
 					return;
 				}
@@ -112,6 +112,7 @@ public class ErkundenderBotLvl2 extends Bot {
 					// Formular hochzählen wird in dem Wrapper der rundeInitialisieren gemacht um
 					// quatschen abzufangen
 //					System.err.println("1.3");
+					this.letzteRichtung = "";
 					this.aufsammeln();
 					return;
 				}
@@ -130,6 +131,7 @@ public class ErkundenderBotLvl2 extends Bot {
 				this.kick(richtungKick);
 				return;
 			} else {
+				this.letzteRichtung = "";
 				this.aufsammeln();
 				return;
 			}
@@ -395,6 +397,11 @@ public class ErkundenderBotLvl2 extends Bot {
 			// anfassen
 			if (f.istBegehbar() && f.pruefenErkundet()) {
 				bewertung = 0;
+				//sind wir von ort gekommen?
+				if (this.letzteRichtung.equals( Koordinaten.getRichtung(ort, getOrt() ))) {
+					bewertung++; //
+				}
+
 				switch (f.getTyp()) {
 				case Feld.ziel:
 					break; // abbruch falscher Feldtyp
@@ -405,7 +412,7 @@ public class ErkundenderBotLvl2 extends Bot {
 						break; // eigene Formulare sollen ausgeschlossen werden
 					}
 					// nicht eigene höher bewerten
-					bewertung++;
+					bewertung ++;
 				case Feld.flur:
 					// nix machen
 				default:
