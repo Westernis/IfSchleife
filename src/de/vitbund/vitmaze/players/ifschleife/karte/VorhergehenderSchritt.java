@@ -42,12 +42,10 @@ public class VorhergehenderSchritt implements Comparable<VorhergehenderSchritt> 
 		this.vorgaenger = vorgaenger;
 	}
 
-	// TODO: JavaDoc: Gibts Besonderheiten die es bei den Getter und Settern zu
-	// beachten gilt? Wenn ja in JavaDocs schreiben.
 	/**
 	 * 
 	 * 
-	 * @return weglaenge
+	 * @return weglaenge Gibt eine ganzzahligen Wert größer Null zurück.
 	 */
 	public int getWeglaenge() {
 		return weglaenge;
@@ -56,7 +54,7 @@ public class VorhergehenderSchritt implements Comparable<VorhergehenderSchritt> 
 	/**
 	 * Setzt die Weglänge auf den übergebenen Wert.
 	 * 
-	 * @param weglaenge
+	 * @param weglaenge Es dürfen nur Werte größer Null übergeben werden.
 	 */
 	public void setWeglaenge(int weglaenge) {
 		this.weglaenge = weglaenge;
@@ -69,15 +67,6 @@ public class VorhergehenderSchritt implements Comparable<VorhergehenderSchritt> 
 	 */
 	public Feld getVorgaenger() {
 		return vorgaenger;
-	}
-
-	/**
-	 * Setzt den Vorgänger auf das übergebene Feld.
-	 * 
-	 * @param vorgaenger - das Feld auf den der Vorgänger gesetzt wird.
-	 */
-	public void setVorgaenger(Feld vorgaenger) {
-		this.vorgaenger = vorgaenger;
 	}
 
 	// eine Methode vom Interface "comparable"; sie vergleicht ein übergeb. Objekt

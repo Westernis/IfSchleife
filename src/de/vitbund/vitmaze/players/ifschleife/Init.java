@@ -107,7 +107,6 @@ public class Init {
 			eastCell.rueckgabeAuswerten(eastCellStatus);
 			southCell.rueckgabeAuswerten(southCellStatus);
 			westCell.rueckgabeAuswerten(westCellStatus);
-			// Karte befüllen
 
 			// Debug Information ausgeben (optional möglich)
 			/*
@@ -118,7 +117,6 @@ public class Init {
 //			System.err.println("Ergebnis Vorrunde Westen / Osten: " + "   " + westCellStatus + " / " + eastCellStatus);
 //			System.err.println("Ergebnis Vorrunde Sueden: " + "                " + southCellStatus);
 
-			// TODO: initialisieren und Prüfung reinschreiben
 			unserBot.rundeInitialisiern();
 			unserBot.machAktion();
 		}

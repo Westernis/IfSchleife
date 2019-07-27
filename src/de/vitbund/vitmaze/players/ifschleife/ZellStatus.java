@@ -46,7 +46,7 @@ public class ZellStatus {
 		// Wäre hier wegen der Prüfung weiter oben zwar nicht relevant, aber gleich
 		// angewöhnen
 		if (!(Feld.flur.equals(zerlegt[i]) || Feld.wand.equals(zerlegt[i]) || Feld.formular.equals(zerlegt[i])
-				|| Feld.ziel.equals(zerlegt[i]))) {
+				|| Feld.ziel.equals(zerlegt[i]) || Feld.zettel.equals(zerlegt[i]))) {
 			return false; // muss von einem dieser Typen sein sonst ist was schief gegangen
 		} else {
 			typ = zerlegt[i];
@@ -117,9 +117,8 @@ public class ZellStatus {
 	}
 
 	/**
-	 * TODO: JavaDoc
 	 * 
-	 * @return die Entfernung des Bots
+	 * @return die Entfernung gegnerischer Bots
 	 */
 	public int getBotentfernung() {
 		return botentfernung;

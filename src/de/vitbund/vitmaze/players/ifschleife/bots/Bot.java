@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.vitbund.vitmaze.players.ifschleife.Init;
+import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 
@@ -48,10 +49,9 @@ public abstract class Bot {
 
 	private Koordinaten ort;
 
-	// TODO schöne Beschreibung für Karte suchen -> in JavaDocs aufführen
 	/**
 	 * Erstellt einen Bot mit einer Karte, einer PlayerID und den aktuellen
-	 * Koordinaten (Startkoordinaten)
+	 * Koordinaten (Startkoordinaten).
 	 * 
 	 * @param karte    - die Spielfeldkarte
 	 * @param playerId - die ID des Spielers
@@ -195,6 +195,10 @@ public abstract class Bot {
 		aktuelleKarte.aktualisiereFeld(getOrt(), Init.currentCell);
 		if (aktuelleKarte.getFeld(getOrt()) != null) {
 			aktuelleKarte.getFeld(getOrt()).pruefenErkundet();
+			//Falls der aktuelle Standort ein Zettel ist auf erkundet setzen
+			if(aktuelleKarte.getFeld(getOrt()).getTyp().equals(Feld.zettel)) {
+				aktuelleKarte.getFeld(getOrt()).setErkundet(true);
+			}
 		}
 	}
 
@@ -281,11 +285,6 @@ public abstract class Bot {
 		case 2:
 		case 3:
 		case 4:
-			// removeIf um letzte Richtung aus der Liste zu entfernen und danach in eine
-			// neue zu gehen
-
-//				richtungsliste.removeIf(n -> (letzteRichtung.equals(n)));
-//				kann man nich benutzen geht nicht -> TODO noch mal testen da wir dafür erst einen anderen Fehler fixen mussten. 
 
 			int index = -1;
 			// System.err.println(richtungUmkehren(letzteRichtung));
@@ -332,7 +331,7 @@ public abstract class Bot {
 	/**
 	 * Die Methode überprüft ob ein Weg eine Wand ist.
 	 * 
-	 * @return true, wenn uebergebene Richtung eine Wand ist. False wenn uebergebene
+	 * @return {@code true}, wenn uebergebene Richtung eine Wand ist. {@code false} wenn uebergebene
 	 *         Richtung eine Wand ist.
 	 */
 	public boolean wegGleichWand(String zufaelligeRichtung) {
@@ -342,34 +341,31 @@ public abstract class Bot {
 				return true;
 			} else
 				return false;
-//				break; benötigt man nicht, weil alle Fälle mit Return beendet werden?
 
 		case "go east":
 			if ("WALL".equals(Init.eastCellStatus)) {
 				return true;
 			} else
 				return false;
-//				break;
 
 		case "go north":
 			if ("WALL".equals(Init.northCellStatus)) {
 				return true;
 			} else
 				return false;
-//				break;
 
 		case "go south":
 			if ("WALL".equals(Init.southCellStatus)) {
 				return true;
 			} else
 				return false;
-//				break;
+
 		default:
 			return true;
 		}
 
-//			return false; warum muss hier ein Return stehen? Für den Fall dass Case nicht
-		// durchlaufen wird??? -> default hat gefehlt
+		//	return false; warum muss hier ein Return stehen? Für den Fall dass Case nicht
+		// durchlaufen wird??? -> default hatte gefehlt
 
 	}
 
@@ -389,12 +385,6 @@ public abstract class Bot {
 	public void setLetzteRichtung(String letzteRichtung) {
 		this.letzteRichtung = letzteRichtung;
 	}
-
-	/*
-	 * Angestrebte Teilung: letzteAktionPruefen letzteAktionAufOKpruefen - prueft
-	 * erst auf ok/nok - wenn nok dann weitere Prüfung wenn nicht dann fertig
-	 * letzteAktionNachNOKPruefen
-	 */
 
 	/**
 	 * Prueft die letze Aktion auf OK/NOK. Wenn NOK: prueft dann auf die
@@ -450,8 +440,7 @@ public abstract class Bot {
 	 */
 	/**
 	 * Prueft den Teil des Status der letzten Aktion nach dem NOK. Mögliche Werte
-	 * sind TALKING, BLOCKED, NOTSUPPORTED, WRONGORDER, NOTYOURS, EMPTY. Es ist auch
-	 * eine Prüfung auf null eingebaut.
+	 * sind TALKING, BLOCKED, NOTSUPPORTED, WRONGORDER, NOTYOURS, EMPTY. 
 	 */
 	public void letzteAktionNachNOKpruefen() {
 //		System.err.println("Nun befindet er sich in der weitere Pruefung nach NOK...");
@@ -478,7 +467,7 @@ public abstract class Bot {
 
 			case "BLOCKED":
 				// wenn Bot gegen eine Wand gefahren ist oder Formular gegen Wand gekickt wurde
-				// TODO: Koordinaten zurückändern???
+				// TODO: - Koordinaten zurückändern beim gegen die Wand fahren, nicht dringend, rest tue nix
 				break;
 
 			case "NOTSUPPORTED":
@@ -522,7 +511,7 @@ public abstract class Bot {
 		 * Dafür gibts bereits die Methoden der Klasse Koordinaten à .norden() die den
 		 * KoordSatz einer nördlichen Bewegung zurückgibt.
 		 * 
-		 * TODO 1.0 - Erstmal Richtung umkehren von letzter Richtung damit switch case
+		 * Erstmal Richtung umkehren von letzter Richtung damit switch case
 		 * übersichtlich ist 1.1 - dann in entsprechende Cases springen 2.0 -
 		 * Koordinaten korrigieren 2.1 - Wegelisten anpassen? 2.2 - Karte aktualisieren?
 		 * Oder beinhaltet sie nur Feldtypen?

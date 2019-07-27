@@ -15,7 +15,6 @@ public class TestBot extends Bot {
 
 	public TestBot(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
-		// TODO Automatisch generierter Konstruktorstub
 	}
 
 	@Override

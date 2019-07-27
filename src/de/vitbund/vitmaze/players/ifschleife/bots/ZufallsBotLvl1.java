@@ -146,9 +146,4 @@ public class ZufallsBotLvl1 extends Bot {
 			nachOsten();
 		}
 	}
-
-	// TODO entfernen da leer?
-	public void letztesFeld() {
-
-	}
 }

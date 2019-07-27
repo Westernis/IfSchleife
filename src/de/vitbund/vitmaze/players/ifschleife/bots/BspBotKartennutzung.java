@@ -10,15 +10,12 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 import de.vitbund.vitmaze.players.ifschleife.karte.VorhergehenderSchritt;
-//TODO TK-JavaDocs: machAktion() noch ausführlicher bauen...
 
 /**
  * Ein Bot an dem die Verwendung der navigation deutlich werden soll. Erbt von
  * der Klasse Bot.
  * 
  * @deprecated
- * 
- * 
  * 
  * @author IFSchleife
  * @see ErkundenderBotLvl2
@@ -63,12 +60,10 @@ public class BspBotKartennutzung extends Bot {
 
 		// zu testzwecken erst mal einfach finish versuchen damit keine
 		// Zeitüberschreitung auftritt
-		// FIXME sinnvolle alternative
 		System.err.println("finish");
 		System.err.println(this.aktuelleKarte.getZiel(id));
 	}
 
-	// TODO sollte wahrscheinlich in die Botklasse rein, da es alle brauchen
 	/**
 	 * Die Methode lässt den Bot zu bisher unerkundeten Feldern fahren.
 	 * 

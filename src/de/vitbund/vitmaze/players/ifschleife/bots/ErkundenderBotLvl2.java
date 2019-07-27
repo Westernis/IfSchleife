@@ -17,8 +17,6 @@ public class ErkundenderBotLvl2 extends Bot {
 	private int erledigteFormulare = 0; // speichert das höchste abgearbeitete Formular, Formulare sollten bei 1 starten
 	private HashMap<Integer, Ziele> meineformulare;
 
-	// Variablen für die Formularsuche
-	private boolean formularVermisst;
 	private boolean sucheGestartet;
 	private boolean flurFelderWiederEntnullen = false;
 	private ArrayList<Feld> suchListe;
@@ -83,6 +81,7 @@ public class ErkundenderBotLvl2 extends Bot {
 
 	@Override
 	public void machAktion() {
+		// TODO ++ unbekannte Zettel als Ziel setzen !!
 		// String letzteRichtung = null; // muss raus da man das im Bot nutzen soll
 		Feld ziel = null;
 
@@ -112,13 +111,22 @@ public class ErkundenderBotLvl2 extends Bot {
 					return;
 				}
 				break;
+			case Feld.zettel:
+				String richtungKick = kickenPruefen();
+				if (richtungKick != null) {
+					kick(richtungKick);
+					return;
+				} else {
+					this.aufsammeln();
+					return;
+				}
 			default:
 				break;
 			}
 
 		}
 
-		// 2. nächstes erkundetes Feld
+		// 2. nächstes unerkundetes Feld
 
 		// WegeKarte holen
 		LinkedHashMap<Feld, VorhergehenderSchritt> wege = this.getAktuelleKarte().findeWege(getOrt());
@@ -152,9 +160,6 @@ public class ErkundenderBotLvl2 extends Bot {
 			// prüfen ob in der Karte noch das selbe Formular an der Stelle liegt
 			Ziele zielFeldAusKarte = getAktuelleKarte().getFormulare(ziel.getPunkt());
 			if (!((Ziele) ziel).selbesFormular(zielFeldAusKarte)) {
-//				System.err.println("3.2.3");
-				formularVermisst = true;// TODO noch nötig?
-
 				// wenn kein Formular mehr da -> liefert getFormular null, daher muss das Feld
 				// nochmal geholt werden
 				if (zielFeldAusKarte == null) {
@@ -188,10 +193,9 @@ public class ErkundenderBotLvl2 extends Bot {
 	}
 
 	private void formularSucheZuruecksetzen() {
-		formularVermisst = false;
 		sucheGestartet = false;
 		suchListe = null;
-		// TODO alles zurücksetzen
+		// TODO + alles zurücksetzen
 	}
 
 	/**
@@ -280,6 +284,9 @@ public class ErkundenderBotLvl2 extends Bot {
 		int zielNote = 0;
 		for (Feld feld : potFeld) {
 			note = 0;
+			if (Feld.zettel.equals(feld.getTyp())) {
+				note += 10; // neue Felder mit Zetteln sollen Vorrang haben
+			}
 			if (feld.getNord() == null)
 				note++;
 			if (feld.getWest() == null)
@@ -288,7 +295,10 @@ public class ErkundenderBotLvl2 extends Bot {
 				note++;
 			if (feld.getSued() == null)
 				note++;
-			if (note > zielNote) {// TODO zufällig eins der Felder aussuchen?
+			if (note > zielNote) {
+				// zufälliges Aussuchen gleichwertiger Felder könnte zu Erhöhung der
+				// Gesamtstrecke führen die der Bot fahren muss. Das müsste vor Einführung
+				// gründlich getestet werden.
 				ziel = feld;
 				zielNote = note;
 			}
@@ -359,6 +369,72 @@ public class ErkundenderBotLvl2 extends Bot {
 			System.err.println("ACHTUNG Karte ENTnullt");
 			this.getAktuelleKarte().formularsucheEnde();
 			flurFelderWiederEntnullen = false;
+		}
+	}
+
+	/**
+	 * Prüft ob auf ein benachbartes Feld ein Zettel gekickt werden sollte. Dafür
+	 * muss das Feld dazu geeignet sein (Flur oder Formular ohne Zettel) und im
+	 * Idealfall noch ein gegnerisches Formular sein.
+	 * 
+	 * @return Richtung in die gekickt werden sollte ("norden" TODO + nach todo konstanten) oder
+	 *         {@code null} falls kein geeignetes Feld da ist.
+	 */
+	public String kickenPruefen() {
+		Feld ziel = null;
+		int bewertung = 0;
+		int bewertungAlt = 0;
+
+		// Zielliste mit erlaubten Zielen holen und bewerten
+		for (Koordinaten ort : new Koordinaten[] { getOrt().norden(), getOrt().sueden(), getOrt().westen(),
+				getOrt().osten() }) {
+
+			Feld f = this.getAktuelleKarte().getFeld(ort);
+
+			// prüfen ob 1. begehbar, nur auf solchen Feldern können überhaupt Zettel liegen
+			if (f.istBegehbar()) {
+				bewertung = 0;
+				switch (f.getTyp()) {
+				case Feld.ziel:
+					break; // abbruch brauch nicht rein
+				case Feld.zettel:
+					break;// abbruch brauch nicht rein
+				case Feld.formular:
+					if (((Ziele) f).getPlayerID() == this.id) {
+						break; // eigene Formulare sollen ausgeschlossen werden
+					}
+					// nicht eigene höher bewerten
+					bewertung++;
+				case Feld.flur:
+					// nix machen
+				default:
+					if (bewertung >= bewertungAlt) {
+						ziel = f;
+						bewertungAlt = bewertung;
+					}
+				}
+			}
+		}
+
+		if (ziel == null) {
+			return null; // keine geeignetes Feld vorhanden
+		}
+
+		return Koordinaten.getRichtung(this.getOrt(), ziel.getPunkt());
+	}
+
+	public void kick(String richtung) {
+		if ("Westen".equals(richtung)) {
+			System.out.println("kick west");
+		}
+		if ("Norden".equals(richtung)) {
+			System.out.println("kick north");
+		}
+		if ("Osten".equals(richtung)) {
+			System.out.println("kick east");
+		}
+		if ("Sueden".equals(richtung)) {
+			System.out.println("kick south");
 		}
 	}
 }

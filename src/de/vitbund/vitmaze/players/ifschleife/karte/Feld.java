@@ -2,7 +2,7 @@ package de.vitbund.vitmaze.players.ifschleife.karte;
 
 /**
  * Ein Feld stellt ein Quadrat auf einer Karte dar. Mit einer bestimmten
- * Position auf dem Spielfeld und einer "Füllung" - in VITMaze kann auf einem
+ * Position auf dem Spielfeld und einem Typ - in VITMaze kann auf einem
  * Feld bspw. ein Formular oder ein Ziel o.ä. liegen. Außerdem enthält das Feld
  * eine Eigenschaft für die Darstellung ob es bereits erkundet oder noch
  * unbekannt ist.
@@ -11,10 +11,6 @@ package de.vitbund.vitmaze.players.ifschleife.karte;
  */
 public abstract class Feld {
 
-	/*
-	 * geht wahrscheinlich schöner über enums oder ähnlich, keine Lust mehr
-	 * nachzulesen TODO schöner machen?
-	 */
 	/**
 	 * Text für die Flurfelder: "FLOOR".
 	 */
@@ -31,6 +27,11 @@ public abstract class Feld {
 	 * Text für die Formularfelder: "FORM".
 	 */
 	public static final String formular = "FORM";
+
+	/**
+	 * Text für Felder auf denen ein Zettel liegt: "SHEET".
+	 */
+	public static final String zettel = "SHEET";
 
 //	private final int x;
 //	private final int y;
@@ -103,7 +104,8 @@ public abstract class Feld {
 		case Feld.formular:// fehlendes return/break ist Absicht, der einzige Uunterschied ist in Typ drin
 		case Feld.ziel:
 			return new Ziele(punkt, karte, playerID, formID, typ);
-
+		case Feld.zettel:
+			return new Zettel(punkt, karte);
 		default:
 			return null;
 		}
@@ -111,10 +113,13 @@ public abstract class Feld {
 	}
 
 	/**
-	 * prüft anhand der benachbarten Felder (sind alle angelegt?) ob das Feld auf
-	 * erkundet gesetzt werden kann. Wenn ja setze Variable auf erkundet.
+	 * Prüft anhand der benachbarten Felder (sind alle angelegt?) ob das Feld auf
+	 * erkundet gesetzt werden kann, wenn ja wird das Feld als erkundet markiert.
+	 * Erkundet bedeutet in diesem Zusammenhang, das alle relevanten Informationen
+	 * über das Feld bekannt sind. Daher der Typ des Feldes und welche Wege besitzt
+	 * es.
 	 * 
-	 * @return erkundet. Bei Fehlern false
+	 * @return Ist das Feld als erkundet markiert.
 	 */
 	public boolean pruefenErkundet() {
 		if (erkundet) {
@@ -131,7 +136,17 @@ public abstract class Feld {
 	}
 
 	/**
-	 * Eine Methode die von Unterklassen überschrieben wird. Sie wird darstellen ob
+	 * Mit Ausnahme von Feldern vom Typ Zettel sollte die Methode
+	 * {@link #pruefenErkundet()} benutzt werden.
+	 * 
+	 * @param erkundet
+	 */
+	public void setErkundet(boolean erkundet) {
+		this.erkundet = erkundet;
+	}
+
+	/**
+	 * Eine Methode die von Unterklassen überschrieben wird. Sie gibt zurück ob
 	 * ein Feld begehbar ist.
 	 */
 	public abstract boolean istBegehbar();
@@ -251,7 +266,7 @@ public abstract class Feld {
 	}
 
 	/**
-	 * Setzt den Typ des Felds. Beispielhafte Felder sind flur oder wand.
+	 * Setzt den Typ des Felds. Beispielhafte Felder sind {@link Feld#flur} oder {@link Feld#wand}.
 	 * 
 	 * @param typ
 	 */

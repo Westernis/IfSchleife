@@ -6,6 +6,8 @@ import java.util.List;
 import de.vitbund.vitmaze.players.ifschleife.Init;
 import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
+import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
+import de.vitbund.vitmaze.players.ifschleife.karte.Ziele;
 
 /**
  * Dieser Bot verteilt zufällig Zettel auf der Karte.
@@ -15,7 +17,7 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
  */
 public class CharlySheet extends Bot {
 
-	private int sheetCount;
+	private int zettelZahl;
 
 	/**
 	 * 
@@ -23,11 +25,11 @@ public class CharlySheet extends Bot {
 	 * @param playerId   - Die ID des Spielers - üblicherweise Werte von 1 bis 4
 	 * @param x          die X-Koordinate - die Position auf der horizontalen Achse
 	 * @param y          die Y-Koordinate - die Position auf der vertikalen Achse
-	 * @param sheetCount Anzahl der Zettel die man legen kann.
+	 * @param zettelZahl Anzahl der Zettel die man legen kann.
 	 */
-	public CharlySheet(Karte karte, int playerId, int x, int y, int sheetCount) {
+	public CharlySheet(Karte karte, int playerId, int x, int y, int zettelZahl) {
 		super(karte, playerId, x, y);
-		this.sheetCount = sheetCount;
+		this.zettelZahl = zettelZahl;
 	}
 
 	/**
@@ -49,17 +51,17 @@ public class CharlySheet extends Bot {
 				legeZettel();
 			}
 		}
-		this.nachWesten();
-		// schlauereZufallsrichtung();
+		//this.nachWesten();
+		schlauereZufallsrichtung();
 	}
 
 	/**
 	 * Legt Zettel auf die Karte, solange Zettel vorhanden sind.
 	 */
-	private void legeZettel() {// TODO NOK berücksichtigen, ist aber eh nur testbot
-		if (sheetCount > 0) {
+	private void legeZettel() {// TODO - NOK berücksichtigen, ist aber eh nur testbot
+		if (zettelZahl > 0) {
 			System.out.println("put");
-			sheetCount--;
+			zettelZahl--;
 		}
 	}
 }

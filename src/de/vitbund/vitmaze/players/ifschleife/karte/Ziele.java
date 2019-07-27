@@ -1,9 +1,13 @@
 package de.vitbund.vitmaze.players.ifschleife.karte;
 
-//  TODO: Jenachdem hier als Art noch den Zettel einfügen. 
 /**
- * Das Ziel erweitert den
- * Flur und kann bisher entweder ein Sachbearbeiter oder ein Formular sein.
+ * Ziele erweitert {@link Flur} und repräsentiert entweder ein Sachbearbeiter
+ * oder ein Formular.
+ * 
+ * Unterschieden werden diese durch den Typ. Außerdem ist zu
+ * beachten, das bei Ziele die formID, die Anzahl der benötigten Formulare
+ * darstellt, bei Formularen jedeoch die Nummer des Formulars.Das führt dazu,
+ * dass das letzte Formular die selbe formID haben sollte wie das Ziel.
  * 
  * @author IFSchleife
  * @see Flur
@@ -59,7 +63,6 @@ public class Ziele extends Flur {
 	 * @return der Typ des Ziels + ID des Spielers + Nummer des Formulars
 	 */
 	public String toString() {
-		// TODO Ziel vom Dokument unterscheiden bei der Rückgabe
 		return this.getTyp() + " " + playerID + " " + formID;
 	}
 

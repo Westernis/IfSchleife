@@ -10,7 +10,6 @@ import java.util.Map.Entry;
 
 import de.vitbund.vitmaze.players.ifschleife.ZellStatus;
 
-//TODO: hier könnte man die JavaDocs uU noch verbessern.
 /**
  * Die Karte ist eine Sammlung von Informationen bzgl. des Spielfelds.
  * Bestandteile sind u.A. die Felder und die Anzahl der Formulare. In der Karte
@@ -26,12 +25,12 @@ public class Karte {
 	private final Feld[][] felder;
 	private int anzahlFormulare = -1;
 	// Ziele sind statische Eigenschaften der Karte, Formulare nicht, deshalb werden
-	// letztere hier nicht mitgespeichert.
+	// letztere hier nicht als zusätzliche Liste mitgeführt.
 	private HashMap<Integer, Ziele> ziele; // HashMap akzeptiert keine primitiven Typen daher Integer hier
 
 	/**
 	 * Erstellt eine Karte mit einer übergebenen Größe. Diese Karte hat Felder und
-	 * eine Zielliste.
+	 * eine Liste mit bekannten Zielen.
 	 * 
 	 * @param sizeX - die Größe die die Karte in der Horizontalen ausweißt.
 	 * @param sizeY - die Größe die die Karte in der Vertikalen ausweißt.
@@ -73,8 +72,6 @@ public class Karte {
 		return ziele.get(playerID);
 	}
 
-	// TODO Startfelder anlegen
-
 	/**
 	 * Prüft ob ein Feld (wird mit den Koordinaten übergeben) bekannt ist.
 	 * 
@@ -83,7 +80,6 @@ public class Karte {
 	 *         bekannt.
 	 */
 	public boolean isFeldBekannt(Koordinaten ort) {
-		// return isFeldBekannt(ort.getX(), ort.getY());
 		if (felder[ort.getX()][ort.getY()] == null) {
 			return false;
 		}
@@ -110,22 +106,22 @@ public class Karte {
 		Feld nachbar;
 
 		// Wenn kein Feld vorhanden ist ODER das vorhandene Feld ein Formular und das
-		// neu ein Flur ist (oder andersherum) wird eine neue passende Feldinstanz
+		// neue ein Flur ist (oder andersherum), wird eine neue passende Feldinstanz
 		// angelegt und gespeichert
 		if (ort == null || ((Feld.formular.equals(feldtyp.getTyp()) || Feld.flur.equals(feldtyp.getTyp()))
 				&& !ort.getTyp().equals(feldtyp.getTyp()))) {
-			// Feldkonstruktionsmethode aufrufen und im Array speichern
+			// Feldkonstruktionsmethode aufrufen und Ergebnis im Array speichern
 			felder[punkt.getX()][punkt.getY()] = Feld.konstruiereFeld(punkt, this, feldtyp.getTyp(),
 					feldtyp.getPlayerID(), feldtyp.getFormID());
 
-			// altes Formular entfernen
+			// altes Formular entfernen um doppelte Formulare zu vermeiden
 			if (Feld.formular.equals(feldtyp.getTyp())) {
 				Ziele f;
 				// Array nach dem Formular durchsuchen
 				for (Feld[] felds : felder) {
 					for (Feld feld : felds) {
 						if (feld != null) {
-							f = getFormulare(feld.getPunkt());
+							f = getFormulare(feld.getPunkt()); // feld noch mal als "Ziele" holen
 							if (f != null && feldtyp.getPlayerID() == f.getPlayerID()
 									&& feldtyp.getFormID() == f.getFormID()) {
 								int x = f.getPunkt().getX();
@@ -135,7 +131,8 @@ public class Karte {
 									// Formular raus nehmen und Feld auf Floor setzen
 
 									felder[x][y] = Feld.konstruiereFeld(f.getPunkt(), this, Feld.flur, 0, 0);
-									// TODO Wege setzen
+									// Wege für das neue Feld setzen
+									wegeSetzen(new Koordinaten(x, y));
 									break;
 								}
 							}
@@ -144,14 +141,14 @@ public class Karte {
 				}
 			}
 		}
-		// abfangen falls zwei Formular durch verschieben die Plätze getauscht haben
+		// abfangen falls zwei Formulare durch verschieben die Plätze getauscht haben
 		if (Feld.formular.equals(feldtyp.getTyp())) {
-			// TODO abfangen fertig machen
+			// TODO + abfangen fertig machen
 
 		}
 
 		/*
-		 * ort muss noch mal geholt werden, kann ja sein das oben gerade ein neues Feld
+		 * ort muss noch mal geholt werden, es kann ja sein das oben gerade ein neues Feld
 		 * angelegt wurde,
 		 */
 		ort = this.getFeld(punkt);
@@ -206,13 +203,12 @@ public class Karte {
 		}
 	}
 
-	// TODO Java-Doc: Return ausführen
 	/**
 	 * Fügt ein Ziel zur Zieleliste hinzu und setzt die Anzahl der nötigen
 	 * Formulare.
 	 * 
 	 * @param f - das Feld das es anzupassen gilt.
-	 * @return {@code true} wenn TODO und {@code false} wenn TODO
+	 * @return {@code false} falls das Übergebene Feld nicht vom Typ {@link Feld#ziel} ist. 
 	 */
 	public boolean addZiel(Feld f) {
 		if (f.getTyp().equals(Feld.ziel))// Prüfen ob ich umwandeln darf
@@ -232,6 +228,7 @@ public class Karte {
 	 * Gibt die Karte in der Standard-Ausgabe aus. Nützlich für Debug-Zwecke.
 	 */
 	public void ausgabe() {
+		//TODO - Umbau auf StringBuilder wäre schön
 		int x = felder.length - 1;
 		int y = felder[0].length - 1;
 		for (int i = 0; i < x; i++) {
@@ -241,6 +238,8 @@ public class Karte {
 				} else if (felder[j][i].istBegehbar() == true) {
 					if (felder[j][i].getTyp().equals(Feld.flur)) {
 						System.err.print("_");
+					} else if (Feld.zettel.equals(felder[j][i].getTyp())) {
+						System.err.println("Z");
 					} else
 						System.err.print("|");
 				} else {
@@ -266,6 +265,7 @@ public class Karte {
 	 * @return Gibt eine LinkedHashMap mit vorhergehenden Schritten zurück.
 	 */
 	/*
+	 * Für den Rest des Teams:
 	 * LinkedHashMap für wege wurde gewählt, weil die Reihenfolge, in der die Felder
 	 * hinzugefügt wurden, erhalten bleibt und ein Iterator die Werte in dieser
 	 * Reihenfolge zurückgeben kann. Das ist in soweit hilfreich, da der
@@ -324,7 +324,6 @@ public class Karte {
 		return wege;
 	}
 
-	// TODO reicht das JavaDoc?
 	/**
 	 * Aktualisiert die Arbeitsliste - für die Wegfindung benötigt.
 	 * {@link #findeWege(Koordinaten)}
@@ -333,7 +332,7 @@ public class Karte {
 	 * @param fertigFelder
 	 * @param arbeitsliste
 	 */
-	public void arbeitslisteAktualisieren(Feld arbeitnachbar, List<Feld> fertigFelder, List<Feld> arbeitsliste) {
+	private void arbeitslisteAktualisieren(Feld arbeitnachbar, List<Feld> fertigFelder, List<Feld> arbeitsliste) {
 		if (arbeitnachbar != null) {
 			if (!fertigFelder.contains(arbeitnachbar) && !arbeitsliste.contains(arbeitnachbar)) {
 				arbeitsliste.add(arbeitnachbar);
@@ -342,14 +341,14 @@ public class Karte {
 	}
 
 	/**
-	 * TODO reicht das JavaDoc? Aktualisiert die Wegeliste - für die Wegfindung
+	 * Aktualisiert die Wegeliste - für die Wegfindung
 	 * benötigt. {@link #findeWege(Koordinaten)}
 	 * 
 	 * @param arbeit
 	 * @param nachbar
 	 * @param wege
 	 */
-	public void wegelisteAktualisieren(Feld arbeit, Feld nachbar, Map<Feld, VorhergehenderSchritt> wege) {
+	private void wegelisteAktualisieren(Feld arbeit, Feld nachbar, Map<Feld, VorhergehenderSchritt> wege) {
 		if (nachbar != null) {
 			int weglaenge = wege.get(arbeit).getWeglaenge();
 
@@ -365,10 +364,9 @@ public class Karte {
 		}
 	}
 
-	// TODO JavaDoc uU ausführlicher gestalten
 	/**
-	 * Gibt die Wegeliste zurück, die mit {@link #findeWege(Koordinaten)} erstellt
-	 * wurde.
+	 * Gibt die Wegeliste, die mit {@link #findeWege(Koordinaten)} erstellt
+	 * wurde, über die Standardausgabe für Fehler aus.
 	 * 
 	 * @param wege
 	 */
@@ -460,12 +458,12 @@ public class Karte {
 	}
 
 	/**
-	 * TODO das kann man bestimmt ausführlicher JavaDoc-umentieren Wertet die Liste
-	 * aus. Siehe auch: {@link #findeWege(Koordinaten)}
+	 * Durchsucht die Liste die in {@link #findeWege(Koordinaten)} erstellt wird nach dem gewünschten Zielfeld. Wird das Ziel gefunden, wird eine Liste mit den abzufahrenden Felder erstellt um am Wunschziel anzukommen.
+	 * Die Liste ist in der Reihenfolge sortiert in der man die Felder abfahren muss, mit dem Feld, das man in {@link #findeWege(Koordinaten)} als Startpunkt übergeben hat, an Index 0.
 	 * 
-	 * @param wege
-	 * @param wunschZiel
-	 * @return null wenn keine Wege oder keine Ziele. Sonst wunschZiel.
+	 * @param wege Die Liste mit den möglichen Wegen.
+	 * @param wunschZiel Das Feld zu dem man möchte.
+	 * @return null falls das Wunschziel nicht in der Liste ist, ansonsten eine Liste mit abzufahrenden Felder.
 	 */
 	public ArrayList<Feld> werteListeAus(Map<Feld, VorhergehenderSchritt> wege, Feld wunschZiel) {
 		if (wege == null || wunschZiel == null || wege.isEmpty()) {

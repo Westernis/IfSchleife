@@ -213,7 +213,7 @@ public class Koordinaten {
 	 * @return Gibt {@code null} wenn es keine benachbarten Knoten sind.
 	 */
 	public static String getRichtung(Koordinaten start, Koordinaten ziel) {
-		// TODO die Strings durch konstanten ersetzen
+		// TODO + die Strings durch konstanten ersetzen
 		if (start.getXPlus(1) == ziel.getX()) {
 			return "Osten";
 		}
