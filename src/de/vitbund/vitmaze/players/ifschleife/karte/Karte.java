@@ -103,13 +103,20 @@ public class Karte {
 	 */
 	public void aktualisiereFeld(Koordinaten punkt, ZellStatus feldtyp) {
 		Feld ort = this.getFeld(punkt);
+		Ziele form = this.getFormulare(punkt);
 		Feld nachbar;
 
 		// Wenn kein Feld vorhanden ist ODER das vorhandene Feld ein Formular und das
-		// neue ein Flur ist (oder andersherum), wird eine neue passende Feldinstanz
-		// angelegt und gespeichert
-		if (ort == null || ((Feld.formular.equals(feldtyp.getTyp()) || Feld.flur.equals(feldtyp.getTyp()))
-				&& !ort.getTyp().equals(feldtyp.getTyp()))) {
+		// neue ein Flur ist (oder andersherum) ODER ein anderes Formular da ist,
+		// wird eine neue passende Feldinstanz angelegt und gespeichert
+		if (ort == null
+				// Feldtyp hat sich geändert?
+				|| ((Feld.formular.equals(feldtyp.getTyp()) || Feld.flur.equals(feldtyp.getTyp()))
+				&& !ort.getTyp().equals(feldtyp.getTyp())) 
+				//liegt eventuell ein anderes Formular dort als erwartet?
+				|| form != null && Feld.formular.equals(feldtyp.getTyp()) &&
+				(form.getFormID() != feldtyp.getFormID() || form.getPlayerID() != feldtyp.getPlayerID()) ){
+			
 			// Feldkonstruktionsmethode aufrufen und Ergebnis im Array speichern
 			felder[punkt.getX()][punkt.getY()] = Feld.konstruiereFeld(punkt, this, feldtyp.getTyp(),
 					feldtyp.getPlayerID(), feldtyp.getFormID());
@@ -140,11 +147,6 @@ public class Karte {
 					}
 				}
 			}
-		}
-		// abfangen falls zwei Formulare durch verschieben die Plätze getauscht haben
-		if (Feld.formular.equals(feldtyp.getTyp())) {
-			// TODO + abfangen fertig machen
-
 		}
 
 		/*
@@ -208,7 +210,8 @@ public class Karte {
 	 * Formulare.
 	 * 
 	 * @param f - das Feld das es anzupassen gilt.
-	 * @return {@code false} falls das Übergebene Feld nicht vom Typ {@link Feld#ziel} ist. 
+	 * @return {@code false} falls das Übergebene Feld nicht vom Typ
+	 *         {@link Feld#ziel} ist.
 	 */
 	public boolean addZiel(Feld f) {
 		if (f.getTyp().equals(Feld.ziel))// Prüfen ob ich umwandeln darf
@@ -228,7 +231,7 @@ public class Karte {
 	 * Gibt die Karte in der Standard-Ausgabe aus. Nützlich für Debug-Zwecke.
 	 */
 	public void ausgabe() {
-		//TODO - Umbau auf StringBuilder wäre schön
+		// TODO - Umbau auf StringBuilder wäre schön
 		int x = felder.length - 1;
 		int y = felder[0].length - 1;
 		for (int i = 0; i < x; i++) {
@@ -265,12 +268,11 @@ public class Karte {
 	 * @return Gibt eine LinkedHashMap mit vorhergehenden Schritten zurück.
 	 */
 	/*
-	 * Für den Rest des Teams:
-	 * LinkedHashMap für wege wurde gewählt, weil die Reihenfolge, in der die Felder
-	 * hinzugefügt wurden, erhalten bleibt und ein Iterator die Werte in dieser
-	 * Reihenfolge zurückgeben kann. Das ist in soweit hilfreich, da der
-	 * Dijkstra-Algorithmus die Felder nach Weglänge sortiert findet. Somit ist auch
-	 * unsere Liste nach Weglänge sortiert
+	 * Für den Rest des Teams: LinkedHashMap für wege wurde gewählt, weil die
+	 * Reihenfolge, in der die Felder hinzugefügt wurden, erhalten bleibt und ein
+	 * Iterator die Werte in dieser Reihenfolge zurückgeben kann. Das ist in soweit
+	 * hilfreich, da der Dijkstra-Algorithmus die Felder nach Weglänge sortiert
+	 * findet. Somit ist auch unsere Liste nach Weglänge sortiert
 	 * 
 	 * https://docs.oracle.com/javase/8/docs/api/java/util/LinkedHashMap.html
 	 *
@@ -341,8 +343,8 @@ public class Karte {
 	}
 
 	/**
-	 * Aktualisiert die Wegeliste - für die Wegfindung
-	 * benötigt. {@link #findeWege(Koordinaten)}
+	 * Aktualisiert die Wegeliste - für die Wegfindung benötigt.
+	 * {@link #findeWege(Koordinaten)}
 	 * 
 	 * @param arbeit
 	 * @param nachbar
@@ -365,8 +367,8 @@ public class Karte {
 	}
 
 	/**
-	 * Gibt die Wegeliste, die mit {@link #findeWege(Koordinaten)} erstellt
-	 * wurde, über die Standardausgabe für Fehler aus.
+	 * Gibt die Wegeliste, die mit {@link #findeWege(Koordinaten)} erstellt wurde,
+	 * über die Standardausgabe für Fehler aus.
 	 * 
 	 * @param wege
 	 */
@@ -458,12 +460,17 @@ public class Karte {
 	}
 
 	/**
-	 * Durchsucht die Liste die in {@link #findeWege(Koordinaten)} erstellt wird nach dem gewünschten Zielfeld. Wird das Ziel gefunden, wird eine Liste mit den abzufahrenden Felder erstellt um am Wunschziel anzukommen.
-	 * Die Liste ist in der Reihenfolge sortiert in der man die Felder abfahren muss, mit dem Feld, das man in {@link #findeWege(Koordinaten)} als Startpunkt übergeben hat, an Index 0.
+	 * Durchsucht die Liste die in {@link #findeWege(Koordinaten)} erstellt wird
+	 * nach dem gewünschten Zielfeld. Wird das Ziel gefunden, wird eine Liste mit
+	 * den abzufahrenden Felder erstellt um am Wunschziel anzukommen. Die Liste ist
+	 * in der Reihenfolge sortiert in der man die Felder abfahren muss, mit dem
+	 * Feld, das man in {@link #findeWege(Koordinaten)} als Startpunkt übergeben
+	 * hat, an Index 0.
 	 * 
-	 * @param wege Die Liste mit den möglichen Wegen.
+	 * @param wege       Die Liste mit den möglichen Wegen.
 	 * @param wunschZiel Das Feld zu dem man möchte.
-	 * @return null falls das Wunschziel nicht in der Liste ist, ansonsten eine Liste mit abzufahrenden Felder.
+	 * @return null falls das Wunschziel nicht in der Liste ist, ansonsten eine
+	 *         Liste mit abzufahrenden Felder.
 	 */
 	public ArrayList<Feld> werteListeAus(Map<Feld, VorhergehenderSchritt> wege, Feld wunschZiel) {
 		if (wege == null || wunschZiel == null || wege.isEmpty()) {
