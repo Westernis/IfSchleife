@@ -109,7 +109,7 @@ public class Karte {
 		if (ort == null) {
 			feldErneuern = true;
 		} else {
-			// Feldvorhanden aber Typ hat sich geändert? //TODO ZETTEL
+			// Feldvorhanden aber Typ hat sich geändert?
 			if (!ort.getTyp().equals(feldtyp.getTyp())) {
 				feldErneuern = true;
 				// Ich muss bei Zetteln den Status bzgl. erkundet manuell mitnehmen
@@ -124,7 +124,7 @@ public class Karte {
 				Ziele form = this.getFormulare(punkt);
 				if (form != null
 						&& (form.getFormID() != feldtyp.getFormID() || form.getPlayerID() != feldtyp.getPlayerID())) {
-//TODO WICHTIG
+
 				}
 			}
 		}

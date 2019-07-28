@@ -29,6 +29,13 @@ public class ErkundenderBot extends Bot {
 	private Koordinaten nichtKicken;
 	private int kickCounter;
 
+	/**
+	 * 
+	 * @param karte    - die Spielfeldkarte
+	 * @param playerId - die ID des Spielers
+	 * @param x        - die X-Koordinate also der Punkt auf der horizontalen Achse
+	 * @param y        - die Y-Koordinate also der Punkt auf der vertikalen Achse
+	 */
 	public ErkundenderBot(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
 		/*
@@ -108,8 +115,6 @@ public class ErkundenderBot extends Bot {
 	 * 
 	 */
 	public void machAktion() {
-		// TODO ++ unbekannte Zettel als Ziel setzen !!
-		// String letzteRichtung = null; // muss raus da man das im Bot nutzen soll
 		Feld ziel = null;
 
 		this.aktualisiereMeineFormulare();
@@ -179,16 +184,16 @@ public class ErkundenderBot extends Bot {
 
 		// 3. Formular/Ziel bekannt -> Ziel überschreiben
 
-		for (Entry<Integer, Ziele> feld : meineformulare.entrySet()) {
-			System.err.println(feld.getValue().getPunkt());
-		}
+//		for (Entry<Integer, Ziele> feld : meineformulare.entrySet()) {
+//			System.err.println(feld.getValue().getPunkt());
+//		}
 		
 		// 3.1 Ziel
 		// Erste Bedingung prüft ob bekannt ist wie viel Formulare wir brauchen,
 		// zweite Bedingung ob wir genug haben
 		if (getAktuelleKarte().getAnzahlFormulare() >= 0
 				&& erledigteFormulare >= getAktuelleKarte().getAnzahlFormulare()) {
-			System.err.println("1");
+//			System.err.println("1");
 			// WICHTIG nur setzten wenn auch das eigene Ziel bekannt ist
 			if (getAktuelleKarte().getZiel(this.id) != null) {
 				ziel = getAktuelleKarte().getZiel(this.id);
@@ -198,7 +203,7 @@ public class ErkundenderBot extends Bot {
 		// 3.2 Formulare
 		else if (meineformulare.get(erledigteFormulare + 1) != null) {
 			ziel = meineformulare.get(erledigteFormulare + 1);
-			System.err.println("2");
+//			System.err.println("2");
 			// prüfen ob in der Karte noch das selbe Formular an der Stelle liegt
 			aktuelleKarte.ausgabe();
 			Ziele zielFeldAusKarte = getAktuelleKarte().getFormulare(ziel.getPunkt());
@@ -207,12 +212,12 @@ public class ErkundenderBot extends Bot {
 				// wenn kein Formular mehr da -> liefert getFormular null, daher muss das Feld
 				// nochmal geholt werden
 				if (zielFeldAusKarte == null) {
-					System.err.println("DICKE NULL -> Suche");
+//					System.err.println("DICKE NULL -> Suche");
 					
 					ziel = formularSuche(getAktuelleKarte().getFeld(ziel.getPunkt()), wege);
 				} else {
-					System.err.println("2.1");
-					System.err.println(""+zielFeldAusKarte.getPunkt() +"|"+ ziel.getPunkt());
+//					System.err.println("2.1");
+//					System.err.println(""+zielFeldAusKarte.getPunkt() +"|"+ ziel.getPunkt());
 					ziel = formularSuche(zielFeldAusKarte, wege);
 				}
 
@@ -242,7 +247,7 @@ public class ErkundenderBot extends Bot {
 	private void formularSucheZuruecksetzen() {
 		sucheGestartet = false;
 		suchListe = null;
-		// TODO + alles zurücksetzen
+		// TODO - alles zurücksetzen
 	}
 
 	/**
@@ -254,7 +259,7 @@ public class ErkundenderBot extends Bot {
 	 */
 	private Feld formularSuche(Feld gesuchtesFormular, LinkedHashMap<Feld, VorhergehenderSchritt> aktuelleWege) {
 
-		System.err.println("Formularsuche ausgelöst");
+//		System.err.println("Formularsuche ausgelöst");
 		int suchweite = 4;
 		LinkedHashMap<Feld, VorhergehenderSchritt> wegeVomFormular;
 
@@ -272,13 +277,13 @@ public class ErkundenderBot extends Bot {
 					suchListe.add(element.getKey());
 				}
 			}
-			System.err.println("suchListe gfüllt");
+//			System.err.println("suchListe gfüllt");
 		}
 
 		// Stehen wir am ursprünglich bekannten Punkt?
 		if (gesuchtesFormular.getPunkt().xyGleich(this.getOrt())) {
 			sucheGestartet = true;
-			System.err.println("Am alten Ort des Formulars");
+//			System.err.println("Am alten Ort des Formulars");
 		}
 
 		// Orginalfeld ist besucht und noch abzusuchende Felder vorhanden-> suche kann
@@ -289,7 +294,7 @@ public class ErkundenderBot extends Bot {
 				if (suchListe.contains(set.getKey())) {
 					ergebnis = set.getKey();
 					suchListe.remove(ergebnis);
-					System.err.println("nächstes Feld aus der Suchliste ist " + ergebnis.getPunkt());
+//					System.err.println("nächstes Feld aus der Suchliste ist " + ergebnis.getPunkt());
 					break;// wichtig wir wollen nur das erste gefundene Feld rausschmeißen
 				}
 			}
@@ -299,7 +304,7 @@ public class ErkundenderBot extends Bot {
 
 		// falls unsere Suchliste irgendwann mal leer ist, haben wir nix gefunden
 		if (suchListe.isEmpty()) {
-			System.err.println("Alles nach formularen abgesucht");
+//			System.err.println("Alles nach formularen abgesucht");
 			// wenn die Liste leer ist, wird davon ausgegangen, dass wir das Formular nicht
 			// mehr kennen
 			meineformulare.remove(erledigteFormulare + 1);
@@ -363,7 +368,7 @@ public class ErkundenderBot extends Bot {
 		}
 
 		if (ziel == null) {
-			System.err.println("Alles erkundet");
+//			System.err.println("Alles erkundet");
 			return null;
 		}
 		return ziel;
@@ -410,7 +415,7 @@ public class ErkundenderBot extends Bot {
 		super.aufsammeln();
 		if (flurFelderWiederEntnullen) {
 
-			System.err.println("ACHTUNG Karte ENTnullt");
+//			System.err.println("ACHTUNG Karte ENTnullt");
 			this.getAktuelleKarte().formularsucheEnde();
 			flurFelderWiederEntnullen = false;
 		}
@@ -511,10 +516,10 @@ public class ErkundenderBot extends Bot {
 			// wenn es nicht das aktuelle Formular ist}
 			if (Feld.formular.equals(Init.currentCell.getTyp()) && Init.currentCell.getPlayerID() == this.getId()
 					&& Init.currentCell.getFormID() == (erledigteFormulare + 1)) {
-				System.err.println("Unser Feld Korrekur");
+//				System.err.println("Unser Feld Korrekur");
 				// nix machen, weil es unser Formular ist und wir es aufheben und nicht fahren
 			} else {
-				System.err.println("koord korrigieren");
+//				System.err.println("koord korrigieren");
 				this.bewegungRueckgaengigMachen();
 			}
 

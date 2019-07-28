@@ -62,7 +62,7 @@ public class CharlySheet extends Bot {
 	/**
 	 * Legt Zettel auf die Karte, solange Zettel vorhanden sind.
 	 */
-	private void legeZettel() {// TODO - NOK berücksichtigen, ist aber eh nur testbot
+	private void legeZettel() {// TODO - NOK berücksichtigen, ist aber eh nur testbot -> keine prio
 		if (zettelZahl > 0) {
 			System.out.println("put");
 			zettelZahl--;
