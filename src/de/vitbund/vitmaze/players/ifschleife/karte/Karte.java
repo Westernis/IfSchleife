@@ -186,7 +186,10 @@ public class Karte {
 			this.wegeSetzen(punkt);
 		}
 	}
-
+/**
+ * Aktualisiert die Wege der einzelnen Felder
+ * @param punkt Feld für das die Wege aktualisiert werden
+ */
 	private void wegeSetzen(Koordinaten punkt) {
 		Feld ort = this.getFeld(punkt);
 		Feld nachbar;

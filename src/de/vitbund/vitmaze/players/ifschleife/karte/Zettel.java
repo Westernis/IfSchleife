@@ -1,12 +1,25 @@
 package de.vitbund.vitmaze.players.ifschleife.karte;
-
+/**
+ * Repräsentiert ein Feld auf dem ein Zettel liegt.
+ * @author Niklas.Schindler
+ *
+ */
 public class Zettel extends Feld {
 
+	/**
+	 * Erstellt ein Feld mit einem Typ und konkreten Koordinaten auf einer Karte.
+	 * 
+	 * @param punkt - die Position des Felds auf der Karte (horizontale und
+	 *              vertikale Achse). {@link #punkt}
+	 * @param karte - die Karte auf der sich das Feld befindet.
+	 */
 	public Zettel(Koordinaten punkt, Karte karte) {
 		super(punkt, karte, Feld.zettel);
 	}
 
-	@Override
+	/**
+	 * Gibt zurück das der Zettel begehbar ist.
+	 */
 	public boolean istBegehbar() {
 		return true;
 	}
