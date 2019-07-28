@@ -258,7 +258,7 @@ public class Koordinaten {
 	 *         nicht gleich sind.
 	 */
 	public boolean xyGleich(Koordinaten ort) {
-		if (this.x == ort.getX() && this.y == ort.getY()) {
+		if (ort!=null && this.x == ort.getX() && this.y == ort.getY()) {
 			return true;
 		}
 		return false;

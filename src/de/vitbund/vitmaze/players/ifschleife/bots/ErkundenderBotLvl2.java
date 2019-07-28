@@ -21,6 +21,9 @@ public class ErkundenderBotLvl2 extends Bot {
 	private boolean flurFelderWiederEntnullen = false;
 	private ArrayList<Feld> suchListe;
 
+	private Koordinaten nichtKicken;
+	private int kickCounter;
+
 	public ErkundenderBotLvl2(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
 		/*
@@ -46,18 +49,28 @@ public class ErkundenderBotLvl2 extends Bot {
 			}
 		}
 
+		// gesehene Felder aus Formularsuchliste entfernen
 		if (suchListe != null) {
 			ArrayList<Feld> zuEntfernen = new ArrayList<Feld>();
 
 			for (Feld feld : suchListe) {
 				if (feld.getPunkt().xyGleich(getOrt()) || feld.getPunkt().xyGleich(getOrt().norden())
 						|| feld.getPunkt().xyGleich(getOrt().westen()) || feld.getPunkt().xyGleich(getOrt().osten())
-						|| feld.getPunkt().xyGleich(getOrt().sueden())) {
+						|| feld.getPunkt().xyGleich(getOrt().sueden()))  {
+					
+					//if(!feld.getPunkt().xyGleich(getOrt()) && )
 					zuEntfernen.add(feld);
-
 				}
 			}
 			suchListe.removeAll(zuEntfernen);
+		}
+
+		// kickcounter senken
+		if (kickCounter > 0) {
+			if (kickCounter == 1) {
+				nichtKicken = null;
+			}
+			kickCounter--;
 		}
 	}
 
@@ -123,18 +136,24 @@ public class ErkundenderBotLvl2 extends Bot {
 		}
 		// 1.3 Ist es ein Zettel? -> ja wir entscheiden ob aufsammeln oder kicken
 //		//wichtig nicht mehr kicken wenn wir alle Formulare habens
-
 		if (Feld.zettel.equals(Init.currentCell.getTyp()) && !(getAktuelleKarte().getAnzahlFormulare() >= 0
 				&& erledigteFormulare >= getAktuelleKarte().getAnzahlFormulare())) {
+			// nicht kicken wenn wir den gerade selbst dorthin befördert haben
+			if (!getOrt().xyGleich(nichtKicken)) {
 //			System.err.println("1.3");
-			String richtungKick = kickenPruefen();
-			if (richtungKick != null) {
-				this.kick(richtungKick);
-				return;
-			} else {
-				this.letzteRichtung = "";
-				this.aufsammeln();
-				return;
+				Feld kickZiel = kickenPruefen();
+
+				if (kickZiel != null) {
+					String richtungKick = Koordinaten.getRichtung(this.getOrt(), kickZiel.getPunkt());
+					this.kick(richtungKick);
+					nichtKicken = kickZiel.getPunkt();// Ort speichern an den wir kicken
+					kickCounter = 5;
+					return;
+				} else {
+					this.letzteRichtung = "";
+					this.aufsammeln();
+					return;
+				}
 			}
 		}
 
@@ -382,7 +401,7 @@ public class ErkundenderBotLvl2 extends Bot {
 	 * @return Richtung in die gekickt werden sollte ("norden" TODO + nach todo
 	 *         konstanten) oder {@code null} falls kein geeignetes Feld da ist.
 	 */
-	public String kickenPruefen() {
+	public Feld kickenPruefen() {
 		Feld ziel = null;
 		int bewertung = 0;
 		int bewertungAlt = 0;
@@ -396,7 +415,7 @@ public class ErkundenderBotLvl2 extends Bot {
 			// prüfen ob 1. begehbar, nur auf solchen Feldern können überhaupt Zettel liegen
 			// 2. nur auf erkundete Felder kicken, sonst müssen wir den zettel nochmal
 			// anfassen
-			if (f.istBegehbar() && f.pruefenErkundet()) {
+			if (f.istBegehbar() /*&& f.pruefenErkundet()*/) {
 				bewertung = 0;
 				// sind wir von ort gekommen?
 				if (this.letzteRichtung.equals(Koordinaten.getRichtung(ort, getOrt()))) {
@@ -429,7 +448,7 @@ public class ErkundenderBotLvl2 extends Bot {
 			return null; // keine geeignetes Feld vorhanden
 		}
 
-		return Koordinaten.getRichtung(this.getOrt(), ziel.getPunkt());
+		return ziel;
 	}
 
 	public void kick(String richtung) {
