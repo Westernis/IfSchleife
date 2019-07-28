@@ -6,14 +6,19 @@ import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
 import de.vitbund.vitmaze.players.ifschleife.Init;
-import de.vitbund.vitmaze.players.ifschleife.ZellStatus;
 import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 import de.vitbund.vitmaze.players.ifschleife.karte.VorhergehenderSchritt;
 import de.vitbund.vitmaze.players.ifschleife.karte.Ziele;
 
-public class ErkundenderBotLvl2 extends Bot {
+/**
+ * Ist ein Bot der bis Level 5 unbekannte Karten fahren kann
+ * 
+ * @author Helmut.Rietz
+ *
+ */
+public class ErkundenderBot extends Bot {
 	private int erledigteFormulare = 0; // speichert das höchste abgearbeitete Formular, Formulare sollten bei 1 starten
 	private HashMap<Integer, Ziele> meineformulare;
 
@@ -24,7 +29,7 @@ public class ErkundenderBotLvl2 extends Bot {
 	private Koordinaten nichtKicken;
 	private int kickCounter;
 
-	public ErkundenderBotLvl2(Karte karte, int playerId, int x, int y) {
+	public ErkundenderBot(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
 		/*
 		 * es macht einen Unterschied ob man hier den gen. Typ weglässt - dann HashMap
@@ -33,7 +38,9 @@ public class ErkundenderBotLvl2 extends Bot {
 		meineformulare = new HashMap<Integer, Ziele>();
 	}
 
-	@Override
+	/**
+	 * {@inheritDoc}
+	 */
 	public void rundeInitialisiern() {
 		super.rundeInitialisiern(); // ich will alles aus der Elternklasse machen
 		System.err.println("LAST: |" + Init.lastActionsResult + "| letzteRichtung |" + letzteRichtung);
@@ -56,13 +63,14 @@ public class ErkundenderBotLvl2 extends Bot {
 			for (Feld feld : suchListe) {
 				if (feld.getPunkt().xyGleich(getOrt()) || feld.getPunkt().xyGleich(getOrt().norden())
 						|| feld.getPunkt().xyGleich(getOrt().westen()) || feld.getPunkt().xyGleich(getOrt().osten())
-						|| feld.getPunkt().xyGleich(getOrt().sueden()))  {
+						|| feld.getPunkt().xyGleich(getOrt().sueden())) {
 					// falls es kein Zettel ist oder wir auf dem Zettel stehen -> entfernen
 					// Zettel sollen nur raus wenn wir drauf stehen
-					if(feld.getPunkt().xyGleich(getOrt()) || !Feld.zettel.equals(getAktuelleKarte().getFeld(getOrt()).getTyp())) {
+					if (feld.getPunkt().xyGleich(getOrt())
+							|| !Feld.zettel.equals(getAktuelleKarte().getFeld(getOrt()).getTyp())) {
 						zuEntfernen.add(feld);
 					}
-					
+
 				}
 			}
 			suchListe.removeAll(zuEntfernen);
@@ -96,7 +104,9 @@ public class ErkundenderBotLvl2 extends Bot {
 
 	}
 
-	@Override
+	/**
+	 * 
+	 */
 	public void machAktion() {
 		// TODO ++ unbekannte Zettel als Ziel setzen !!
 		// String letzteRichtung = null; // muss raus da man das im Bot nutzen soll
@@ -216,6 +226,9 @@ public class ErkundenderBotLvl2 extends Bot {
 
 	}
 
+	/**
+	 * Setzt die Variablen für die Ablaufsteuerung bei der Formularsuche zurück.
+	 */
 	private void formularSucheZuruecksetzen() {
 		sucheGestartet = false;
 		suchListe = null;
@@ -223,9 +236,11 @@ public class ErkundenderBotLvl2 extends Bot {
 	}
 
 	/**
-	 * Methode händelt die Suche nach einem bereits gesehenen Formular.
+	 * Methode händelt die Suche nach einem bereits gesehenen Formular. Bitte die
+	 * Methode {@link #formularSucheZuruecksetzen()} zum abbrechen/beenden der Suche
+	 * benutzen.
 	 * 
-	 * @return
+	 * @return Gibt das nächste anzufahrende Feld zurück
 	 */
 	private Feld formularSuche(Feld gesuchtesFormular, LinkedHashMap<Feld, VorhergehenderSchritt> aktuelleWege) {
 
@@ -263,7 +278,7 @@ public class ErkundenderBotLvl2 extends Bot {
 			for (Entry<Feld, VorhergehenderSchritt> set : aktuelleWege.entrySet()) {
 				if (suchListe.contains(set.getKey())) {
 					ergebnis = set.getKey();
-					suchListe.remove(ergebnis);// TODO METHODE für alle sichtbaren Felder
+					suchListe.remove(ergebnis);
 					System.err.println("nächstes Feld aus der Suchliste ist " + ergebnis.getPunkt());
 					break;// wichtig wir wollen nur das erste gefundene Feld rausschmeißen
 				}
@@ -286,6 +301,15 @@ public class ErkundenderBotLvl2 extends Bot {
 		return ergebnis;
 	}
 
+	/**
+	 * Bestimmt das nächste Feld das erkundet werden soll. Die Gewichtung
+	 * berücksichtigt die Zahl der unbekannten Nachbarfelder. Felder die unerkundet
+	 * sind und Zettel beinhalten haben Priorität
+	 * 
+	 * @param wege Liste mit allen Wegen die berücksichtigt werden sollen, ausgehend
+	 *             vom Botstandort
+	 * @return
+	 */
 	private Feld naechstesFeldGewichtet(LinkedHashMap<Feld, VorhergehenderSchritt> wege) {
 		ArrayList<Feld> potFeld = new ArrayList<Feld>();
 		Feld ziel = null;
@@ -335,35 +359,18 @@ public class ErkundenderBotLvl2 extends Bot {
 		return ziel;
 	}
 
-	private Feld naechstesUnerkundetesFeld(LinkedHashMap<Feld, VorhergehenderSchritt> wege) {
-		Feld ziel = null;
-
-//		 Ich will jetzt die Felder durchgehen bis ich eins mit unerkundet gefunden habe.
-
-		// LinkedHashMap selbst hat das Interface iterable nicht implementiert daher
-		// geht wege nicht in der foreach, aber wege.entrySet gibt mir die Inhalte in
-		// einer Form zurück die mir das erlaubt.
-		for (Entry<Feld, VorhergehenderSchritt> element : wege.entrySet()) {
-
-			// ich hab jetzt in "element" immer ein Eintrag in der Form
-			// <Feld,VorhergehenderSchritt>, da hole ich mir jetzt das Feld raus und schaue
-			// ob erkundet != true
-			if (!element.getKey().pruefenErkundet()) {
-				ziel = element.getKey();
-				break;// for Schleife abbrechen, wir haben ja ein Ziel
-			}
-		}
-
-		// falls kein Ziel gefunden wurde ist noch immer null drin, abfangen
-		if (ziel == null) {
-			System.err.println("Alles erkundet");
-			return null;
-		}
-		return ziel;
-	}
-
 //		Weg zum Ziel bestimmen
 //	 	dazu kann man die Methode werteListeAus nutzen, dann hat man den kompletten Weg in der Hand
+	/**
+	 * Bestimmt die Richtung in die man fahren muss um diese Runde näher an das
+	 * Zielfeld zu kommen.
+	 * 
+	 * @param ziel Feld das angesteuert werden soll.
+	 * @param wege Liste mit bekannten Wegen
+	 * @return Richtung in die man vom Startfeld von {@code wege} aus fahren soll.
+	 *         Wenn kein Weg ermittelt werden konnte wird {@code null}
+	 *         zurückgegeben.
+	 */
 	private String bestimmeRichtung(Feld ziel, LinkedHashMap<Feld, VorhergehenderSchritt> wege) {
 		ArrayList<Feld> meinWeg = this.getAktuelleKarte().werteListeAus(wege, ziel);
 		// sicherstellen das ein Weg zurückkam, wenn nicht null zurückgeben
@@ -385,7 +392,10 @@ public class ErkundenderBotLvl2 extends Bot {
 
 	}
 
-	@Override
+	/**
+	 * Schickt den Befehl zu Formular aufsammeln raus und stellt die Karte wieder
+	 * her, falls Sie vorher zurückgesetzt wurde um alles neu abzusuchen.
+	 */
 	protected void aufsammeln() {
 		super.aufsammeln();
 		if (flurFelderWiederEntnullen) {
@@ -418,7 +428,7 @@ public class ErkundenderBotLvl2 extends Bot {
 			// prüfen ob 1. begehbar, nur auf solchen Feldern können überhaupt Zettel liegen
 			// 2. nur auf erkundete Felder kicken, sonst müssen wir den zettel nochmal
 			// anfassen
-			if (f.istBegehbar() /*&& f.pruefenErkundet()*/) {
+			if (f.istBegehbar() /* && f.pruefenErkundet() */) {
 				bewertung = 0;
 				// sind wir von ort gekommen?
 				if (this.letzteRichtung.equals(Koordinaten.getRichtung(ort, getOrt()))) {
@@ -454,6 +464,11 @@ public class ErkundenderBotLvl2 extends Bot {
 		return ziel;
 	}
 
+	/**
+	 * 
+	 * @param richtung In die gekickt werden soll. Erlaubte Übergaben sind "Norden",
+	 *                 "Westen", "Osten" und "Sueden".
+	 */
 	public void kick(String richtung) {
 		if ("Westen".equals(richtung)) {
 			System.out.println("kick west");

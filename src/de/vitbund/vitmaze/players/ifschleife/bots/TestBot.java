@@ -13,6 +13,13 @@ public class TestBot extends Bot {
 
 	int i;
 
+	/**
+	 * 
+	 * @param karte    - die Spielfeldkarte
+	 * @param playerId - die ID des Spielers
+	 * @param x        - die X-Koordinate also der Punkt auf der horizontalen Achse
+	 * @param y        - die Y-Koordinate also der Punkt auf der vertikalen Achse
+	 */
 	public TestBot(Karte karte, int playerId, int x, int y) {
 		super(karte, playerId, x, y);
 	}
@@ -24,9 +31,9 @@ public class TestBot extends Bot {
 			this.nachNorden();
 		}
 		if (i == 3) {
-			
+
 			i++;
-			//this.aktuelleKarte.ausgabe();
+			// this.aktuelleKarte.ausgabe();
 			this.beenden();
 		}
 		if (i == 4) {
@@ -35,7 +42,7 @@ public class TestBot extends Bot {
 			this.aktuelleKarte.ausgabe();
 			i++;
 			this.beenden();
-			}
+		}
 		if (i > 4) {
 			System.err.println("setzen");
 			this.aktuelleKarte.formularsucheEnde();

@@ -1,12 +1,11 @@
 package de.vitbund.vitmaze.players.ifschleife.bots;
 
 import de.vitbund.vitmaze.players.ifschleife.Init;
-import de.vitbund.vitmaze.players.ifschleife.karte.BekannteKarten;
 import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 
-public class Level2 extends ErkundenderBotLvl2 {
+public class Level2 extends ErkundenderBot {
 	private boolean karteErkannt;
 	private boolean abweichungFestgestellt = false;
 
@@ -24,11 +23,11 @@ public class Level2 extends ErkundenderBotLvl2 {
 			break; // 04 05
 
 		case 13:
-			this.aktuelleKarte = BekannteKarten.krankheit();
+			//this.aktuelleKarte = BekannteKarten.krankheit();
 			karteErkannt = true;
 			break; // 06
 		case 20:
-			this.aktuelleKarte = BekannteKarten.friendly();
+			//this.aktuelleKarte = BekannteKarten.friendly();
 			karteErkannt = true;
 			break; // 07
 		case 25:
@@ -62,10 +61,10 @@ public class Level2 extends ErkundenderBotLvl2 {
 			Feld fE = ersatzkarte.getFeld(getOrt().osten());
 			if (Feld.ziel.equals(f.getTyp()) || Feld.ziel.equals(fN.getTyp()) || Feld.ziel.equals(fS.getTyp())
 					|| Feld.ziel.equals(fW.getTyp()) || Feld.ziel.equals(fE.getTyp())) {
-				this.aktuelleKarte = BekannteKarten.kreis();
+				//this.aktuelleKarte = BekannteKarten.kreis();
 
 			} else {
-				this.aktuelleKarte = BekannteKarten.kreis2();
+				//this.aktuelleKarte = BekannteKarten.kreis2();
 			}
 			karteErkannt = true;
 		}

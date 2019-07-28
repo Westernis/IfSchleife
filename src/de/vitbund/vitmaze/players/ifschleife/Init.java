@@ -71,23 +71,23 @@ public class Init {
 
 		switch (level) {
 		case 1:
-			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
+			unserBot = new ErkundenderBot(karte, playerId, startX, startY);
 			break;
 		case 2:
-			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
+			unserBot = new ErkundenderBot(karte, playerId, startX, startY);
 			break;
 		case 3:
-			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
+			unserBot = new ErkundenderBot(karte, playerId, startX, startY);
 			break;
 		case 4:
-			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
+			unserBot = new ErkundenderBot(karte, playerId, startX, startY);
 			break;
 		case 5:
-			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
+			unserBot = new ErkundenderBot(karte, playerId, startX, startY);
 			break;
 
 		default:
-			unserBot = new ErkundenderBotLvl2(karte, playerId, startX, startY);
+			unserBot = new ErkundenderBot(karte, playerId, startX, startY);
 			break;
 		}
 

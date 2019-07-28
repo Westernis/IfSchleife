@@ -186,10 +186,12 @@ public class Karte {
 			this.wegeSetzen(punkt);
 		}
 	}
-/**
- * Aktualisiert die Wege der einzelnen Felder
- * @param punkt Feld für das die Wege aktualisiert werden
- */
+
+	/**
+	 * Aktualisiert die Wege der einzelnen Felder
+	 * 
+	 * @param punkt Feld für das die Wege aktualisiert werden
+	 */
 	private void wegeSetzen(Koordinaten punkt) {
 		Feld ort = this.getFeld(punkt);
 		Feld nachbar;
@@ -260,7 +262,7 @@ public class Karte {
 		int x = Koordinaten.getxMax();
 		int y = Koordinaten.getyMax();
 		for (int j = 0; j < y; j++) {
-			for (int i = 0; i < x; i++){
+			for (int i = 0; i < x; i++) {
 				if (felder[i][j] == null) {
 					System.err.print("0");
 				} else if (felder[i][j].istBegehbar() == true) {
@@ -518,7 +520,7 @@ public class Karte {
 
 	/**
 	 * Diese Methode tauscht alle Flurfelder gegen null aus. Außerdem werden die
-	 * Wege passend geändert.
+	 * Wege passend geändert. Bekannte Zettel werden auch auf unerkundet gesetzt
 	 */
 	public void flurFelderNullen() {
 		// Karte durchschauen
@@ -529,7 +531,10 @@ public class Karte {
 				ort = new Koordinaten(x, y);
 				feld = this.getFeld(ort);
 				if (feld != null) {
-					// System.err.println("Feld entfernen? " + ort);
+					if (Feld.zettel.equals(feld.getTyp())) {
+						//Sicherstellen das auch unter Zetteln nochmal gesucht wird 
+						felder[ort.getX()][ort.getY()].setErkundet(false);
+					}
 					if (feld.getTyp().equals(Feld.flur)) {
 						felder[ort.getX()][ort.getY()] = null;
 
@@ -557,6 +562,8 @@ public class Karte {
 				arbeitsfeld = this.getFeld(ort);
 				if (arbeitsfeld == null) {
 					aktualisiereFeld(ort, zelle);
+				} else if(Feld.zettel.equals(arbeitsfeld.getTyp())) {
+					felder[ort.getX()][ort.getY()].setErkundet(true);
 				}
 			}
 		}

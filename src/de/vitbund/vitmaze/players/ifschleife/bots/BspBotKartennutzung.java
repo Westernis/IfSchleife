@@ -18,7 +18,7 @@ import de.vitbund.vitmaze.players.ifschleife.karte.VorhergehenderSchritt;
  * @deprecated
  * 
  * @author IFSchleife
- * @see ErkundenderBotLvl2
+ * @see ErkundenderBot
  */
 public class BspBotKartennutzung extends Bot {
 
