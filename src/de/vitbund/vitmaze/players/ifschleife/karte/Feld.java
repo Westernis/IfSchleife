@@ -2,10 +2,10 @@ package de.vitbund.vitmaze.players.ifschleife.karte;
 
 /**
  * Ein Feld stellt ein Quadrat auf einer Karte dar. Mit einer bestimmten
- * Position auf dem Spielfeld und einem Typ - in VITMaze kann auf einem
- * Feld bspw. ein Formular oder ein Ziel o.ä. liegen. Außerdem enthält das Feld
- * eine Eigenschaft für die Darstellung ob es bereits erkundet oder noch
- * unbekannt ist.
+ * Position auf dem Spielfeld und einem Typ - in VITMaze kann auf einem Feld
+ * bspw. ein Formular oder ein Ziel o.ä. liegen. Außerdem enthält das Feld eine
+ * Eigenschaft für die Darstellung ob es bereits erkundet oder noch unbekannt
+ * ist.
  * 
  * @author IFSchleife
  */
@@ -146,8 +146,8 @@ public abstract class Feld {
 	}
 
 	/**
-	 * Eine Methode die von Unterklassen überschrieben wird. Sie gibt zurück ob
-	 * ein Feld begehbar ist.
+	 * Eine Methode die von Unterklassen überschrieben wird. Sie gibt zurück ob ein
+	 * Feld begehbar ist.
 	 */
 	public abstract boolean istBegehbar();
 
@@ -249,7 +249,8 @@ public abstract class Feld {
 	}
 
 	/**
-	 * Gibt den Typ des Feldes zurück. Für die möglichen Werte siehe Konstanten dieser Klasse.
+	 * Gibt den Typ des Feldes zurück. Für die möglichen Werte siehe Konstanten
+	 * dieser Klasse.
 	 * 
 	 * @return den Typ des Felds
 	 */
@@ -266,7 +267,8 @@ public abstract class Feld {
 	}
 
 	/**
-	 * Setzt den Typ des Felds. Beispielhafte Felder sind {@link Feld#flur} oder {@link Feld#wand}.
+	 * Setzt den Typ des Felds. Beispielhafte Felder sind {@link Feld#flur} oder
+	 * {@link Feld#wand}.
 	 * 
 	 * @param typ
 	 */

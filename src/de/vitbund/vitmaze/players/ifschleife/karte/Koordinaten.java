@@ -97,7 +97,8 @@ public class Koordinaten {
 	 * @param zahl    - die es zu korrigieren gilt
 	 *                {@code zahl = (zahl % (maximum));...}
 	 * @param maximum - ein Maximalwert idR der Wert den die Karte maximal hergibt.
-	 * @return korrigierte Zahl - Also bspw. der neue Positionswert auf den Koordinaten
+	 * @return korrigierte Zahl - Also bspw. der neue Positionswert auf den
+	 *         Koordinaten
 	 */
 	public static int korrigiere(int zahl, int maximum) {
 		zahl = (zahl % (maximum));
@@ -258,7 +259,7 @@ public class Koordinaten {
 	 *         nicht gleich sind.
 	 */
 	public boolean xyGleich(Koordinaten ort) {
-		if (ort!=null && this.x == ort.getX() && this.y == ort.getY()) {
+		if (ort != null && this.x == ort.getX() && this.y == ort.getY()) {
 			return true;
 		}
 		return false;

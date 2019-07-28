@@ -2,7 +2,9 @@ package de.vitbund.vitmaze.players.ifschleife;
 
 import java.util.Scanner;
 
-import de.vitbund.vitmaze.players.ifschleife.bots.*;
+import de.vitbund.vitmaze.players.ifschleife.bots.Bot;
+import de.vitbund.vitmaze.players.ifschleife.bots.ErkundenderBot;
+import de.vitbund.vitmaze.players.ifschleife.bots.Level2;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;
 import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
 
@@ -14,7 +16,6 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
  * @author IFSchleife
  *
  */
-
 public class Init {
 
 	public static String lastActionsResult = "";
@@ -36,7 +37,7 @@ public class Init {
 	 * 2. Passenden Bot mithilfe der LevelID deklarieren und instanziieren. 3.
 	 * Methoden für weitere Aktionen aufrufen (u.a. Bewegung des Bots).
 	 * 
-	 * @param args
+	 * @param args - werden aktuell nicht verarbeitet
 	 */
 	public static void main(String[] args) {
 
@@ -51,7 +52,7 @@ public class Init {
 		int playerId = input.nextInt(); // id dieses Players / Bots
 		int startX = input.nextInt(); // X-Koordinate der Startposition dieses Player
 		int startY = input.nextInt(); // Y-Koordinate der Startposition dieses Players
-		int sheetCount = 0;
+		int sheetCount = 0; // wird nur für bots gebraucht die selber Zettel legen wollen
 		if (level == 5) {
 			sheetCount = input.nextInt();
 		}

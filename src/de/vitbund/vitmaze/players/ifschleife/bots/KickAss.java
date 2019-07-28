@@ -1,8 +1,5 @@
 package de.vitbund.vitmaze.players.ifschleife.bots;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.vitbund.vitmaze.players.ifschleife.Init;
 import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 import de.vitbund.vitmaze.players.ifschleife.karte.Karte;

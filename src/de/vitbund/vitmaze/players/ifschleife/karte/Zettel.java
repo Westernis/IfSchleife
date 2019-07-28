@@ -1,6 +1,8 @@
 package de.vitbund.vitmaze.players.ifschleife.karte;
+
 /**
  * Repräsentiert ein Feld auf dem ein Zettel liegt.
+ * 
  * @author Niklas.Schindler
  *
  */
@@ -25,13 +27,15 @@ public class Zettel extends Feld {
 	}
 
 	/**
-	 * Überschreibt die prufenErkundet um sicherzustellen, dass Zettel nur manuell auf erkundet = wahr gesetzt werden können.
-	 * Es soll vor allem nicht reichen alle vier Nachbarfelder zu sehen, was für alle anderen begehbaren Felder gilt.
+	 * Überschreibt die prufenErkundet um sicherzustellen, dass Zettel nur manuell
+	 * auf erkundet = wahr gesetzt werden können. Es soll vor allem nicht reichen
+	 * alle vier Nachbarfelder zu sehen, was für alle anderen begehbaren Felder
+	 * gilt.
 	 */
 	public boolean pruefenErkundet() {
 		return erkundet;
 	}
-	
+
 	/**
 	 * 
 	 * @return gibt den Typ des Flurs zurück.

@@ -2,7 +2,6 @@ package de.vitbund.vitmaze.players.ifschleife.karte;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +19,7 @@ import de.vitbund.vitmaze.players.ifschleife.ZellStatus;
  */
 public class Karte {
 
-	// der 1. Index ist die Höhe, der 2. Index die Breite, 
+	// der 1. Index ist die Höhe, der 2. Index die Breite,
 	private final Feld[][] felder;
 	private int anzahlFormulare = -1;
 	// Ziele sind statische Eigenschaften der Karte, Formulare nicht, deshalb werden
@@ -426,7 +425,7 @@ public class Karte {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Karte karte = new Karte(4, 4);
+//		Karte karte = new Karte(4, 4);
 		// x Richtung
 //		for (int i = 0; i < 4; i++) {
 //			karte.aktualisiereFeld(new Koordinaten(i, 0), "WALL");
@@ -476,7 +475,7 @@ public class Karte {
 	 */
 	public Ziele getFormulare(Koordinaten ort) {
 		Feld feld = this.getFeld(ort);
-		if(feld == null) {
+		if (feld == null) {
 			return null;
 		}
 		Ziele formular = null;

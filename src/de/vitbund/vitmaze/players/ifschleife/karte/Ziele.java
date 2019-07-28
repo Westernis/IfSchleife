@@ -4,10 +4,10 @@ package de.vitbund.vitmaze.players.ifschleife.karte;
  * Ziele erweitert {@link Flur} und repräsentiert entweder ein Sachbearbeiter
  * oder ein Formular.
  * 
- * Unterschieden werden diese durch den Typ. Außerdem ist zu
- * beachten, das bei Ziele die formID, die Anzahl der benötigten Formulare
- * darstellt, bei Formularen jedeoch die Nummer des Formulars.Das führt dazu,
- * dass das letzte Formular die selbe formID haben sollte wie das Ziel.
+ * Unterschieden werden diese durch den Typ. Außerdem ist zu beachten, das bei
+ * Ziele die formID, die Anzahl der benötigten Formulare darstellt, bei
+ * Formularen jedeoch die Nummer des Formulars.Das führt dazu, dass das letzte
+ * Formular die selbe formID haben sollte wie das Ziel.
  * 
  * @author IFSchleife
  * @see Flur

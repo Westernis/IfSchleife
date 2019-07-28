@@ -202,7 +202,8 @@ public class Level2 extends ErkundenderBot {
 	}
 
 	/**
-	 * Füllt die Formularliste mit allen eigenen Fomularen die zum zeitpunkt des Aufrufens in der aktuellenKarte vorhanden sind. 
+	 * Füllt die Formularliste mit allen eigenen Fomularen die zum zeitpunkt des
+	 * Aufrufens in der aktuellenKarte vorhanden sind.
 	 */
 	private void formularListeErstellen() {
 		for (int x = 0; x < Koordinaten.getxMax(); x++) {

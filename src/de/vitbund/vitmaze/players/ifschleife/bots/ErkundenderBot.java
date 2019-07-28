@@ -19,7 +19,8 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Ziele;
  *
  */
 public class ErkundenderBot extends Bot {
-	protected int erledigteFormulare = 0; // speichert das höchste abgearbeitete Formular, Formulare sollten bei 1 starten
+	protected int erledigteFormulare = 0; // speichert das höchste abgearbeitete Formular, Formulare sollten bei 1
+											// starten
 	protected HashMap<Integer, Ziele> meineformulare;
 
 	private boolean sucheGestartet;
@@ -187,7 +188,7 @@ public class ErkundenderBot extends Bot {
 //		for (Entry<Integer, Ziele> feld : meineformulare.entrySet()) {
 //			System.err.println(feld.getValue().getPunkt());
 //		}
-		
+
 		// 3.1 Ziel
 		// Erste Bedingung prüft ob bekannt ist wie viel Formulare wir brauchen,
 		// zweite Bedingung ob wir genug haben
@@ -205,7 +206,6 @@ public class ErkundenderBot extends Bot {
 			ziel = meineformulare.get(erledigteFormulare + 1);
 //			System.err.println("2");
 			// prüfen ob in der Karte noch das selbe Formular an der Stelle liegt
-			aktuelleKarte.ausgabe();
 			Ziele zielFeldAusKarte = getAktuelleKarte().getFormulare(ziel.getPunkt());
 //			System.err.println(""+zielFeldAusKarte.getPunkt() +"|"+ ziel.getPunkt());
 			if (!((Ziele) ziel).selbesFormular(zielFeldAusKarte)) {
@@ -213,7 +213,7 @@ public class ErkundenderBot extends Bot {
 				// nochmal geholt werden
 				if (zielFeldAusKarte == null) {
 //					System.err.println("DICKE NULL -> Suche");
-					
+
 					ziel = formularSuche(getAktuelleKarte().getFeld(ziel.getPunkt()), wege);
 				} else {
 //					System.err.println("2.1");
