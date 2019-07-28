@@ -19,8 +19,8 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Ziele;
  *
  */
 public class ErkundenderBot extends Bot {
-	private int erledigteFormulare = 0; // speichert das höchste abgearbeitete Formular, Formulare sollten bei 1 starten
-	private HashMap<Integer, Ziele> meineformulare;
+	protected int erledigteFormulare = 0; // speichert das höchste abgearbeitete Formular, Formulare sollten bei 1 starten
+	protected HashMap<Integer, Ziele> meineformulare;
 
 	private boolean sucheGestartet;
 	private boolean flurFelderWiederEntnullen = false;
@@ -43,15 +43,15 @@ public class ErkundenderBot extends Bot {
 	 */
 	public void rundeInitialisiern() {
 		super.rundeInitialisiern(); // ich will alles aus der Elternklasse machen
-		System.err.println("LAST: |" + Init.lastActionsResult + "| letzteRichtung |" + letzteRichtung);
-		System.err.println("Standort: " + this.getOrt());
+//		System.err.println("LAST: |" + Init.lastActionsResult + "| letzteRichtung |" + letzteRichtung);
+//		System.err.println("Standort: " + this.getOrt());
 		// neue hinzugekommener Teil
 		if (this.letzeAktionAufOKpruefen()) {
 			// prüfen ob formular aufgehoben
 			String s = "OK FORM";
 			// System.err.println("OK Form prüfen");
 			if (Init.lastActionsResult.contains(s)) {
-				System.err.println("OK Form aufgehoben");
+//				System.err.println("OK Form aufgehoben");
 				erledigteFormulare++;
 			}
 		}
@@ -179,12 +179,16 @@ public class ErkundenderBot extends Bot {
 
 		// 3. Formular/Ziel bekannt -> Ziel überschreiben
 
+		for (Entry<Integer, Ziele> feld : meineformulare.entrySet()) {
+			System.err.println(feld.getValue().getPunkt());
+		}
+		
 		// 3.1 Ziel
 		// Erste Bedingung prüft ob bekannt ist wie viel Formulare wir brauchen,
 		// zweite Bedingung ob wir genug haben
 		if (getAktuelleKarte().getAnzahlFormulare() >= 0
 				&& erledigteFormulare >= getAktuelleKarte().getAnzahlFormulare()) {
-
+			System.err.println("1");
 			// WICHTIG nur setzten wenn auch das eigene Ziel bekannt ist
 			if (getAktuelleKarte().getZiel(this.id) != null) {
 				ziel = getAktuelleKarte().getZiel(this.id);
@@ -194,15 +198,21 @@ public class ErkundenderBot extends Bot {
 		// 3.2 Formulare
 		else if (meineformulare.get(erledigteFormulare + 1) != null) {
 			ziel = meineformulare.get(erledigteFormulare + 1);
-
+			System.err.println("2");
 			// prüfen ob in der Karte noch das selbe Formular an der Stelle liegt
+			aktuelleKarte.ausgabe();
 			Ziele zielFeldAusKarte = getAktuelleKarte().getFormulare(ziel.getPunkt());
+//			System.err.println(""+zielFeldAusKarte.getPunkt() +"|"+ ziel.getPunkt());
 			if (!((Ziele) ziel).selbesFormular(zielFeldAusKarte)) {
 				// wenn kein Formular mehr da -> liefert getFormular null, daher muss das Feld
 				// nochmal geholt werden
 				if (zielFeldAusKarte == null) {
+					System.err.println("DICKE NULL -> Suche");
+					
 					ziel = formularSuche(getAktuelleKarte().getFeld(ziel.getPunkt()), wege);
 				} else {
+					System.err.println("2.1");
+					System.err.println(""+zielFeldAusKarte.getPunkt() +"|"+ ziel.getPunkt());
 					ziel = formularSuche(zielFeldAusKarte, wege);
 				}
 

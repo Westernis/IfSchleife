@@ -20,8 +20,7 @@ import de.vitbund.vitmaze.players.ifschleife.ZellStatus;
  */
 public class Karte {
 
-	// 1. Index ist die x-Koordinate(Breite), der 2. Index ist die
-	// y-Koordinate(Höhe)
+	// der 1. Index ist die Höhe, der 2. Index die Breite, 
 	private final Feld[][] felder;
 	private int anzahlFormulare = -1;
 	// Ziele sind statische Eigenschaften der Karte, Formulare nicht, deshalb werden
@@ -125,7 +124,7 @@ public class Karte {
 				Ziele form = this.getFormulare(punkt);
 				if (form != null
 						&& (form.getFormID() != feldtyp.getFormID() || form.getPlayerID() != feldtyp.getPlayerID())) {
-
+//TODO WICHTIG
 				}
 			}
 		}
@@ -477,6 +476,9 @@ public class Karte {
 	 */
 	public Ziele getFormulare(Koordinaten ort) {
 		Feld feld = this.getFeld(ort);
+		if(feld == null) {
+			return null;
+		}
 		Ziele formular = null;
 
 		if (Feld.formular.equals(feld.getTyp())) {
@@ -532,7 +534,7 @@ public class Karte {
 				feld = this.getFeld(ort);
 				if (feld != null) {
 					if (Feld.zettel.equals(feld.getTyp())) {
-						//Sicherstellen das auch unter Zetteln nochmal gesucht wird 
+						// Sicherstellen das auch unter Zetteln nochmal gesucht wird
 						felder[ort.getX()][ort.getY()].setErkundet(false);
 					}
 					if (feld.getTyp().equals(Feld.flur)) {
@@ -562,7 +564,7 @@ public class Karte {
 				arbeitsfeld = this.getFeld(ort);
 				if (arbeitsfeld == null) {
 					aktualisiereFeld(ort, zelle);
-				} else if(Feld.zettel.equals(arbeitsfeld.getTyp())) {
+				} else if (Feld.zettel.equals(arbeitsfeld.getTyp())) {
 					felder[ort.getX()][ort.getY()].setErkundet(true);
 				}
 			}

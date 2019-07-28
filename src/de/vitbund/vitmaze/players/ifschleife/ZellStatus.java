@@ -30,7 +30,7 @@ public class ZellStatus {
 	 */
 	public boolean rueckgabeAuswerten(String rueckgabe) {
 		this.orginalText = rueckgabe;// für testzwecke und Kontrollen beibehalten
-		System.err.println(orginalText);
+		//System.err.println(orginalText);
 		String[] zerlegt; // ACHTUNG ARRAY von STRINGS
 		int i = 0; // index den wir anschauen
 
