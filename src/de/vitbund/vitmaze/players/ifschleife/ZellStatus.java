@@ -4,11 +4,8 @@ import de.vitbund.vitmaze.players.ifschleife.bots.Bot;
 import de.vitbund.vitmaze.players.ifschleife.karte.Feld;
 
 /**
- * Mit Zellstatus kann man den Status-String (die Rückgabe) zerlegen und gezielt
- * auswerten.
- * 
- * Die Auswertung des LastActionResults auf OK / NOK und folgende Teile befindet
- * sich in der Bot-Klasse als {@code letzteAktionPruefen()}
+ * Die Zellstatusklasse zerlegt die Textrückgabe von der Spielengine und stellt
+ * Sie in aufbereiter Form für das restliche Programm bereit.
  * 
  * @see Bot
  * @author IFSchleife
@@ -24,7 +21,7 @@ public class ZellStatus {
 	/**
 	 * Wertet die übergebene Rückgabe aus indem sie zerlegt wird.
 	 * 
-	 * @param rueckgabe
+	 * @param rueckgabe Der auszuwertende Text.
 	 * @return {@code true} wenn keine Fehler aufgetreten sind. {@code false} wenn
 	 *         bei der Zerlegung Fehler aufgetreten sind. Wenn der übergebene String
 	 *         bspw. leer war.
@@ -131,7 +128,7 @@ public class ZellStatus {
 	 * einen fiktiven Status und gibt die Einzelwerte à Typ, SpielerID, FormularNr
 	 * und Botentfernung zurück.
 	 * 
-	 * @param args
+	 * @param args ingorierter input
 	 */
 	public static void main(String[] args) {
 		ZellStatus a = new ZellStatus();

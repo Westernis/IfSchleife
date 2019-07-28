@@ -12,7 +12,7 @@ import de.vitbund.vitmaze.players.ifschleife.karte.Koordinaten;
  *
  * Die Grundklasse für alle anderen Bots. Die Prüfung auf korrekte Ausführung
  * der Felder muss ab Level 5 im jeweiligen Bot überschrieben bzw ergänzt
- * werden, da hierführ Informationen rundenübergreifend bereitstehen müssen.
+ * werden, da hierfür Informationen rundenübergreifend bereitstehen müssen.
  * 
  * @author IFSchleife
  */
@@ -37,7 +37,7 @@ public abstract class Bot {
 	/**
 	 * Setzt die aktuelleKarte
 	 * 
-	 * @param aktuelleKarte
+	 * @param aktuelleKarte die neue Karte
 	 */
 	public void setAktuelleKarte(Karte aktuelleKarte) {
 		this.aktuelleKarte = aktuelleKarte;
@@ -90,8 +90,10 @@ public abstract class Bot {
 	 * Die Methode wandelt eine Richtung in die gegenteilige Richtung um. Mögliche
 	 * Inputs sind "Norden", "Sueden", "Osten", oder "Westen"
 	 * 
-	 * @return Gegenteil von eingegeber Richtung, bei falscher eingabe -> null
-	 * @param Richtung, das was von der Methode umgekehrt werden soll.
+	 * @param richtung das was von der Methode umgekehrt werden soll.
+	 * @return Gegenteil der eingegebenen Richtung, bei falscher Eingabe wird null
+	 *         zurückgegeben.
+	 * 
 	 */
 	public String richtungUmkehren(String richtung) {
 //		System.err.println("fahre in: "+richtung);
@@ -236,6 +238,7 @@ public abstract class Bot {
 	 * gehe nicht zurück sondern in neue Richtung. Die neue Richtung wird zufällig
 	 * ausgewählt. Bewegt den Bot nach der Entscheidung.
 	 * 
+	 * @return Gibt die Richtung, in die gefahren wurde zurück.
 	 */
 	public String schlauereZufallsrichtung() {
 
@@ -334,31 +337,32 @@ public abstract class Bot {
 	/**
 	 * Die Methode überprüft ob ein Weg eine Wand ist.
 	 * 
+	 * @param zufaelligeRichtung Die Richtung die überprüft werden soll
 	 * @return {@code true}, wenn uebergebene Richtung eine Wand ist. {@code false}
 	 *         wenn uebergebene Richtung eine Wand ist.
 	 */
 	public boolean wegGleichWand(String zufaelligeRichtung) {
 		switch (zufaelligeRichtung) {
 		case "go west":
-			if ("WALL".equals(Init.westCellStatus)) {
+			if (Feld.wand.equals(Init.westCellStatus)) {
 				return true;
 			} else
 				return false;
 
 		case "go east":
-			if ("WALL".equals(Init.eastCellStatus)) {
+			if (Feld.wand.equals(Init.eastCellStatus)) {
 				return true;
 			} else
 				return false;
 
 		case "go north":
-			if ("WALL".equals(Init.northCellStatus)) {
+			if (Feld.wand.equals(Init.northCellStatus)) {
 				return true;
 			} else
 				return false;
 
 		case "go south":
-			if ("WALL".equals(Init.southCellStatus)) {
+			if (Feld.wand.equals(Init.southCellStatus)) {
 				return true;
 			} else
 				return false;
@@ -509,9 +513,10 @@ public abstract class Bot {
 	public void bewegungRueckgaengigMachen() {
 //		System.err.println("Ort vor Aenderung: " + this.ort.getX() + " + " + this.ort.getY());
 		String korrekturRichtung = richtungUmkehren(this.letzteRichtung);
-				if(korrekturRichtung == null) {
-					return; //Annahme wenn RichtungUmkehren null liefert sind wir letzte Runde gar nicht gefahren
-				}
+		if (korrekturRichtung == null) {
+			return; // Annahme wenn RichtungUmkehren null liefert sind wir letzte Runde gar nicht
+					// gefahren
+		}
 		switch (korrekturRichtung) {
 		/*
 		 * Wenn versucht hat in Norden zu bewegen x-Koordinate belassen und y-Koordinate

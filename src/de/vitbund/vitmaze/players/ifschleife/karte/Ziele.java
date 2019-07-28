@@ -68,7 +68,7 @@ public class Ziele extends Flur {
 
 	/**
 	 * 
-	 * @param value
+	 * @param value Feld vom Typ {@link Ziele} gegen das verglichen wird.
 	 * @return {@code false} wenn das Ziel nicht die gleichen Inhalte hat.
 	 *         {@code true} wenn die Inhalte des Formulars identisch sind.
 	 */

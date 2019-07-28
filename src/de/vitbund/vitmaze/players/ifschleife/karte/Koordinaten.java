@@ -31,10 +31,10 @@ public class Koordinaten {
 
 	/**
 	 * Setzt einmalig für den Programmablauf die Grenzen an denen die Kartengrenzen
-	 * verlaufen und "umkippen". Die Koordinaten bilden zwei Restklassenringe ->
-	 * modulo x bzw. y. Das wird für das Überschreiten der Kartengrenzen benötigt.
-	 * Ein Bot kann sich damit auf einer Seite rausbewegen und kommt auf der anderen
-	 * Seite wieder rein.
+	 * verlaufen und "umkippen". Die Koordinaten bilden zwei Restklassenringe modulo
+	 * x bzw. y. Das wird für das Überschreiten der Kartengrenzen benötigt. Ein Bot
+	 * kann sich damit auf einer Seite rausbewegen und kommt auf der anderen Seite
+	 * wieder rein.
 	 * 
 	 * @param x Anzahl der Felder entlang der X-Achse. Die Zählung beginnt bei 1.
 	 * @param y Anzahl der Felder entlang der Y-Achse. Die Zählung beginnt bei 1.
@@ -134,7 +134,7 @@ public class Koordinaten {
 	/**
 	 * Berechnet die um Wert geänderte Koordinate.
 	 * 
-	 * @param wert
+	 * @param wert Die Zahl die hinzuaddiert werden soll.
 	 * @return Entspricht der X-Koordinaten die man erhält, wenn man die X-Achse um
 	 *         den Wert entlang wandert.
 	 */
@@ -145,7 +145,7 @@ public class Koordinaten {
 	/**
 	 * Berechnet die um Wert geänderte Koordinate.
 	 * 
-	 * @param wert
+	 * @param wert Die Zahl die hinzuaddiert werden soll.
 	 * @return Entspricht der Y-Koordinaten die man erhält, wenn man die Y-Achse um
 	 *         den Wert entlang wandert.
 	 */
@@ -209,8 +209,9 @@ public class Koordinaten {
 	/**
 	 * Gibt für direkt benachbarte Koordinaten die Richtung zurück.
 	 * 
-	 * @param start
-	 * @param ziel
+	 * @param start Die Koordinaten von dem aus die Richtung bestimmt werden soll.
+	 * @param ziel  Die Koordinaten des Feldes zu dem die Richtung bestimmt werden
+	 *              soll.
 	 * @return Gibt {@code null} wenn es keine benachbarten Knoten sind.
 	 */
 	public static String getRichtung(Koordinaten start, Koordinaten ziel) {
@@ -234,7 +235,7 @@ public class Koordinaten {
 	 * 
 	 * Dient dem Testen der Koordinatenklasse
 	 * 
-	 * @param args
+	 * @param args -wird ignoriert
 	 */
 	public static void main(String[] args) {
 		Koordinaten.setzeMaximaleKoordinaten(10, 5);

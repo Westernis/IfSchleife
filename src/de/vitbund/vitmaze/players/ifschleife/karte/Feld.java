@@ -139,7 +139,7 @@ public abstract class Feld {
 	 * Mit Ausnahme von Feldern vom Typ Zettel sollte die Methode
 	 * {@link #pruefenErkundet()} benutzt werden.
 	 * 
-	 * @param erkundet
+	 * @param erkundet Erkundetstatus des Feldes
 	 */
 	public void setErkundet(boolean erkundet) {
 		this.erkundet = erkundet;
@@ -148,6 +148,8 @@ public abstract class Feld {
 	/**
 	 * Eine Methode die von Unterklassen überschrieben wird. Sie gibt zurück ob ein
 	 * Feld begehbar ist.
+	 * 
+	 * @return Soll zurück geben, ob das Feld befahrbar ist
 	 */
 	public abstract boolean istBegehbar();
 
@@ -162,7 +164,7 @@ public abstract class Feld {
 	/**
 	 * setzt das nördliche Feld auf das übergebene Feld
 	 * 
-	 * @param nord
+	 * @param nord Das Feld nördlich von der aufrufenden Instanz.
 	 * 
 	 */
 	public void setNord(Feld nord) {
@@ -180,7 +182,7 @@ public abstract class Feld {
 	/**
 	 * setzt das südliche Feld auf das übergebene Feld
 	 * 
-	 * @param sued
+	 * @param sued Das Feld südlich von der aufrufenden Instanz
 	 * 
 	 */
 	public void setSued(Feld sued) {
@@ -198,7 +200,7 @@ public abstract class Feld {
 	/**
 	 * setzt das östliche Feld auf das übergebene Feld
 	 * 
-	 * @param feld
+	 * @param ost Das Feld östlich von der aufrufenden Instanz
 	 * 
 	 */
 	public void setOst(Feld ost) {
@@ -216,7 +218,7 @@ public abstract class Feld {
 	/**
 	 * setzt das westliche Feld auf das übergebene Feld
 	 * 
-	 * @param feld
+	 * @param west Das Feld westlich von der aufrufenden Instanz
 	 * 
 	 */
 	public void setWest(Feld west) {
@@ -270,7 +272,7 @@ public abstract class Feld {
 	 * Setzt den Typ des Felds. Beispielhafte Felder sind {@link Feld#flur} oder
 	 * {@link Feld#wand}.
 	 * 
-	 * @param typ
+	 * @param typ Der zu setzende Typ.
 	 */
 	public void setTyp(String typ) {
 		this.typ = typ;

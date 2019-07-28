@@ -288,8 +288,7 @@ public class Karte {
 	 * {@link #arbeitslisteAktualisieren(Feld, List, List)},
 	 * {@link #wegelisteAktualisieren(Feld, Feld, Map)}
 	 * 
-	 * @param startX - Die Startposition auf der X-Achse.
-	 * @param startY - Die Startposition auf der Y-Achse
+	 * @param startpunkt Die Koordinaten die das Startfeld repräsentieren.
 	 * @return Gibt eine LinkedHashMap mit vorhergehenden Schritten zurück.
 	 */
 	/*
@@ -395,7 +394,7 @@ public class Karte {
 	 * Gibt die Wegeliste, die mit {@link #findeWege(Koordinaten)} erstellt wurde,
 	 * über die Standardausgabe für Fehler aus.
 	 * 
-	 * @param wege
+	 * @param wege Die auszuwertenden Wege
 	 */
 	public void ausgabeWegliste(Map<Feld, VorhergehenderSchritt> wege) {
 
@@ -422,7 +421,7 @@ public class Karte {
 	/**
 	 * Diese main dient dem Testen der Karte und der Wegfindung.
 	 * 
-	 * @param args
+	 * @param args - wird ignoriert
 	 */
 	public static void main(String[] args) {
 //		Karte karte = new Karte(4, 4);
@@ -470,7 +469,7 @@ public class Karte {
 	/**
 	 * Kontrolliert ob sich an dem übergebenen Ort ein Formular befindet.
 	 * 
-	 * @param ort
+	 * @param ort Die Koordinaten die überprüft werden sollen.
 	 * @return formular, falls an den Koordinaten ein Formular ist, ansonsten null
 	 */
 	public Ziele getFormulare(Koordinaten ort) {
