@@ -57,9 +57,12 @@ public class ErkundenderBotLvl2 extends Bot {
 				if (feld.getPunkt().xyGleich(getOrt()) || feld.getPunkt().xyGleich(getOrt().norden())
 						|| feld.getPunkt().xyGleich(getOrt().westen()) || feld.getPunkt().xyGleich(getOrt().osten())
 						|| feld.getPunkt().xyGleich(getOrt().sueden()))  {
+					// falls es kein Zettel ist oder wir auf dem Zettel stehen -> entfernen
+					// Zettel sollen nur raus wenn wir drauf stehen
+					if(feld.getPunkt().xyGleich(getOrt()) || !Feld.zettel.equals(getAktuelleKarte().getFeld(getOrt()).getTyp())) {
+						zuEntfernen.add(feld);
+					}
 					
-					//if(!feld.getPunkt().xyGleich(getOrt()) && )
-					zuEntfernen.add(feld);
 				}
 			}
 			suchListe.removeAll(zuEntfernen);
