@@ -97,7 +97,7 @@ public class ErkundenderBotLvl2 extends Bot {
 		if (Init.currentCell.getPlayerID() == id) {
 			switch (Init.currentCell.getTyp()) {
 			case Feld.ziel:
-				// Ziel schon erlaubt? -> einsammeln
+				// Ziel -> schon erlaubt? -> einsammeln
 				if (Init.currentCell.getFormID() == erledigteFormulare) {
 //					System.err.println("1.1");
 					this.letzteRichtung = "";
@@ -121,10 +121,11 @@ public class ErkundenderBotLvl2 extends Bot {
 				break;
 			}
 		}
-		// 1.3 Ist es ein Zettel? -> ja wir entscheiden ob aufsammeln oder kicken danach
-		// fertig
+		// 1.3 Ist es ein Zettel? -> ja wir entscheiden ob aufsammeln oder kicken
+//		//wichtig nicht mehr kicken wenn wir alle Formulare habens
 
-		if (Feld.zettel.equals(Init.currentCell.getTyp())) {
+		if (Feld.zettel.equals(Init.currentCell.getTyp()) && !(getAktuelleKarte().getAnzahlFormulare() >= 0
+				&& erledigteFormulare >= getAktuelleKarte().getAnzahlFormulare())) {
 //			System.err.println("1.3");
 			String richtungKick = kickenPruefen();
 			if (richtungKick != null) {
@@ -397,8 +398,8 @@ public class ErkundenderBotLvl2 extends Bot {
 			// anfassen
 			if (f.istBegehbar() && f.pruefenErkundet()) {
 				bewertung = 0;
-				//sind wir von ort gekommen?
-				if (this.letzteRichtung.equals( Koordinaten.getRichtung(ort, getOrt() ))) {
+				// sind wir von ort gekommen?
+				if (this.letzteRichtung.equals(Koordinaten.getRichtung(ort, getOrt()))) {
 					bewertung++; //
 				}
 
@@ -412,7 +413,7 @@ public class ErkundenderBotLvl2 extends Bot {
 						break; // eigene Formulare sollen ausgeschlossen werden
 					}
 					// nicht eigene höher bewerten
-					bewertung ++;
+					bewertung++;
 				case Feld.flur:
 					// nix machen
 				default:
@@ -457,7 +458,7 @@ public class ErkundenderBotLvl2 extends Bot {
 		String[] statusNachNOK;
 		statusNachNOK = (Init.lastActionsResult).split(" ");
 
-		//neuer Fehlercode?
+		// neuer Fehlercode?
 		if ("TAKING".equals(statusNachNOK[1])) {
 			// Korrektur muss erfolgen wenn wir wegfahren würden, daher eigentlich immer,
 			// wenn es nicht das aktuelle Formular ist}
@@ -465,17 +466,14 @@ public class ErkundenderBotLvl2 extends Bot {
 					&& Init.currentCell.getFormID() == (erledigteFormulare + 1)) {
 				System.err.println("Unser Feld Korrekur");
 				// nix machen, weil es unser Formular ist und wir es aufheben und nicht fahren
-			} else  {
+			} else {
 				System.err.println("koord korrigieren");
 				this.bewegungRueckgaengigMachen();
 			}
-			
-		} else {//wenn nein an die Ursprüngliche Methode weitergeben
+
+		} else {// wenn nein an die Ursprüngliche Methode weitergeben
 			super.bewegungRueckgaengigMachen();
 		}
-
-
-
 
 	}
 }
